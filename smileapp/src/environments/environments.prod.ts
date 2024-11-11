@@ -1,4 +1,8 @@
 export const environment = {
-    production: true,
-    baseUrl: 'http://localhost:8080/api/v1' 
+
+    production : true,
+    //baseURL : "https://smile-api-latest.onrender.com/api/v1"
+    baseURL : "http://localhost:8080/api/v1"
+
 };
+
