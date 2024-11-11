@@ -1,0 +1,20 @@
+
+    <google-map
+    mapId="f647ae78466faec3"
+    height="100%"
+    width="100%"
+    [center]="center"
+    [zoom]="zoom">
+    @for (clinica of clinicas; track clinica) {
+        <map-advanced-marker 
+        #marker="mapAdvancedMarker"
+        (mapClick)="MarkerClick(clinica,marker)"
+        [position]="{ lat: +clinica.latitude, lng: +clinica.longitude }"></map-advanced-marker>
+      }
+      <map-info-window/>
+    </google-map>
+
+
+
+
+
