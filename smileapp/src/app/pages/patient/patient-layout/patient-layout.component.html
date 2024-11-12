@@ -1,0 +1,43 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="color col-md-1 d-grid gap-2">
+            <div class="row p-0">
+                <button class="btn" 
+                    [ngClass]="{'btn-outline-light': !isActive('/patient'), 'btn-secondary': isActive('/patient')}" 
+                    routerLink="/patient">
+                    <i class="fa-regular fa-user"></i> Cuenta           
+                </button>
+            </div>
+            <div class="row p-0 text-light">
+                <button class="btn" 
+                    [ngClass]="{'btn-outline-light': !isActive('/patient/cita'), 'btn-secondary': isActive('/patient/cita')}" 
+                    routerLink="/patient/cita">
+                    <i class="fa-regular fa-calendar"></i> Agendar Cita
+                </button>
+            </div>
+            <div class="row p-0 text-light">
+                <button class="btn" 
+                    [ngClass]="{'btn-outline-light': !isActive('/patient/comunidades'), 'btn-secondary': isActive('/patient/comunidades')}" 
+                    routerLink="/participant/comunidades">
+                    <i class="fa-regular fa-comment"></i> Historia Clinica
+                </button>
+            </div>
+            <div class="row p-0 text-light">
+                <button class="btn" 
+                    [ngClass]="{'btn-outline-light': !isActive('/patient/MisCitas'), 'btn-secondary': isActive('/patient/MisCitas')}" 
+                    routerLink="/patient/MisCitas">
+                    <i class="fa-solid fa-clock-rotate-left" style="color: #ffffff;"></i> Historial
+                </button>
+            </div>
+            <div class="row p-0 text-light">
+                <button class="btn" 
+                (click)="logout()">
+                <i class="fa-solid fa-right-from-bracket fa-rotate-180" style="color: #ffffff;"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-md-11">
+            <router-outlet></router-outlet>
+        </div>     
+    </div>
+</div>

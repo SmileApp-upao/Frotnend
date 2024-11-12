@@ -1,0 +1,48 @@
+<div class="container-fluid fondo">
+    <div class="val">
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Smile 
+                   <strong>App</strong> </h1>
+            </div>
+            <div class="col-md-4">
+                <img src="muela.png"/>
+            </div>
+        </div>
+        <div class="row">
+            <h3>Validaremos tu Identidad</h3>
+
+            <form [formGroup]="validarCopForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="cop">Número de COP</label>
+                    <input type="text" id="cop" class="form-control" formControlName="cop" placeholder="Ingrese su número de COP">
+                    <div class="alert alert-danger mt-2" *ngIf="validarCopForm.get('cop')?.invalid && (validarCopForm.get('cop')?.dirty || validarCopForm.get('cop')?.touched)">
+                        <span *ngIf="validarCopForm.get('cop')?.errors?.['required']">
+                            El número de COP es obligatorio.
+                        </span>
+                        <span *ngIf="validarCopForm.get('cop')?.errors?.['pattern']">
+                            Ingrese un número de COP válido.
+                        </span>
+                        <span *ngIf="validarCopForm.get('cop')?.errors?.['minlength'] || validarCopForm.get('cop')?.errors?.['maxlength']">
+                            El COP no puede ser mayor o menor a 5.
+                        </span>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3" [disabled]="validarCopForm.invalid">Validar COP</button>
+            </form>
+            
+            <div *ngIf="copStatus" class="mt-3">
+                <div class="alert" [ngClass]="{'alert-success': copStatus === 'Habilitado', 'alert-danger': copStatus !== 'Habilitado'}">
+                    {{ copStatus === 'Habilitado' ? 'COP válido y habilitado!' : 'COP no habilitado. Por favor, verifique su estado.' }}
+                </div>
+            </div>
+            
+        </div>
+
+        
+        <div class="row mt-4 text-center">
+                <a>¿Olvidaste tu contraseña?</a>
+        </div>
+    </div>
+</div>
+

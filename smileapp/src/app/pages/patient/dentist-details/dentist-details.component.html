@@ -1,0 +1,66 @@
+<div class="row-md-2 p-3">
+    <button class="btn fs-3 hover" (click)="Volver()"> <i class="fa-solid fa-arrow-left"></i> Volver</button>
+</div>
+<div class="row p-4">
+    <div class="div bg-black text-light p-4">
+        <div class="row align-items-center p-4">
+            <div class="col-md-1 p-0 text-center" >
+                <img src="https://banffventureforum.com/wp-content/uploads/2019/08/no-photo-icon-22.png" alt="Profile Image" class="img-thumbnail rounded-circle">
+            </div>
+            <div class="col-md-10 ">
+                <div class="row">
+                   
+                    <h3 class="ms-3 fs-1">{{dentista.name}} {{dentista.lastname}}</h3>
+                </div>
+                <div class="row">
+                    <h3 class="ms-3 fs-4 text-white-50">Dentista {{dentista.condition}}</h3>
+                </div>
+                
+            </div>
+            
+        </div>
+        <div class="container row ">
+            <div class="col offset-md-10">
+                <button class="ms-5 btn btn-outline-light p-2" 
+                (mouseenter)="hover = true" 
+                (mouseleave)="hover = false" (click)="IrCreateCita(dentista.id,clinica.id)">
+                     Agendar Cita 
+                    <i class="fa-solid fa-arrow-up-right-from-square" 
+                 [ngStyle]="{'color': hover ? '#000000' : '#ffffff'}">
+                    </i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row ">
+    <div class="col-md-4">
+        <div class="row m-4 bg-black rounded p-4 text-white-50">
+            <h1 class="fs-4 text-light">Sobre mí :</h1>
+            <p class="fs-6">{{dentista.gender}}</p>
+            <p class="fs-6">{{dentista.birthday}}</p>
+            <p class="fs-6">{{clinica.address}}</p>
+            <p class="fs-6">{{dentista.email}}</p>
+            <p class="fs-6">{{dentista.phone}}</p>
+            <p class="fs-6">{{clinica.openHour}} - {{clinica.closeHour}}</p>
+        </div>
+        
+
+    </div>
+    <div class="col-md-4 ">
+        <div class="row m-4 border border-start-0 border-end-0 border-top-0 border-black border-3s">
+            <h1 class="fs-4">Publicaciones</h1>
+        </div> 
+        <div class="row m-4 bg-black rounded p-4 text-white-50">
+
+        </div>   
+    </div>
+    <div class="col-md-4">
+        <div class="card m-4 border border-3">
+            <div class="card-body m-3">
+              <h2 class="fw-bold fs-3">Descripcion</h2>
+              <p class="card-text">{{dentista.description}}</p>
+            </div>
+        </div>
+    </div>
+</div>

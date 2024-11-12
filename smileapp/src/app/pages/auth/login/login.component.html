@@ -1,1 +1,51 @@
-<p>login works!</p>
+<div class="container-fluid fondo">
+    <div class="ini">
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Smile 
+                   <strong>App</strong> </h1>
+            </div>
+            <div class="col-md-4">
+                <img src="muela.png"/>
+            </div>
+        </div>
+        <div class="row">
+            <h3>Bienvenido</h3>
+
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <input type="email" class="form-control" formControlName="email" placeholder="Ingrese su correo electrónico">
+                    <div class="alert alert-danger mt-2" [hidden]="loginForm.get('email')?.valid || loginForm.get('email')?.pristine">
+                        <span *ngIf="loginForm.get('email')?.errors?.['required']">
+                            El correo es obligatorio.
+                        </span>
+                        <span *ngIf="loginForm.get('email')?.errors?.['email']">
+                            Introduzca un correo válido.
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group mt-3">
+                    <input type="password" class="form-control" formControlName="password" placeholder="Ingrese su contraseña">
+                    <div class="alert alert-danger mt-2" [hidden]="loginForm.get('password')?.valid || loginForm.get('password')?.pristine">
+                        <span *ngIf="loginForm.get('password')?.errors?.['required']">
+                            La contraseña es obligatoria.
+                        </span>
+                        <span *ngIf="loginForm.get('password')?.errors?.['minlength']">
+                            Su contraseña no puede ser menor a 8 caracteres.
+                        </span>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-outline-dark mt-2 " [disabled]="loginForm.invalid" >Iniciar Sesión</button>
+            </form>
+            
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <a>¿Olvidaste tu contraseña?</a>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-outline-dark" routerLink="/auth/type-acount"> Crear Cuenta</button>
+            </div>
+        </div>
+    </div>
+</div>

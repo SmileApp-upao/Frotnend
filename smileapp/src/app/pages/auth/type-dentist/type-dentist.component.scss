@@ -1,0 +1,56 @@
+.fondo{
+    background: linear-gradient(143deg, #FFF 8.54%, #444040 52.84%, #000 115.2%);
+    min-height: 100vh;
+    text-align: center;
+    font-family: Montserrat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.tipd{
+    display: flex;
+    max-width: 500px;
+    min-height: 530px;
+    padding: 40px 70px;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 30px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.fondo {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+ .tipd {
+  
+    .btn {
+      margin: 10px;
+      width: 100%;
+      padding: 0.2rem;
+      font-size: 1rem;
+      border-radius: 10px;
+      transition: all 0.15s ease-in-out;
+  
+      &-outline-dark {
+        &:hover {
+          background-color: #343a40;
+          color: white;
+        }
+      }
+    }
+  }
+  
+  // Responsive adjustments
+  @media (max-width: 768px) {
+    .tipd {
+      padding: 1.5rem;
+    }
+  }

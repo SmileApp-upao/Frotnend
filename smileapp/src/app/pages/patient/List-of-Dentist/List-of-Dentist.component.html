@@ -1,0 +1,46 @@
+<div class="row-md-2 p-3">
+    <button class="btn fs-3 hover" routerLink="/patient/cita"> <i class="fa-solid fa-arrow-left"></i> Volver</button>
+</div>
+<div class="row  ms-4">
+    <div class="col-md-5 ms-4 mt-4 me-5">
+        <div class="row mb-4">
+            <div class="col-md-4 text-light bg-black p-3">
+                <img src="https://scontent-lim1-1.xx.fbcdn.net/v/t39.30808-6/414850126_407251714969818_7350880059826478217_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=mGzQKTe_oaQQ7kNvgHnhY2y&_nc_zt=23&_nc_ht=scontent-lim1-1.xx&_nc_gid=AbyMQNGM9CAo6rKemP6W0TW&oh=00_AYCEiKoGAzxZEz-HufBnroFbJQs40nSp2_QAs3N_h5h-Ag&oe=6737D7D0" class="img-thumbnail rounded-circle" >
+            </div>
+            <div class="col-md-8 text-light bg-black p-3">
+                <h5 class="card-title fs-1">{{clinica.name}}</h5>
+                <h5 class=" text-white-50 card-title fw-light">Consultorio</h5>
+            </div>
+            <p  class="card-text p-3 fs-5">{{clinica.desc}}</p>
+        </div>
+        <div style="width: 30rem;">
+            <div class="card-body row bg-black text-light p-3 ">
+                <div class="col-md-12 p-3">
+                    <h5 class="card-title fs-3">Acerca de: </h5>
+                    <h5 class=" text-white-50 card-title fw-light p-3"><i class="fa-solid fa-location-dot" style="color: #ffffff;"></i> {{clinica.address}}</h5>
+                    <h5 class=" text-white-50 card-title fw-light p-3"><i class="fa-solid fa-envelope" style="color: #ffffff;"></i> {{clinica.email}}</h5>
+                    <h5 class=" text-white-50 card-title fw-light p-3"><i class="fa-solid fa-phone" style="color: #ffffff;"></i> {{clinica.telf}}</h5>
+                    <h5 class=" text-white-50 card-title fw-light p-3"><i class="fa-solid fa-clock" style="color: #ffffff;"></i> {{clinica.openHour}} - {{clinica.closeHour}}</h5>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <div class="col-md-4 offset-md-1">
+        <div class="row">
+            <div class="d-flex p-2" role="search">
+                <select class="form-select me-2 rounded-pill border border-3 p-3" [(ngModel)]="searchQuery" (ngModelChange)="onSearch()">
+                    <option value="" selected>Seleccione ciclo de estudios</option>
+                    <option *ngFor="let cycle of cycles" [value]="cycle">{{ cycle }}</option>
+                </select>
+                <button class="btn-close mt-1" (click)="clearFilter()"></button>
+            </div>
+        </div>
+        <div class="row m-6" *ngFor="let dentist of filterDentist" >
+            <button class="btn btn-outline-dark font-monospace text-start fs-5 m-2" (click)="DentistDetails(dentist.userId)"><img src="https://scontent-lim1-1.xx.fbcdn.net/v/t39.30808-6/414850126_407251714969818_7350880059826478217_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=mGzQKTe_oaQQ7kNvgHnhY2y&_nc_zt=23&_nc_ht=scontent-lim1-1.xx&_nc_gid=AbyMQNGM9CAo6rKemP6W0TW&oh=00_AYCEiKoGAzxZEz-HufBnroFbJQs40nSp2_QAs3N_h5h-Ag&oe=6737D7D0" 
+                class="img-thumbnail small-thumbnail rounded-circle" >
+                
+                {{dentist.name}} {{dentist.lastname}}</button>
+        </div>
+    </div>
+</div>
+

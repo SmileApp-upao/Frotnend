@@ -7,7 +7,7 @@ import { AuthResponse } from '../../shared/models/auth/auth-response-model';
   })
 
 export class StorageService {
-    private authKey="govench_auth"
+    private authKey="smile_auth"
 
     setAuthData(data:AuthResponse):void {
         localStorage.setItem(this.authKey,JSON.stringify(data))
