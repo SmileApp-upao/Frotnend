@@ -23,7 +23,7 @@
             <div class="col offset-md-10">
                 <button class="ms-5 btn btn-outline-light p-2" 
                 (mouseenter)="hover = true" 
-                (mouseleave)="hover = false">
+                (mouseleave)="hover = false" (click)="IrCreateCita(dentista.id,clinica.id)">
                      Agendar Cita 
                     <i class="fa-solid fa-arrow-up-right-from-square" 
                  [ngStyle]="{'color': hover ? '#000000' : '#ffffff'}">

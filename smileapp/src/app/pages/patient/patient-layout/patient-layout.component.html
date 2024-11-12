@@ -17,16 +17,22 @@
             </div>
             <div class="row p-0 text-light">
                 <button class="btn" 
-                    [ngClass]="{'btn-outline-light': !isActive('/participant/comunidades'), 'btn-secondary': isActive('/participant/comunidades')}" 
+                    [ngClass]="{'btn-outline-light': !isActive('/patient/comunidades'), 'btn-secondary': isActive('/patient/comunidades')}" 
                     routerLink="/participant/comunidades">
                     <i class="fa-regular fa-comment"></i> Historia Clinica
                 </button>
             </div>
             <div class="row p-0 text-light">
                 <button class="btn" 
-                    [ngClass]="{'btn-outline-light': !isActive('/participant/comunidades'), 'btn-secondary': isActive('/participant/comunidades')}" 
-                    routerLink="/participant/comunidades">
-                    <i class="fa-regular fa-comment"></i> Historial
+                    [ngClass]="{'btn-outline-light': !isActive('/patient/MisCitas'), 'btn-secondary': isActive('/patient/MisCitas')}" 
+                    routerLink="/patient/MisCitas">
+                    <i class="fa-solid fa-clock-rotate-left" style="color: #ffffff;"></i> Historial
+                </button>
+            </div>
+            <div class="row p-0 text-light">
+                <button class="btn" 
+                (click)="logout()">
+                <i class="fa-solid fa-right-from-bracket fa-rotate-180" style="color: #ffffff;"></i>
                 </button>
             </div>
         </div>
