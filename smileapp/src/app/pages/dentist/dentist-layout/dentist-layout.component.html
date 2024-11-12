@@ -1,0 +1,37 @@
+<div class="container-fluid h-100">
+    <div class="row h-100"> 
+        <div class="col-md-2 bg-dark text-light d-flex flex-column align-items-center py-4">
+            <button class="btn w-100 mb-3 text-light" 
+                [ngClass]="{'active-btn': isActive('profile')}" 
+                routerLink="/dentist/profile">
+                <i class="fa-regular fa-user d-block mb-2"></i>
+                <span>Cuenta</span>          
+            </button>
+
+            <button class="btn w-100 mb-3 text-light" 
+                [ngClass]="{'active-btn': isActive('')}" 
+                routerLink="">
+                <i class="fa-regular fa-file-alt d-block mb-2"></i>
+                <span>Documentos</span>
+            </button>
+
+            <button class="btn w-100 mb-3 text-light" 
+                [ngClass]="{'active-btn': isActive('')}" 
+                routerLink="">
+                <i class="fa-regular fa-calendar-check d-block mb-2"></i>
+                <span>Agenda</span>
+            </button>
+
+            <button class="btn w-100 mb-3 text-light" 
+                [ngClass]="{'active-btn': isActive('add-clinic')}" 
+                routerLink="/dentist/add-clinic">
+                <i class="fa-regular fa-hospital d-block mb-2"></i>
+                <span>Consultorio</span>
+            </button>
+        </div>
+ 
+        <div class="col-md-10 bg-light p-4">
+            <router-outlet></router-outlet>
+        </div>     
+    </div>
+</div>

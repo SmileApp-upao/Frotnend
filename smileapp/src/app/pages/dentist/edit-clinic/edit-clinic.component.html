@@ -1,62 +1,64 @@
 <div class="container clinic-form-container mt-5">
-    <div class="text-center my-4 p-2 card profile-card shadow-sm bg-dark rounded-2 ">
-        <p class="text-light fs-4">Añadir Centro Odontológico</p>
+    <div class="text-center my-4 p-2 card profile-card shadow-sm bg-dark rounded-2">
+        <p class="text-light fs-4">Editar Centro Odontológico</p>
     </div>
 
-    <div class="row">
+    <div class="row"> 
         <div class="col-md-6">
-            <form class="shadow-sm p-5 text-light bg-dark rounded-2">
+            <form [formGroup]="clinicForm" (ngSubmit)="onSubmit()" class="shadow-sm p-5 text-light bg-dark rounded-2">
                 <div class="form-group mb-3">
                     <label for="name" class="form-label">Nombre</label>
-                    <input type="text" id="name" class="form-control" placeholder="Nombre del centro">
+                    <input type="text" id="name" formControlName="name" class="form-control" placeholder="Nombre del centro">
                 </div>
+
                 <div class="form-group mb-3">
                     <label for="address" class="form-label">Dirección</label>
-                    <input type="text" id="address" class="form-control" placeholder="Dirección">
+                    <input type="text" id="address" formControlName="address" class="form-control" placeholder="Dirección">
                 </div>
+
                 <div class="form-group mb-3">
                     <label for="phone" class="form-label">Teléfono</label>
-                    <input type="tel" id="phone" class="form-control" placeholder="Número de teléfono">
+                    <input type="tel" id="phone" formControlName="phone" class="form-control" placeholder="Número de teléfono">
                 </div>
+
                 <div class="form-group mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" id="email" class="form-control" placeholder="Correo electrónico">
+                    <input type="email" id="email" formControlName="email" class="form-control" placeholder="Correo electrónico">
                 </div>
+
                 <div class="form-group mb-3">
                     <label for="description" class="form-label">Descripción</label>
-                    <textarea id="description" class="form-control" rows="3"
+                    <textarea id="description" formControlName="description" class="form-control" rows="3"
                         placeholder="Descripción del centro"></textarea>
                 </div>
 
                 <div class="form-group mb-3">
                     <div class="row justify-content-evenly">
                         <div class="col">
-                            <label for="openDays" class="form-label">Abierto</label>
-                            <select id="openDays" class="form-select">
-                                <option>Días</option>
-                                <option>Lunes a Viernes</option>
-                                <option>Sábado y Domingo</option>
+                            <label for="openDays" class="form-label">Días de Apertura</label>
+                            <select id="openDays" formControlName="openDays" class="form-select">
+                                <option value="">Selecciona Días</option>
+                                <option value="Lunes a Viernes">Lunes a Viernes</option>
+                                <option value="Sábado y Domingo">Sábado y Domingo</option> 
                             </select>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="openTime" class="form-label">Hora de Apertura</label>
-                                <select id="openTime" class="form-select">
-                                    <option>Apertura</option>
-                                    <option>8:00 am</option>
-                                    <option>9:00 am</option>
-                                    <!-- Agregar más opciones según sea necesario -->
+                                <label for="openHour" class="form-label">Hora de Apertura</label>
+                                <select id="openHour" formControlName="openHour" class="form-select">
+                                    <option value="">Selecciona Hora</option>
+                                    <option value="08:00">8:00 am</option>
+                                    <option value="09:00">9:00 am</option> 
                                 </select>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="closeTime" class="form-label">Hora de Cierre</label>
-                                <select id="closeTime" class="form-select">
-                                    <option>Cierre</option>
-                                    <option>5:00 pm</option>
-                                    <option>6:00 pm</option>
-                                    <!-- Agregar más opciones según sea necesario -->
+                                <label for="closeHour" class="form-label">Hora de Cierre</label>
+                                <select id="closeHour" formControlName="closeHour" class="form-select">
+                                    <option value="">Selecciona Hora</option>
+                                    <option value="17:00">5:00 pm</option>
+                                    <option value="18:00">6:00 pm</option> 
                                 </select>
                             </div>
                         </div>
@@ -72,8 +74,8 @@
             </div>
         </div>
     </div>
- 
+
     <div class="text-center mt-4">
-        <button class="btn btn-dark px-5 btn-lg" (click)="navigateToEdit()">Guardar</button>
+        <button type="submit" class="btn btn-dark px-5 btn-lg" [disabled]="clinicForm.invalid">Guardar Cambios</button>
     </div>
 </div>

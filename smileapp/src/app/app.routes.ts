@@ -1,15 +1,14 @@
-import { Routes } from '@angular/router';
-import { EditClinicComponent } from './pages/dentist/edit-clinic/edit-clinic.component';
-import { AddClinicComponent } from './pages/dentist/add-clinic/add-clinic.component';
+import { Routes } from '@angular/router'; 
 
 export const routes: Routes = [
 
-
-    { path: 'consultorio/editar', component: EditClinicComponent },
+    { 
+        path: 'dentist',
+        loadChildren: () => import('././pages/dentist/dentist.routes').then(m => m.dentistRoutes)
+    },
     { path: 'patient', 
         loadChildren : () => import ("././pages/patient/patient.routes").then(p => p.patientantRoutes)
     },
-    { path: 'consultorio/add', component: AddClinicComponent },
     {
         path:'auth',
     loadChildren: () => import('./pages/auth/auth.routes').then(a => a.authRoutes)
