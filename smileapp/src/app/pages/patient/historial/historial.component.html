@@ -1,0 +1,59 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="row ms-5" *ngFor="let cita of filtercitas" >
+                <div class="col-md-3 ms-3">
+                        <img *ngIf="cita.clinicId === 1; else otherImage" 
+                        src="https://scontent-lim1-1.xx.fbcdn.net/v/t39.30808-6/414850126_407251714969818_7350880059826478217_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=mGzQKTe_oaQQ7kNvgHnhY2y&_nc_zt=23&_nc_ht=scontent-lim1-1.xx&_nc_gid=AbyMQNGM9CAo6rKemP6W0TW&oh=00_AYCEiKoGAzxZEz-HufBnroFbJQs40nSp2_QAs3N_h5h-Ag&oe=6737D7D0" 
+                       
+                        alt="Profile Image" 
+                        class="img-thumbnail rounded-circle small-thumbnail">
+               
+                        <ng-template #otherImage>
+                            <img src="https://banffventureforum.com/wp-content/uploads/2019/08/no-photo-icon-22.png" 
+                                alt="Alternative Image" 
+                                class="img-thumbnail rounded-circle small-thumbnail">
+                        </ng-template>
+                
+                </div>
+                <div class="col-md-8">
+                    <div class="row ">
+                        <h3 class="fs-5">{{cita.clinicname}}</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p>{{cita.dentistName}} {{cita.dentistLastName}}</p>
+                            <p>{{cita.clinicdirection}}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p>{{cita.date}}</p>
+                            <p>{{cita.hour}}</p>
+                        </div>
+                    </div>
+        
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card" style="width: 18rem;">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            Filtros
+                        </div>  
+                        <div class="col">
+                            Limpiar
+                        </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">A second item</li>
+                  <li class="list-group-item">A third item</li>
+                </ul>
+              </div>
+        </div>
+    </div>
+
+</div>
+
+

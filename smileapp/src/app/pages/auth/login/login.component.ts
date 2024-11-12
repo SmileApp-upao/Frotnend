@@ -38,7 +38,7 @@ export class LoginComponent {
 
     this.authService.login(credentials).subscribe({
       next: () => {
-        this.router.navigateByUrl('/auth/login');
+        this.router.navigateByUrl('/patient');
       },
       error: (error) => {
         this.showSnackbar('Error al iniciar sesion: '+ error);
