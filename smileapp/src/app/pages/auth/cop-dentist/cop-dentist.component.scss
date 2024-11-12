@@ -9,7 +9,7 @@
     padding: 20px;
 }
 
-.tip{
+.val{
     display: flex;
     max-width: 500px;
     min-height: 530px;
@@ -29,10 +29,39 @@
     justify-content: center;
   }
 
- .tip {
+ .val {
+
+    strong {
+        color: #9F9393;
+      }
+
+    .form-group {
+      margin-bottom: 1rem;
+  
+      input, select {
+        border-radius: 10px;
+        border: 1px solid #9F9393;
+        width: 100%;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  
+        &:focus {
+          border-color: #9F9393;
+          outline: 0;
+          box-shadow: 0 0 0 0.2rem #9F9393;
+        }
+      }
+    }
+  
+    .alert-danger {
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+      color: #721c24;
+      padding: 0.2rem;
+      border-radius: 5px;
+      font-size: 0.875rem;
+    }
   
     .btn {
-      margin: 10px;
       width: 100%;
       padding: 0.2rem;
       font-size: 1rem;
@@ -50,7 +79,7 @@
   
   // Responsive adjustments
   @media (max-width: 768px) {
-    .tip {
+    .val {
       padding: 1.5rem;
     }
   }
