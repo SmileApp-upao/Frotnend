@@ -97,7 +97,7 @@ export class CitaDetailsComponent {
         next:() =>
         {
           this.showSnackBar('Cita creada exitosamente.');
-          this.router.navigate(["/patient"]);
+          this.router.navigate(["/patient/MisCitas"]);
           this.submitSuccess = true;
         },
         error: (error) => {

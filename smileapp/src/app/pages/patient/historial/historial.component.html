@@ -1,6 +1,6 @@
 <div class="container mt-5">
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-8">
             <div class="row ms-5" *ngFor="let cita of filtercitas" >
                 <div class="col-md-3 ms-3">
                         <img *ngIf="cita.clinicId === 1; else otherImage" 
@@ -34,21 +34,50 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card" style="width: 18rem;">
+        <div class="col-md-4">
+            <div class="card" style="width: 100%;">
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item">
                     <div class="row">
                         <div class="col">
-                            Filtros
+                            <p class="fs-5">Filtros</p>
                         </div>  
-                        <div class="col">
-                            Limpiar
+                        <div class="col-md-2">
+                            <button class="btn-close mt-1" (click)="clearFilter()"></button>
                         </div>
                     </div>
                   </li>
-                  <li class="list-group-item">A second item</li>
-                  <li class="list-group-item">A third item</li>
+                  <li class="list-group-item ">
+                    <div class="row">
+                        <p class="fs-5">Periodo</p>
+                    </div>
+                    <div class="row ">
+                        <div class="col ">
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-outline-dark" (click)="filterToday()">Hoy</button>
+                            </div>
+                            
+                        </div>
+                        <div class="col">
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-outline-dark" (click)="filterTomorrow()">Mañana</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-outline-dark" (click)="filterThisWeek()">Esta Semana</button>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-outline-dark" (click)="filterNextWeek()">Próxima Semana</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </li>
                 </ul>
               </div>
         </div>

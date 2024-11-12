@@ -44,4 +44,42 @@ export class HistorialComponent {
       this.filtercitas = this.miscitas.filter(cita => cita.date === query);
     }
   }
+  clearFilter(): void {
+    this.searchQuery = '';
+    this.filtercitas = [...this.miscitas];
+  }
+  filterToday(): void {
+    const today = new Date().toISOString().split('T')[0];
+    this.filtercitas = this.miscitas.filter(cita => cita.date === today);
+  }
+
+  filterTomorrow(): void {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrowStr = tomorrow.toISOString().split('T')[0];
+    this.filtercitas = this.miscitas.filter(cita => cita.date === tomorrowStr);
+  }
+
+  filterThisWeek(): void {
+    const today = new Date();
+    const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
+    const endOfWeek = new Date(today.setDate(today.getDate() + (6 - today.getDay())));
+
+    this.filtercitas = this.miscitas.filter(cita => {
+      const citaDate = new Date(cita.date);
+      return citaDate >= startOfWeek && citaDate <= endOfWeek;
+    });
+  }
+
+  filterNextWeek(): void {
+    const today = new Date();
+    const startOfNextWeek = new Date(today.setDate(today.getDate() + (7 - today.getDay())));
+    const endOfNextWeek = new Date(startOfNextWeek);
+    endOfNextWeek.setDate(endOfNextWeek.getDate() + 6);
+
+    this.filtercitas = this.miscitas.filter(cita => {
+      const citaDate = new Date(cita.date);
+      return citaDate >= startOfNextWeek && citaDate <= endOfNextWeek;
+    });
+  }
 }
