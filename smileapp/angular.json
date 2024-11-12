@@ -27,9 +27,8 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               {
-                "glob": "_redirects",
-                "input": "src",
-                "output":"/"
+                "glob": "**/*",
+                "input": "public"
               }
             ],
             "styles": [
@@ -86,11 +85,10 @@
             ],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
+           "assets": [
               {
-                "glob": "_redirects",
-                "input": "src",
-                "output":"/"
+                "glob": "**/*",
+                "input": "public"
               }
             ],
             "styles": [
