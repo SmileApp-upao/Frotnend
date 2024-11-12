@@ -24,7 +24,7 @@ export class RegisterComponent {
   constructor() {
     this.registerForm = this.fb.group({
       name: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
+      lastname: ['', [Validators.required]],
       birthday: ['', [Validators.required]],
       gender: ['', [Validators.required]],
       dni: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern('^[0-9]*$')]],
@@ -37,10 +37,10 @@ export class RegisterComponent {
 
   onSubmit() {
     if(this.registerForm.valid){
-      const userData = this.registerForm.value;
-      userData.dni = parseInt(userData.dni);
-      
-      this.authService.register(userData).subscribe({
+      const userData2 = this.registerForm.value;
+      console.log(userData2);
+
+      this.authService.registerPatient(userData2).subscribe({
         next: () => {
           this.showSnackbar('Registro exitoso!');
           this.router.navigate(['/auth/login']);
@@ -49,8 +49,8 @@ export class RegisterComponent {
           this.showSnackbar('Error al registrar. Intente nuevamente.');
         }
       });
+
     };
-    console.log(this.registerForm.value);
   }
 
   showSnackbar(message: string) {
