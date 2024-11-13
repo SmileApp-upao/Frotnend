@@ -3,7 +3,7 @@ export interface RegisterPatientRequest {
     lastname: string,
     birthday: string,
     gender: string,
-    dni: number,
+    dni: string,
     phone: string,
     email: string,
     password: string

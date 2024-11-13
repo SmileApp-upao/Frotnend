@@ -49,9 +49,9 @@
                 </div>
              
                 <div class="form-group mt-3">
-                    <input type="text" class="form-control" formControlName="lastName" placeholder="Ingrese su apellido">
-                    <div class="alert alert-danger mt-2" *ngIf="registerForm.get('lastName')?.invalid && (registerForm.get('lastName')?.dirty || registerForm.get('lastName')?.touched)">
-                        <span *ngIf="registerForm.get('lastName')?.errors?.['required']">
+                    <input type="text" class="form-control" formControlName="lastname" placeholder="Ingrese su apellido">
+                    <div class="alert alert-danger mt-2" *ngIf="registerForm.get('lastname')?.invalid && (registerForm.get('lastname')?.dirty || registerForm.get('lastname')?.touched)">
+                        <span *ngIf="registerForm.get('lastname')?.errors?.['required']">
                             El apellido es obligatorio.
                         </span>
                     </div>
@@ -63,8 +63,8 @@
                         <span *ngIf="registerForm.get('phone')?.errors?.['required']">
                             El teléfono es obligatorio.
                         </span>
-                        <span *ngIf="registerForm.get('phone')?.errors?.['minlength']">
-                            El numero de telefono no puede ser menor a 9 digitos.
+                        <span *ngIf="registerForm.get('phone')?.errors?.['minlength'] || registerForm.get('phone')?.errors?.['maxlength']">
+                            El numero de telefono no puede ser menor o mayor a 9 digitos.
                         </span>
                         <span *ngIf="registerForm.get('phone')?.errors?.['pattern']">
                             Introduzca un número de teléfono válido.
@@ -102,8 +102,8 @@
                         <span *ngIf="registerForm.get('dni')?.errors?.['required']">
                             El DNI es obligatorio.
                         </span>
-                        <span *ngIf="registerForm.get('dni')?.errors?.['minlength']">
-                            Su DNI no puede ser menor a 8 digitos.
+                        <span *ngIf="registerForm.get('dni')?.errors?.['minlength'] || registerForm.get('dni')?.errors?.['maxlength']">
+                            Su DNI no puede ser menor o mayor a 8 digitos.
                         </span>
                         <span *ngIf="registerForm.get('dni')?.errors?.['pattern']">
                             Introduzca un DNI válido.

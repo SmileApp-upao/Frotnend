@@ -7,6 +7,11 @@ import { Observable, tap } from "rxjs";
 import { AuthResponse } from "../../../shared/models/auth/auth-response-model";
 import { RegisterPatientResponse } from "../../../shared/models/auth/register-patient-response.model";
 import { RegisterPatientRequest } from "../../../shared/models/auth/register-patient-request.model";
+import { RegisterEstudentRequest } from "../../../shared/models/auth/register-student-dentist-request.model";
+import { RegisterEstudentResponse } from "../../../shared/models/auth/register-student-dentist-response.model";
+import { RegisterDentistRequest } from "../../../shared/models/auth/register-dentist-profesional-request.model";
+import { RegisterDentistResponse } from "../../../shared/models/auth/register-dentist-profesional-response.model";
+import { Cop } from "../../../shared/models/auth/cop-model";
 
 @Injectable({
   providedIn: "root"
@@ -27,8 +32,24 @@ export class AuthService {
         );
     }
     
-    register(registerRequest: RegisterPatientRequest): Observable<RegisterPatientResponse> {
-        return this.http.post<RegisterPatientResponse>(`${this.baseUrl}/register/patient`, registerRequest);
+    registerPatient(registerPatientRequest: RegisterPatientRequest): Observable<RegisterPatientResponse> {
+        return this.http.post<RegisterPatientResponse>(`${this.baseUrl}/register/patient`, registerPatientRequest);
+    }
+
+    registerEstudentDentist(registerEstudentRequest: RegisterEstudentRequest): Observable<RegisterEstudentResponse> {
+        return this.http.post<RegisterEstudentResponse>(`${this.baseUrl}/register/dentist`, registerEstudentRequest);
+    }
+    
+    registerDentist(registerDentistRequest: RegisterDentistRequest): Observable<RegisterDentistResponse> {
+        return this.http.post<RegisterDentistResponse>(`${this.baseUrl}/register/dentist`, registerDentistRequest);
+    }
+    
+    // validarCop(cop: Cop): Observable<string> {
+    //     return this.http.post<string>(`${this.baseUrl}/validarCop`, cop);
+    // }
+
+    validarCop(cop: string): Observable<string> {
+        return this.http.post<string>(`${this.baseUrl}/validarCop`, { cop }, { responseType: 'text' as 'json' });
     }
 
     logout(): void {

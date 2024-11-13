@@ -26,8 +26,10 @@ export class DentistDetailsComponent {
   { console.log(localStorage.getItem('selectedDentistId'))
     if(localStorage.getItem('selectedDentistId')!=null)
     {
-
+      
       this.dentistId= parseInt(localStorage.getItem('selectedDentistId') || '', 10);
+      
+      console.log("id seleccionado: " , this.dentistId)
       this.clinicId = localStorage.getItem('selectedClinicId') || "";
       this.clinicService.getClinicById(+this.clinicId).subscribe({
         next: (clinic) => {
@@ -76,6 +78,12 @@ export class DentistDetailsComponent {
     {
       this.router.navigate(['patient/cita']);
     }
+  }
+  IrCreateCita(dentistId: number,clinicId:number):void
+  { 
+    localStorage.setItem('selectedClinicId', clinicId.toString());
+    localStorage.setItem('selectedDentistId', dentistId.toString());
+    this.router.navigate(['patient/cita/dentistas/dentista/detallesCita'])
   }
 
   }

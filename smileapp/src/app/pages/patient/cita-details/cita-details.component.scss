@@ -1,0 +1,24 @@
+.fondo{
+    font-family: Montserrat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ini{
+    display: flex;
+    max-width: 442px;
+    min-height: 550px;
+    padding: 84px 87px;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 30px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.ini p{
+    font-size: 20px;
+    color: #444040;
+    margin-bottom: 5px;
+}

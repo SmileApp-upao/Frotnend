@@ -1,5 +1,5 @@
 <div class="container-fluid fondo">
-    <div class="dente">
+    <div class="reg">
         <div class="row">
             <div class="col-md-8">
                 <h1>Smile 
@@ -10,10 +10,152 @@
             </div>
         </div>
         <div class="row">
-            <h2>Te estas registrando como ESTUDIANTE</h2>
-            <p>Crea tu cuenta para que puedas ingresar a la plataforma</p>
+            <h5>Ingresa tus datos</h5>
+
+            <form [formGroup]="registerEstudentForm" (ngSubmit)="onSubmit()">
+                <div class="form-group mt-3">
+                    <input type="text" class="form-control" formControlName="name" placeholder="Ingrese su nombre">
+                    <div class="alert alert-danger mt-2" *ngIf="registerEstudentForm.get('name')?.invalid && (registerEstudentForm.get('name')?.dirty || registerEstudentForm.get('name')?.touched)">
+                        <span *ngIf="registerEstudentForm.get('name')?.errors?.['required']">
+                            El nombre es obligatorio.
+                        </span>
+                    </div>
+                </div>
+            
+                <div class="form-group mt-3">
+                    <input type="text" class="form-control" formControlName="lastname" placeholder="Ingrese su apellido">
+                    <div class="alert alert-danger mt-2" *ngIf="registerEstudentForm.get('lastname')?.invalid && (registerEstudentForm.get('lastname')?.dirty || registerEstudentForm.get('lastname')?.touched)">
+                        <span *ngIf="registerEstudentForm.get('lastname')?.errors?.['required']">
+                            El apellido es obligatorio.
+                        </span>
+                    </div>
+                </div>
+            
+                <div class="form-group mt-3">
+                    <label class="text-start">Fecha de Nacimiento</label>
+                    <input type="date" class="form-control" formControlName="birthday">
+                    <div class="alert alert-danger mt-2" *ngIf="registerEstudentForm.get('birthday')?.invalid && (registerEstudentForm.get('birthday')?.dirty || registerEstudentForm.get('birthday')?.touched)">
+                        <span *ngIf="registerEstudentForm.get('birthday')?.errors?.['required']">
+                            La fecha de nacimiento es obligatoria.
+                        </span>
+                    </div>
+                </div>
+            
+                <div class="form-group mt-3">
+                    <select class="form-select" formControlName="gender">
+                        <option value="">Seleccione su género</option>
+                        <option value="male">Masculino</option>
+                        <option value="female">Femenino</option>
+                        <option value="other">Otro</option>
+                    </select>
+                    <div class="alert alert-danger mt-2" *ngIf="registerEstudentForm.get('gender')?.invalid && (registerEstudentForm.get('gender')?.dirty || registerEstudentForm.get('gender')?.touched)">
+                        <span *ngIf="registerEstudentForm.get('gender')?.errors?.['required']">
+                            El género es obligatorio.
+                        </span>
+                    </div>
+                </div>
+            
+                <div class="form-group mt-3">
+                    <select class="form-select" formControlName="condition">
+                        <option value="">Seleccione su condición</option>
+                        <option value="estudiante">Estudiante</option>
+                    </select>
+                    <div class="alert alert-danger mt-2" *ngIf="registerEstudentForm.get('condition')?.invalid && (registerEstudentForm.get('condition')?.dirty || registerEstudentForm.get('condition')?.touched)">
+                        <span *ngIf="registerEstudentForm.get('condition')?.errors?.['required']">
+                            La condición es obligatoria.
+                        </span>
+                    </div>
+                </div>
+            
+                <div class="form-group mt-3">
+                    <input type="text" class="form-control" formControlName="dni" placeholder="Ingrese su DNI">
+                    <div class="alert alert-danger mt-2" *ngIf="registerEstudentForm.get('dni')?.invalid && (registerEstudentForm.get('dni')?.dirty || registerEstudentForm.get('dni')?.touched)">
+                        <span *ngIf="registerEstudentForm.get('dni')?.errors?.['required']">
+                            El DNI es obligatorio.
+                        </span>
+                        <span *ngIf="registerEstudentForm.get('dni')?.errors?.['minlength'] || registerEstudentForm.get('dni')?.errors?.['maxlength']">
+                            Su DNI debe tener 8 dígitos.
+                        </span>
+                        <span *ngIf="registerEstudentForm.get('dni')?.errors?.['pattern']">
+                            Introduzca un DNI válido (solo números).
+                        </span>
+                    </div>
+                </div>
+            
+                <div class="form-group mt-3">
+                    <select class="form-select" formControlName="cicle">
+                        <option value="">Seleccione su ciclo</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                    <div class="alert alert-danger mt-2" *ngIf="registerEstudentForm.get('cicle')?.invalid && (registerEstudentForm.get('cicle')?.dirty || registerEstudentForm.get('cicle')?.touched)">
+                        <span *ngIf="registerEstudentForm.get('cicle')?.errors?.['required']">
+                            El ciclo es obligatorio.
+                        </span>
+                    </div>
+                </div>
+            
+                <div class="form-group mt-3">
+                    <input type="text" class="form-control" formControlName="phone" placeholder="Ingrese su teléfono">
+                    <div class="alert alert-danger mt-2" *ngIf="registerEstudentForm.get('phone')?.invalid && (registerEstudentForm.get('phone')?.dirty || registerEstudentForm.get('phone')?.touched)">
+                        <span *ngIf="registerEstudentForm.get('phone')?.errors?.['required']">
+                            El teléfono es obligatorio.
+                        </span>
+                        <span *ngIf="registerEstudentForm.get('phone')?.errors?.['minlength'] || registerEstudentForm.get('phone')?.errors?.['maxlength']">
+                            El número de teléfono debe tener 9 dígitos.
+                        </span>
+                        <span *ngIf="registerEstudentForm.get('phone')?.errors?.['pattern']">
+                            Introduzca un número de teléfono válido (solo números).
+                        </span>
+                    </div>
+                </div>
+            
+                <div class="form-group mt-3">
+                    <select class="form-select" formControlName="studyCenter">
+                        <option value="">Seleccione su centro de estudios</option>
+                        <option value="Upao">UPAO</option>
+                        <option value="otro">Otro...</option>
+                    </select>
+                    <div class="alert alert-danger mt-2" *ngIf="registerEstudentForm.get('studyCenter')?.invalid && (registerEstudentForm.get('studyCenter')?.dirty || registerEstudentForm.get('studyCenter')?.touched)">
+                        <span *ngIf="registerEstudentForm.get('studyCenter')?.errors?.['required']">
+                            El centro de estudios es obligatorio.
+                        </span>
+                    </div>
+                </div>
+            
+                <div class="form-group mt-3">
+                    <input type="email" class="form-control" formControlName="email" placeholder="Ingrese su correo electrónico">
+                    <div class="alert alert-danger mt-2" *ngIf="registerEstudentForm.get('email')?.invalid && (registerEstudentForm.get('email')?.dirty || registerEstudentForm.get('email')?.touched)">
+                        <span *ngIf="registerEstudentForm.get('email')?.errors?.['required']">
+                            El correo es obligatorio.
+                        </span>
+                        <span *ngIf="registerEstudentForm.get('email')?.errors?.['email']">
+                            Introduzca un correo válido.
+                        </span>
+                    </div>
+                </div>
+            
+                <div class="form-group mt-3">
+                    <input type="password" class="form-control" formControlName="password" placeholder="Ingrese su contraseña">
+                    <div class="alert alert-danger mt-2" *ngIf="registerEstudentForm.get('password')?.invalid && (registerEstudentForm.get('password')?.dirty || registerEstudentForm.get('password')?.touched)">
+                        <span *ngIf="registerEstudentForm.get('password')?.errors?.['required']">
+                            La contraseña es obligatoria.
+                        </span>
+                        <span *ngIf="registerEstudentForm.get('password')?.errors?.['minlength']">
+                            Su contraseña no puede ser menor a 8 caracteres.
+                        </span>
+                    </div>
+                </div>
+            
+                <button type="submit" class="btn btn-outline-dark mt-2" [disabled]="registerEstudentForm.invalid">Registrarse</button>
+            </form>
+            
         </div>
-        <div class="row">
+        <div class="row mt-3">
             <button class="btn btn-outline-dark" routerLink="/auth/login"> Iniciar Sesion</button>
         </div>
     </div>

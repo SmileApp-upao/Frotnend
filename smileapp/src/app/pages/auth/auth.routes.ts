@@ -6,6 +6,7 @@ import { TipoCuentaComponent } from './tipo-cuenta/tipo-cuenta.component';
 import { TypeDentistComponent } from './type-dentist/type-dentist.component';
 import { RegisterProfesionalDentistComponent } from './register-profesional-dentist/register-profesional-dentist.component';
 import { RegisterEstudentDentistComponent } from './register-estudent-dentist/register-estudent-dentist.component';
+import { CopDentistComponent } from './cop-dentist/cop-dentist.component';
 
 export const authRoutes: Routes = [
     
@@ -17,9 +18,9 @@ export const authRoutes: Routes = [
             {path: "type-acount",component: TipoCuentaComponent },
             {path: "type-acount/register-patient" , component : RegisterComponent},
             {path: "type-acount/type-dentist" , component : TypeDentistComponent},
-            {path: "type-acount/type-dentist/register-profesional-dentist" , component : RegisterProfesionalDentistComponent},
             {path: "type-acount/type-dentist/register-estudent-dentist" , component : RegisterEstudentDentistComponent},
-
+            {path: "type-acount/type-dentist/validation-cop" , component : CopDentistComponent},
+            {path: "type-acount/type-dentist/validation-cop/register-profesional-dentist" , component : RegisterProfesionalDentistComponent},
         ]
     }
 

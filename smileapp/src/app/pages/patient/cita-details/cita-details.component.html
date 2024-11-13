@@ -1,1 +1,58 @@
-<p>cita-details works!</p>
+<div class="row-md-2 p-3">
+  <button class="btn fs-3 hover" (click)="Volver()"> <i class="fa-solid fa-arrow-left"></i> Volver</button>
+</div>
+<div class="container-fluid fondo">
+  <div class="ini">
+   <div class="row">
+      <div class="col-md-8">
+          <h1>Smile 
+             <strong>App</strong> </h1>
+      </div>
+      <div class="col-md-4">
+          <img src="muela.png"/>
+      </div>
+   </div>
+   <div class="row">
+      <h2>Agendar Cita</h2>
+      <form [formGroup]="quoteForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="date">Fecha</label>
+          <input id="date" type="date" formControlName="date" class="form-control" [min]="minDate">
+          <div *ngIf="date?.invalid && date?.touched" class="text-danger">
+            <small *ngIf="date?.hasError('required')">La fecha es obligatoria.</small>
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <label for="hour">Hora</label>
+          <input id="hour" type="time" formControlName="hour" class="form-control">
+          <div *ngIf="hour?.invalid && hour?.touched" class="text-danger">
+            <small *ngIf="hour?.hasError('required')">La hora es obligatoria.</small>
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <label for="reason">Motivo</label>
+          <textarea 
+            class="form-control" 
+            id="reason" 
+            rows="3" 
+            formControlName="reason" 
+            placeholder="Ingrese el motivo">
+          </textarea>
+          <div *ngIf="reason?.invalid && reason?.touched" class="text-danger">
+            <small *ngIf="reason?.hasError('required')">El motivo es obligatorio.</small>
+            <small *ngIf="reason?.hasError('maxlength')">El motivo no puede tener más de 255 caracteres.</small>
+          </div>
+        </div>
+      <div class="col d-grid gap-2 mt-4">
+        <button type="submit" class="btn btn-dark p-2 rounded-pill fw-bold fs-5 btn-lg">Agendar Cita</button>
+      </div>
+      </form>
+      <div *ngIf="submitSuccess" class="alert alert-success mt-3">
+        ¡La solicitud de cita ha sido enviada correctamente!
+      </div>
+   </div>
+  </div>
+
+</div>

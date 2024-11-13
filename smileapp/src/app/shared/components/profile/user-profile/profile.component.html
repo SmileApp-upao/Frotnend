@@ -5,7 +5,7 @@
                     <img src="https://banffventureforum.com/wp-content/uploads/2019/08/no-photo-icon-22.png" alt="Profile Image" class="img-thumbnail rounded-circle">
                 </div>
                 <div class="col-md-10 ">
-                    <h3 class="ms-3">Nombre Usuario</h3>
+                    <h3 class="ms-3">{{paciente.name}} {{paciente.lastname}}</h3>
                 </div>
             </div>
             <div class="row">
@@ -22,21 +22,21 @@
             </div>
             <div class="row m-4">
                 <div class="col-md-4 ms-4">
-                    <p class="fs-4">Genero</p>
+                    <p class="fs-4">{{paciente.gender}}</p>
                 </div>
                 <div class="col-md-4">
-                    <p class="fs-4">Edad</p>
+                    <p class="fs-4">{{edad}} años</p>
                 </div>
                 <div class="col-md-2">
-                    <p class="fs-4">Numero</p>
+                    <p class="fs-4">{{paciente.phone}}</p>
                 </div>
             </div>
             <div class="row m-4">
                 <div class="col-md-4 ms-4">
-                    <p class="fs-4">FechaNacimiento</p>
+                    <p class="fs-4">{{paciente.birthday}}</p>
                 </div>
                 <div class="col-md-4">
-                    <p class="fs-4">Correo</p>
+                    <p class="fs-4">{{paciente.email}}</p>
                 </div>
             </div>
         </div>
