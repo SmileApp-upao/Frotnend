@@ -1,49 +1,68 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClinicService } from '../../../core/services/clinic/clinic.service';
+import { AuthService } from '../../../core/services/auth/auth.service';
+import { CommonModule } from '@angular/common';
+import { ClinicRequest } from '../../../shared/models/clinica/clinica-request-model';
 
 @Component({
   selector: 'app-add-clinic',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './add-clinic.component.html',
   styleUrls: ['./add-clinic.component.scss']
 })
-export class AddClinicComponent {
+export class AddClinicComponent implements OnInit {
   clinicForm: FormGroup;
+  isEditMode: boolean = false;
 
   constructor(
     private fb: FormBuilder,
-    private router: Router,
-    private clinicService: ClinicService
+    private clinicService: ClinicService,
+    private authService: AuthService
   ) {
     this.clinicForm = this.fb.group({
-      name: ['', Validators.required],
-      openHour: ['', Validators.required],
-      closeHour: ['', Validators.required],
-      openDays: ['', Validators.required],
-      address: ['', Validators.required],
-      desc: ['', Validators.required],
-      telf: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      latitude: ['', Validators.required],
-      longitude: ['', Validators.required],
-      dentistIds: [[], Validators.required]
+      name: [''], // Opcional para actualización
+      openHour: [''], // Opcional para actualización
+      closeHour: [''], // Opcional para actualización
+      openDays: [''], // Opcional para actualización
+      address: [''], // Opcional para actualización
+      desc: [''], // Opcional para actualización
+      telf: [''], // Opcional para actualización
+      email: ['', [Validators.email]], // Valida solo formato de email
+      latitude: [''],
+      longitude: ['']
     });
   }
 
-  onSubmit() {
-    if (this.clinicForm.valid) {
-      this.clinicService.addClinic(this.clinicForm.value).subscribe({
-        next: (response) => {
-          console.log('Clinic added successfully', response);
-          this.router.navigate(['/dentist/edit-clinic']);
-        },
-        error: (error) => {
-          console.error('Error adding clinic', error);
-        }
-      });
-    }
+  ngOnInit(): void {
+    this.authService.getUserProfile().subscribe(profile => {
+      const condition = profile.condition;
+      this.isEditMode = condition === 'Profesional';
+
+      // Asigna el ID del dentista, si es requerido por el backend
+      const dentistId = profile.id; // Ajusta esto según cómo se obtenga el ID
+      this.clinicForm.get('dentistIds')?.setValue([dentistId]);
+
+    });
   }
+
+  onSubmit(): void {
+    if (this.clinicForm.valid) {
+        const clinicData = { ...this.clinicForm.value };
+
+        // Convertir `openDays` a una cadena separada por comas si es un array
+        if (Array.isArray(clinicData.openDays)) {
+            clinicData.openDays = clinicData.openDays.join(','); // Convertir a cadena separada por comas
+        }
+
+        this.clinicService.updateClinic(clinicData).subscribe({
+            next: () => console.log('Clínica actualizada exitosamente'),
+            error: error => console.error('Error al actualizar clínica', error)
+        });
+    } else {
+        console.log('Formulario inválido');
+    }
+}
 }

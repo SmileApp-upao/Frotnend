@@ -1,8 +1,7 @@
 import { Routes } from '@angular/router';
 import { DentistLayoutComponent } from './dentist-layout/dentist-layout.component';
 import { AddClinicComponent } from './add-clinic/add-clinic.component';
-import { DentistProfileComponent } from './dentist-profile/dentist-profile.component';
-import { EditClinicComponent } from './edit-clinic/edit-clinic.component';
+import { DentistProfileComponent } from './dentist-profile/dentist-profile.component'; 
 
 export const dentistRoutes: Routes = [
     {
@@ -11,7 +10,6 @@ export const dentistRoutes: Routes = [
         children: [
             { path: '', redirectTo: 'profile', pathMatch: 'full' },
             { path: "profile", component: DentistProfileComponent },
-            { path: "edit-clinic", component: EditClinicComponent },
             { path: "add-clinic", component: AddClinicComponent }
         ]
     }

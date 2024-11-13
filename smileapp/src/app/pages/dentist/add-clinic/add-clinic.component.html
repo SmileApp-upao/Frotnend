@@ -1,83 +1,69 @@
 <div class="container clinic-form-container mt-5">
     <div class="text-center my-4 p-2 card profile-card shadow-sm bg-dark rounded-2">
-        <p class="text-light fs-4">Añadir Centro Odontológico</p>
+      <p class="text-light fs-4">{{ isEditMode ? 'Actualizar' : 'Crear' }} Centro Odontológico</p>
     </div>
-
+  
     <div class="row">
-        <div class="col-md-6">
-            <form [formGroup]="clinicForm" (ngSubmit)="onSubmit()" class="shadow-sm p-5 text-light bg-dark rounded-2">
-                <div class="form-group mb-3">
-                    <label for="name" class="form-label">Nombre</label>
-                    <input type="text" id="name" class="form-control" placeholder="Nombre del centro" formControlName="name">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="address" class="form-label">Dirección</label>
-                    <input type="text" id="address" class="form-control" placeholder="Dirección" formControlName="address">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="phone" class="form-label">Teléfono</label>
-                    <input type="tel" id="phone" class="form-control" placeholder="Número de teléfono" formControlName="telf">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" id="email" class="form-control" placeholder="Correo electrónico" formControlName="email">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="latitude" class="form-label">Latitud</label>
-                    <input type="text" id="latitude" class="form-control" placeholder="Latitud" formControlName="latitude">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="longitude" class="form-label">Longitud</label>
-                    <input type="text" id="longitude" class="form-control" placeholder="Longitud" formControlName="longitude">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="description" class="form-label">Descripción</label>
-                    <textarea id="description" class="form-control" rows="3" placeholder="Descripción del centro" formControlName="desc"></textarea>
-                </div>
-
-                <div class="form-group mb-3">
-                    <div class="row justify-content-evenly">
-                        <div class="col">
-                            <label for="openDays" class="form-label">Abierto</label>
-                            <select id="openDays" class="form-select">
-                                <option>MONDAY,TUESDAY,THURSDAY,WEDNESDAY,FRIDAY,SUNDAY</option> 
-                            </select>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label for="openTime" class="form-label">Hora de Apertura</label>
-                                <select id="openTime" class="form-select">
-                                    <option>Apertura</option>
-                                    <option>8:00 am</option>
-                                    <option>9:00 am</option>
-                                    <!-- Agregar más opciones según sea necesario -->
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label for="closeTime" class="form-label">Hora de Cierre</label>
-                                <select id="closeTime" class="form-select">
-                                    <option>Cierre</option>
-                                    <option>5:00 pm</option>
-                                    <option>6:00 pm</option>
-                                    <!-- Agregar más opciones según sea necesario -->
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        <div class="col-md-6 text-center">
-            <div class="map-container mb-3">
-                <img src="" alt="Mapa" class="img-fluid rounded">
-                <p>Latitud: -12.03697014842405, Longitud: -77.05442174533948</p>
-            </div>
-        </div>
-        <div class="text-center mt-4">
-            <button class="btn btn-dark px-5 btn-lg" (click)="onSubmit()">Editar</button>
-        </div>
+      <div class="col-md-6">
+        <form [formGroup]="clinicForm"  class="shadow-sm p-5 text-light bg-dark rounded-2">
+          
+          <div class="form-group mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input type="text" id="name" class="form-control" placeholder="Nombre del centro" formControlName="name">
+          </div>
+  
+          <div class="form-group mb-3">
+            <label for="address" class="form-label">Dirección</label>
+            <input type="text" id="address" class="form-control" placeholder="Dirección" formControlName="address">
+          </div>
+  
+          <div class="form-group mb-3">
+            <label for="telf" class="form-label">Teléfono</label>
+            <input type="tel" id="telf" class="form-control" placeholder="Número de teléfono" formControlName="telf">
+          </div>
+  
+          <div class="form-group mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" class="form-control" placeholder="Correo electrónico" formControlName="email">
+          </div>
+  
+          <div class="form-group mb-3">
+            <label for="latitude" class="form-label">Latitud</label>
+            <input type="text" id="latitude" class="form-control" placeholder="Latitud" formControlName="latitude">
+          </div>
+  
+          <div class="form-group mb-3">
+            <label for="longitude" class="form-label">Longitud</label>
+            <input type="text" id="longitude" class="form-control" placeholder="Longitud" formControlName="longitude">
+          </div>
+  
+          <div class="form-group mb-3">
+            <label for="desc" class="form-label">Descripción</label>
+            <textarea id="desc" class="form-control" rows="3" placeholder="Descripción del centro" formControlName="desc"></textarea>
+          </div>
+  
+          <div class="form-group mb-3">
+            <label for="openDays" class="form-label">Días de Apertura</label>
+            <input type="text" id="openDays" class="form-control" placeholder="Días de Apertura" formControlName="openDays">
+          </div>
+  
+          <div class="form-group mb-3">
+            <label for="openHour" class="form-label">Hora de Apertura</label>
+            <input type="text" id="openHour" class="form-control" placeholder="HH:mm:ss" formControlName="openHour">
+          </div>
+  
+          <div class="form-group mb-3">
+            <label for="closeHour" class="form-label">Hora de Cierre</label>
+            <input type="text" id="closeHour" class="form-control" placeholder="HH:mm:ss" formControlName="closeHour">
+          </div> 
+          
+        </form>
+      </div>
+  
+      <div class="text-center mt-4">
+        <button class="btn btn-dark px-5 btn-lg" type="submit" (click)="onSubmit()" [disabled]="clinicForm.invalid">
+          {{ isEditMode ? 'Actualizar' : 'Crear' }}
+        </button>
+      </div>
     </div>
-</div>
+  </div>
