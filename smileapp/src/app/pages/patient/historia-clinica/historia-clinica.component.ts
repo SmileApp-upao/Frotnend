@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { PatientService } from '../../../core/services/user/patient/patient.service';
 import { HistoriaClinicalRequest } from '../../../shared/models/user/patient/history-clinical-request-model';
 import { Router } from '@angular/router';
+import { HistoriaClinicalResponse } from '../../../shared/models/user/patient/history-clinical-response.model';
 @Component({
   selector: 'app-historia-clinica',
   standalone: true,
@@ -13,13 +14,16 @@ import { Router } from '@angular/router';
   styleUrl: './historia-clinica.component.scss'
 })
 export class HistoriaClinicaComponent {
+  public History!: HistoriaClinicalResponse;
   private snackbar = inject(MatSnackBar);
   private patientService = inject(PatientService)
   private fb = inject(FormBuilder);
   private router=inject(Router)
   historyForm!: FormGroup;
+  existHistory : boolean = false;
   ngOnInit()
   {
+  
     this.historyForm = this.fb.group({
       bloodType: ['', [Validators.required, Validators.maxLength(3)]],
       rh: ['', [Validators.required, Validators.maxLength(2)]],
@@ -36,6 +40,20 @@ export class HistoriaClinicaComponent {
       raze: ['', [Validators.required, Validators.maxLength(30)]],
       residentime: ['', Validators.required]
     });
+    
+    this.patientService.getHistoryClinical().subscribe({
+      next:(historia) =>{
+        console.log(historia.raze);
+        this.History=historia;
+        this.existHistory=true;
+        this.historyForm.patchValue(historia);
+
+      },
+      error:(error)=>{
+        console.log("El usuario no tiene historia clinica, se creara",error);
+      }
+    });
+    
   }
 
    // Enviar la solicitud de cita
@@ -46,19 +64,39 @@ export class HistoriaClinicaComponent {
       const historyRequest: HistoriaClinicalRequest = {
         ...this.historyForm.value
       };
-
-      this.patientService.createHistoryClinical(historyRequest).subscribe({
-        next: () => {
-          this.showSnackBar('Cita creada exitosamente.');
-          this.router.navigate(["/patient"]);
-        },
-        error: (error) => {
-          const errorMessage = error.error['error:'] || 'Ocurrió un error al crear la cita';
-          console.log('Error al crear la cita:', errorMessage);
-          this.showSnackBar(errorMessage);
-        }
-      });
-    } 
+      if(this.existHistory==false)
+      {
+        this.patientService.createHistoryClinical(historyRequest).subscribe({
+          next: () => {
+            this.showSnackBar('Historia clinica creada exitosamente.');
+            this.router.navigate(["/patient"]);
+          },
+          error: (error) => {
+            const errorMessage = error.error['error:'] || 'Ocurrió un error al crear la Historia clinica';
+            console.log('Error al crear la cita:', errorMessage);
+            this.showSnackBar(errorMessage);
+          }
+        });
+      } 
+      else
+      {
+        this.patientService.updateHistoryClinical(historyRequest).subscribe({
+            next:(historia)=>
+            {
+              this.showSnackBar('Historia clinica actualizada exitosamente.');
+              console.log(historia);
+              this.router.navigate(["/patient"]);
+            },
+            error:(error)=>
+            {
+              const errorMessage = error.error['error:'] || 'Ocurrió un error al actualizar la Historia clinica';
+              console.log('Error al crear la cita:', errorMessage);
+              this.showSnackBar(errorMessage);
+            }
+        });
+      }
+      }
+     
   }
 
   private showSnackBar(message:string) : void{

@@ -132,7 +132,7 @@
                             <option value="Otro">Otro</option>
                              </select>
                              <div class="text-danger" *ngIf="historyForm.get('home')?.invalid && historyForm.get('home')?.touched" class="error">
-                                <p class="text-danger fs-6">Estado civil es requerido y no puede exceder 20 caracteres.</p></div>
+                                <p class="text-danger fs-6">Tipo de vivienda es requerido.</p></div>
                     </div>
                 </div>
             </div>
@@ -155,16 +155,16 @@
             </div>
             
             <div class="row">
-                <div class="col">
+                <div class="col-md-4">
                     <div class="form-group" class=" mt-3">
                         <label for="raze">Raza</label>
                         <select id="raze" formControlName="raze" class="form-select border border-black">
-                            <option value="" disabled>Raza</option>
+                            <option value="" disabled></option>
                             <option value="Caucasica">Caucasica</option>
                             <option value="Mestizo">Mestizo</option>
                             <option value="Afroamericano">Afroamericano</option>
                             <option value="Mulato">Mulato</option>
-                            <option value="Indígena">Indígena</option>
+                            <option value="Indigena">Indígena</option>
                              </select>
                              <div class="text-danger" *ngIf="historyForm.get('raze')?.invalid && historyForm.get('raze')?.touched" class="error">
                                 <p class="text-danger fs-6">Raza es requerida</p></div>
@@ -173,16 +173,27 @@
 
                 <div class="col">
                     <div class="form-group" class=" mt-3">
-                        <label for="residentime">Tiempo de Residencia</label>
+                        <label for="residentime">Tiempo de Residencia en Trujillo</label>
                         <input type="text" id="residentime" formControlName="residentime" class="form-control border border-black" placeholder="Tiempo de Residencia">
                       </div>
                       <div class="text-danger" *ngIf="historyForm.get('residentime')?.invalid && historyForm.get('residentime')?.touched" class="error">
                         <p class="text-danger fs-6">Tiempo de Residencia es requerida</p></div>
                 </div>
             </div>
-            <div class="d-grid gap-2 offset-md-2 col-md-6">
-                <button type="submit" [disabled]="historyForm.invalid" class="btn btn-dark mt-3 rounded-pill p-2 ">Guardar</button>
+            
+            <div  class="d-grid gap-2 offset-md-2 col-md-6" >
+
+                <button *ngIf="existHistory===false  ; else Update " type="submit" [disabled]="historyForm.invalid" class="btn btn-dark mt-3 rounded-pill p-2 ">Crear
+                  
+                </button>
+                  <ng-template #Update>
+              
+                  <button type="submit" [disabled]="historyForm.invalid" class="btn btn-dark mt-3 rounded-pill p-2 ">Actualizar</button>
+              
+                  </ng-template >
             </div>
+           
+            
         </form>
       
         <div *ngIf="historyForm.invalid && historyForm.touched" class="error">

@@ -41,7 +41,8 @@ export class LoginComponent {
         this.router.navigateByUrl('/patient');
       },
       error: (error) => {
-        this.showSnackbar('Error al iniciar sesion: '+ error);
+        const errorMessage = error?.error?.error;
+         this.showSnackbar(errorMessage);
       }
     }
     );
