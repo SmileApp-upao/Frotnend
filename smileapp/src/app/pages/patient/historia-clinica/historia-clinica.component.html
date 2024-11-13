@@ -1,0 +1,206 @@
+  <div class="container-fluid fondo">
+    <div class="ini ">
+     <div class="row">
+        <h2 class="fs-1 fw-bold">Datos de afiliación</h2>
+     </div>
+     <div class="row m-2">
+        <form [formGroup]="historyForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="bloodType">Grupo Sanguíneo</label>
+                            <select id="bloodType" formControlName="bloodType" class="form-select border border-black">
+                              <option value="" disabled>Tipo</option>
+                              <option value="A">A</option>
+                              <option value="B">B</option>
+                              <option value="AB">AB</option>
+                              <option value="O">O</option>
+                            </select>
+                          </div>
+                        <div  *ngIf="historyForm.get('bloodType')?.invalid && historyForm.get('bloodType')?.touched" class="error">
+                            <p class="text-danger fs-6">Tipo de sangre es requerido</p>
+                          </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="rh">Factor RH</label>
+                        <select id="rh" formControlName="rh" class="form-select border border-black">
+                            <option value="" disabled>RH</option>
+                            <option value="+">Positivo</option>
+                            <option value="-">Negativo</option>
+                        </select>
+                        <div  *ngIf="historyForm.get('rh')?.invalid && historyForm.get('rh')?.touched" class="error">
+                          <p class="text-danger fs-6">Factor RH es requerido y no puede exceder 2 caracteres.</p>
+                        </div>
+                      </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="rh">Estado civil</label>
+                        <select id="civilState" formControlName="civilState" class="form-select border border-black">
+                            <option value="" disabled>Estado civil</option>
+                            <option value="Soltero">Soltero</option>
+                            <option value="Casado">Casado</option>
+                            <option value="Divorciado">Divorciado</option>
+                            <option value="Viudo">Viudo</option>
+
+                          </select><div class="text-danger" *ngIf="historyForm.get('civilState')?.invalid && historyForm.get('civilState')?.touched" class="error">
+                         <p class="text-danger fs-6">Estado civil es requerido.</p>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="row">
+              <div class="form-group">
+                <label for="birthPlace" class=" mt-3">Lugar de Nacimiento</label>
+                <input type="text" id="birthPlace" formControlName="birthPlace" class="form-control border border-black" placeholder="Lugar de Nacimiento">
+              </div>
+              <div class="text-danger" *ngIf="historyForm.get('birthPlace')?.invalid && historyForm.get('birthPlace')?.touched" class="error">
+                <p class="text-danger fs-6">Lugar de Nacimiento es requerido</p>
+               </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label for="dir" class=" mt-3">Dirección</label>
+                    <input type="text" id="dir" formControlName="dir" class="form-control border border-black" placeholder="Dirección">
+                  </div>
+                  <div class="text-danger" *ngIf="historyForm.get('dir')?.invalid && historyForm.get('dir')?.touched" class="error">
+                    <p class="text-danger fs-6">La Dirección es requerido</p>
+                   </div>
+                  
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label for="studyGrade">Grado de Estudio</label>
+                    <select id="studyGrade" formControlName="studyGrade" class="form-select border border-black">
+                        <option value="" disabled>Grado</option>
+                        <option value="Primaria">Primaria</option>
+                        <option value="Secundaria">Secundaria</option>
+                        <option value="Bachiller">Bachiller</option>
+                        <option value="Superior">Superior</option>
+
+                      </select><div class="text-danger" *ngIf="historyForm.get('studyGrade')?.invalid && historyForm.get('studyGrade')?.touched" class="error">
+                     <p class="text-danger fs-6">Grado de estudios es requerido</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="profession" class=" mt-3">Profesión</label>
+                    <input type="text" id="profession" formControlName="profession" class="form-control border border-black" placeholder="Profesión">
+                </div>
+                <div class="text-danger" *ngIf="historyForm.get('profession')?.invalid && historyForm.get('profession')?.touched" class="error">
+                    <p class="text-danger fs-6">La Profesión es requerida.</p></div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label for="occupation" class=" mt-3">Ocupación</label>
+                    <input type="text" id="occupation" formControlName="occupation" class="form-control border border-black" placeholder="Ocupación">
+                  </div>
+                  <div class="text-danger" *ngIf="historyForm.get('occupation')?.invalid && historyForm.get('occupation')?.touched" class="error">
+                    <p class="text-danger fs-6">La Ocupación es requerido.</p></div>
+                  
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group" class=" mt-3">
+                        <label for="religion">Religión</label>
+                        <select id="religion" formControlName="religion" class="form-select border border-black">
+                            <option value="" disabled>Religión</option>
+                            <option value="Catolica">Catolica</option>
+                            <option value="Evangelico">Evangelico</option>
+                            <option value="Adventista">Adventista</option>
+                            <option value="Ateo">Ateo</option>
+                            <option value="Otra">Otra</option>
+                             </select><div class="text-danger" *ngIf="historyForm.get('religion')?.invalid && historyForm.get('religion')?.touched" class="error">
+                     <p class="text-danger fs-6">La Religión es requerido.</p></div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group" class=" mt-3">
+                        <label for="home">Tipo de vivienda</label>
+                        <select id="home" formControlName="home" class="form-select border border-black">
+                            <option value="" disabled>Tipo Vivienda</option>
+                            <option value="Material Noble">Material Noble</option>
+                            <option value="Adobe">Adobe</option>
+                            <option value="PreFabricado">PreFabricado</option>
+                            <option value="Otro">Otro</option>
+                             </select>
+                             <div class="text-danger" *ngIf="historyForm.get('home')?.invalid && historyForm.get('home')?.touched" class="error">
+                                <p class="text-danger fs-6">Tipo de vivienda es requerido.</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group" class=" mt-3">
+                    <label for="workCenter">Nombre Centro de Trabajo</label> 
+                    <input type="text" id="workCenter" formControlName="workCenter" class="form-control border border-black" placeholder="Centro de Trabajo">
+                  </div>
+                  <div class="text-danger" *ngIf="historyForm.get('workCenter')?.invalid && historyForm.get('workCenter')?.touched" class="error">
+                    <p class="text-danger fs-6">Centro de Trabajo de Trabajo es requerida</p></div>
+            </div>
+            <div class="row">
+                <div class="form-group" class=" mt-3">
+                    <label for="workDir">Dirección de Trabajo</label>
+                    <input type="text" id="workDir" formControlName="workDir" class="form-control border border-black" placeholder="Dirección de Trabajo">
+                  </div>
+                  <div class="text-danger" *ngIf="historyForm.get('workDir')?.invalid && historyForm.get('workDir')?.touched" class="error">
+                    <p class="text-danger fs-6">Dirección de Trabajo es requerida</p></div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group" class=" mt-3">
+                        <label for="raze">Raza</label>
+                        <select id="raze" formControlName="raze" class="form-select border border-black">
+                            <option value="" disabled></option>
+                            <option value="Caucasica">Caucasica</option>
+                            <option value="Mestizo">Mestizo</option>
+                            <option value="Afroamericano">Afroamericano</option>
+                            <option value="Mulato">Mulato</option>
+                            <option value="Indigena">Indígena</option>
+                             </select>
+                             <div class="text-danger" *ngIf="historyForm.get('raze')?.invalid && historyForm.get('raze')?.touched" class="error">
+                                <p class="text-danger fs-6">Raza es requerida</p></div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group" class=" mt-3">
+                        <label for="residentime">Tiempo de Residencia en Trujillo</label>
+                        <input type="text" id="residentime" formControlName="residentime" class="form-control border border-black" placeholder="Tiempo de Residencia">
+                      </div>
+                      <div class="text-danger" *ngIf="historyForm.get('residentime')?.invalid && historyForm.get('residentime')?.touched" class="error">
+                        <p class="text-danger fs-6">Tiempo de Residencia es requerida</p></div>
+                </div>
+            </div>
+            
+            <div  class="d-grid gap-2 offset-md-2 col-md-6" >
+
+                <button *ngIf="existHistory===false  ; else Update " type="submit" [disabled]="historyForm.invalid" class="btn btn-dark mt-3 rounded-pill p-2 ">Crear
+                  
+                </button>
+                  <ng-template #Update>
+              
+                  <button type="submit" [disabled]="historyForm.invalid" class="btn btn-dark mt-3 rounded-pill p-2 ">Actualizar</button>
+              
+                  </ng-template >
+            </div>
+           
+            
+        </form>
+      
+        <div *ngIf="historyForm.invalid && historyForm.touched" class="error">
+          Por favor, complete todos los campos requeridos.
+        </div>
+     </div>
+    </div>
+  
+  </div>
+  

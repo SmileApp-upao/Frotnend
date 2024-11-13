@@ -33,7 +33,8 @@
             
                 <div class="form-group mt-3">
                     <label class="text-start">Fecha de Nacimiento</label>
-                    <input type="date" class="form-control" formControlName="birthday">
+                    <input type="date" class="form-control" formControlName="birthday" placeholder="Ingrese su fecha de nacimiento" 
+                        [min]="'2000-01-01'" [max]="'2024-12-31'">
                     <div class="alert alert-danger mt-2" *ngIf="registerEstudentForm.get('birthday')?.invalid && (registerEstudentForm.get('birthday')?.dirty || registerEstudentForm.get('birthday')?.touched)">
                         <span *ngIf="registerEstudentForm.get('birthday')?.errors?.['required']">
                             La fecha de nacimiento es obligatoria.

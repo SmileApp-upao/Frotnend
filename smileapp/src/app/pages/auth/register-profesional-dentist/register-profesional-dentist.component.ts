@@ -23,6 +23,7 @@ export class RegisterProfesionalDentistComponent {
   private authService = inject(AuthService);
   private sharedDataService = inject(SharedDataService);
 
+  
   constructor() {
 
     const copValidado = this.sharedDataService.getCop();
@@ -40,6 +41,10 @@ export class RegisterProfesionalDentistComponent {
       password: ['', [Validators.required, Validators.minLength(8)]],
 
     });
+    
+  }
+  ngOnInit(): void {
+    this.registerDentistForm.get('birthday')?.setValue('2000-01-01');
   }
 
   onSubmit(){
@@ -51,7 +56,8 @@ export class RegisterProfesionalDentistComponent {
           this.router.navigateByUrl('/auth/login');
         },
         error: (error) => {
-          this.showSnackbar('Error al registrar. Intente nuevamente.');
+          const errorMessage = error?.error?.error;
+          this.showSnackbar(errorMessage);
         }
       });
     };

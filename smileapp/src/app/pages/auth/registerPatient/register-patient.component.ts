@@ -4,7 +4,8 @@ import { FormsModule, ReactiveFormsModule, FormGroup, Validators, FormBuilder} f
 import {MatSnackBarModule,MatSnackBar} from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../core/services/auth/auth.service';
-
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -34,7 +35,9 @@ export class RegisterComponent {
 
     });
   }
-
+  ngOnInit(): void {
+    this.registerForm.get('birthday')?.setValue('2000-01-01');
+  }
   onSubmit() {
     if(this.registerForm.valid){
       const userData2 = this.registerForm.value;
@@ -46,7 +49,8 @@ export class RegisterComponent {
           this.router.navigate(['/auth/login']);
         },
         error: error => {
-          this.showSnackbar('Error al registrar. Intente nuevamente.');
+          const errorMessage = error?.error?.error;
+         this.showSnackbar(errorMessage);
         }
       });
 

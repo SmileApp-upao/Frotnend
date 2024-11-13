@@ -37,6 +37,9 @@ export class RegisterEstudentDentistComponent {
 
     });
   }
+  ngOnInit(): void {
+    this.registerEstudentForm.get('birthday')?.setValue('2000-01-01');
+  }
 
   onSubmit(){
     if(this.registerEstudentForm.valid){
@@ -47,7 +50,8 @@ export class RegisterEstudentDentistComponent {
           this.router.navigateByUrl('/auth/login');
         },
         error: (error) => {
-          this.showSnackbar('Error al registrar. Intente nuevamente.');
+          const errorMessage = error?.error?.error;
+         this.showSnackbar(errorMessage);
         }
       });
     };
