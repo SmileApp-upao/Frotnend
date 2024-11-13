@@ -2,7 +2,7 @@ export interface ClinicRequest {
     openHour: string; 
     name: string;
     closeHour: string;
-    openDays: string[];
+    openDays: string;
     address: string;
     desc: string;
     telf: string;

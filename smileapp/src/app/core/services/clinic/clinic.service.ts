@@ -24,7 +24,12 @@ export class ClinicService {
     return this.http.post<ClinicRequest>(`${this.baseURL}/add`, clinicData);
 }
 
-  updateClinic(clinicData: ClinicRequest): Observable<ClinicRequest> {
-    return this.http.put<ClinicaResponse>(`${this.baseURL}/update`, clinicData);
+updateClinic(clinicData: ClinicRequest): Observable<ClinicaResponse> {
+  // Convertir `openDays` a una cadena separada por comas si es un array
+  if (Array.isArray(clinicData.openDays)) {
+    clinicData.openDays = clinicData.openDays.join(','); // Convertir a cadena separada por comas
   }
+  
+  return this.http.put<ClinicaResponse>(`${this.baseURL}/update`, clinicData);
+}
 }

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../core/services/auth/auth.service';
 
 @Component({
   selector: 'app-dentist-layout',
@@ -11,7 +12,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./dentist-layout.component.scss']
 })
 export class DentistLayoutComponent {
-  private router = inject(Router);
+  private router = inject(Router); 
+  private authService = inject(AuthService);
+  isStudent: boolean = false;
+  isAuthenticated: boolean = false;
 
   isActive(route: string): boolean {
     return this.router.isActive('/dentist/' + route, {
@@ -20,5 +24,19 @@ export class DentistLayoutComponent {
       fragment: 'ignored',
       matrixParams: 'ignored'
     });
+  }
+
+  ngOnInit(): void {
+    this.authService.getUserProfile().subscribe(profile => {
+      this.isStudent = profile.condition === 'Estudiante'; 
+      this.isAuthenticated = true;
+      console.log('Condicion: ', this.isStudent)
+    });
+  }
+
+  logout():void{
+    this.authService.logout();
+    this.isAuthenticated=false;
+    this.router.navigate(['/auth/login']);
   }
 }
