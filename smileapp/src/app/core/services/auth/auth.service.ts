@@ -10,8 +10,9 @@ import { RegisterPatientRequest } from "../../../shared/models/auth/register-pat
 import { RegisterEstudentRequest } from "../../../shared/models/auth/register-student-dentist-request.model";
 import { RegisterEstudentResponse } from "../../../shared/models/auth/register-student-dentist-response.model";
 import { RegisterDentistRequest } from "../../../shared/models/auth/register-dentist-profesional-request.model";
-import { RegisterDentistResponse } from "../../../shared/models/auth/register-dentist-profesional-response.model";
+import { RegisterDentistResponse } from "../../../shared/models/auth/register-dentist-profesional-response.model"; 
 import { Cop } from "../../../shared/models/auth/cop-model";
+import { DentistResponse } from "../../../shared/models/user/dentist/dentist-response-model";
 
 @Injectable({
   providedIn: "root"
@@ -64,4 +65,9 @@ export class AuthService {
         const authData = this.storageService.getAuthData();
         return authData? authData : null;
     }
+
+    getUserProfile(): Observable<DentistResponse> {
+        const userId = this.getUser()?.id; 
+        return this.http.get<DentistResponse>(`${environment.baseURL}/user/profile/${userId}`);
+    } 
 }
