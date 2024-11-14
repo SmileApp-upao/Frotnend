@@ -29,8 +29,7 @@ export class DentistLayoutComponent {
   ngOnInit(): void {
     this.authService.getUserProfile().subscribe(profile => {
       this.isStudent = profile.condition === 'Estudiante'; 
-      this.isAuthenticated = true;
-      console.log('Condicion: ', this.isStudent)
+      this.isAuthenticated = true; 
     });
   }
 

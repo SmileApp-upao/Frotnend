@@ -109,8 +109,7 @@ export class AddClinicComponent implements OnInit {
       if (this.clinicForm.get('closeHour')?.value) clinicData.closeHour = this.clinicForm.get('closeHour')?.value;
       // Verifica y agrega solo los campos con datos
       const selectedDays = this.getSelectedDays();
-      if (selectedDays.length > 0) clinicData.openDays = selectedDays.join(',');
-      console.log('Dias seleccionados:', selectedDays);
+      if (selectedDays.length > 0) clinicData.openDays = selectedDays.join(','); 
 
       if (this.clinicForm.get('address')?.value) clinicData.address = this.clinicForm.get('address')?.value;
       if (this.clinicForm.get('desc')?.value) clinicData.desc = this.clinicForm.get('desc')?.value;
@@ -119,30 +118,24 @@ export class AddClinicComponent implements OnInit {
       if (this.clinicForm.get('latitude')?.value) clinicData.latitude = this.clinicForm.get('latitude')?.value;
       if (this.clinicForm.get('longitude')?.value) clinicData.longitude = this.clinicForm.get('longitude')?.value;
 
-      console.log('Datos que se están enviando:', clinicData);
-
       this.clinicService.updateClinic(clinicData as ClinicRequestDTO).subscribe({
         next: () => {
           this.snackBar.open('Clínica actualizada exitosamente', 'Cerrar', {
             duration: 3000,
             verticalPosition: 'top',
             horizontalPosition: 'center'
-          });
-          console.log('Clínica actualizada exitosamente');
+          }); 
           this.router.navigate(['/dentist/profile']);
         },
-        error: (error) => {
-          console.error('Error al actulizar clínica:', error);
+        error: (error) => { 
           this.snackBar.open('Error al actualizar clínica', 'Cerrar', {
             duration: 3000,
             verticalPosition: 'top',
             horizontalPosition: 'center'
-          });
-          console.log('Intentando crear clínica...');
+          }); 
 
           const authData = this.storageService.getAuthData();
-          const token = authData ? authData.token : null;
-          console.log('token: ', token)
+          const token = authData ? authData.token : null; 
           if (token) {
             // Pasar el token a addClinic
             this.clinicService.addClinic(clinicData as ClinicRequestDTO, token).subscribe({
@@ -151,12 +144,10 @@ export class AddClinicComponent implements OnInit {
                   duration: 3000,
                   verticalPosition: 'top',
                   horizontalPosition: 'center'
-                });
-                console.log('Clínica creada exitosamente');
+                }); 
                 this.router.navigate(['/dentist/profile']);
               },
-              error: createError => {
-                console.error('Error al crear clínica', createError);
+              error: createError => { 
                 this.snackBar.open('Error al crear clínica', 'Cerrar', {
                   duration: 3000,
                   verticalPosition: 'top',
@@ -164,8 +155,7 @@ export class AddClinicComponent implements OnInit {
                 });
               }
             });
-          } else {
-            console.error('Error: No se pudo obtener el token');
+          } else { 
             this.snackBar.open('Error: No se pudo obtener el token', 'Cerrar', {
               duration: 3000,
               verticalPosition: 'top',
@@ -179,8 +169,7 @@ export class AddClinicComponent implements OnInit {
         duration: 3000,
         verticalPosition: 'top',
         horizontalPosition: 'center'
-      });
-      console.log('Formulario inválido');
+      }); 
     }
   }
 }

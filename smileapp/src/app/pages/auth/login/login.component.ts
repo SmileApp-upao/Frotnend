@@ -48,7 +48,8 @@ export class LoginComponent {
           }
       },
       error: (error) => {
-          this.showSnackbar('Error al iniciar sesión: ' + error);
+        const errorMessage = error?.error?.error;
+         this.showSnackbar(errorMessage);
       }
   });
     this.showSnackbar('Inicio de sesion exitoso!');

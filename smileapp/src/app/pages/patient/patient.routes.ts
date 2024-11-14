@@ -6,12 +6,16 @@ import { ListofdentistComponent } from './List-of-Dentist/List-of-Dentist.compon
 import { DentistDetailsComponent } from './dentist-details/dentist-details.component';
 import { CitaDetailsComponent } from './cita-details/cita-details.component';
 import { HistorialComponent } from './historial/historial.component';
+import { HistoriaClinicaComponent } from './historia-clinica/historia-clinica.component';
+import { PatientProfileComponent } from '../../shared/components/profile/update-profile/patient-profile/patient-profile.component';
 export const patientantRoutes: Routes = [
     {
         path : "",
         component :PatientLayoutComponent,
         children: [
             {path: "" , component :ProfileComponent},
+            {path: "actualizar" , component :PatientProfileComponent},
+            {path: "HistoriaClinica" , component : HistoriaClinicaComponent},
             {path: "MisCitas" , component :HistorialComponent},
             {path: "cita" , component :CitaLayoutComponent},
             {path: "cita/dentistas" , component :ListofdentistComponent},
