@@ -1,29 +1,33 @@
 <div class="container clinic-info-container mt-5">
-    <div class="text-center my-4 p-2 card profile-card shadow-sm bg-dark rounded-2">
-      <p class="text-light fs-4">{{ clinic?.name || 'Centro Odontológico' }}</p>
-    </div>
-  
-    <div class="row">
-      <!-- Descripción de la Clínica -->
-      <div class="col-md-6">
-        <div class="card p-3">
-          <h5>Descripción</h5>
-          <p>{{ clinic?.desc || 'Información no disponible.' }}</p>
-        </div>
+  <div class="text-center my-4 p-2 card profile-card shadow-sm bg-dark rounded-2">
+    <p class="text-light fs-4">{{ clinic?.name || 'Centro Odontológico' }}</p>
+  </div>
+
+  <div class="row">
+    <!-- Descripción de la Clínica -->
+    <div class="col-md-6">
+      <div class="card p-3">
+        <h5>Descripción</h5>
+        <p>{{ clinic?.desc || 'Información no disponible.' }}</p>
       </div>
-  
-      <!-- Información de Contacto -->
-      <div class="col-md-6">
-        <div class="card p-3">
-          <h5>Acerca de Centro Odontológico UPAO</h5>
-          <p><strong>Dirección:</strong> {{ clinic?.address || 'No disponible' }}</p>
-          <p><strong>Email:</strong> {{ clinic?.email || 'No disponible' }}</p>
-          <p><strong>Teléfono:</strong> {{ clinic?.telf || 'No disponible' }}</p>
-          <p><strong>Horario:</strong> {{ clinic?.openHour || 'No disponible' }} - {{ clinic?.closeHour || 'No disponible' }}</p>
-          <p><strong>Días de Apertura:</strong> 
-            {{ clinic?.openDays ? clinic.openDays.join(', ') : 'No disponible' }}
-          </p>
-        </div>
+    </div>
+
+    <!-- Información de Contacto -->
+    <div class="col-md-6">
+      <div class="card p-3">
+        <h5>Acerca de Centro Odontológico UPAO</h5>
+        <p><strong>Dirección:</strong> {{ clinic?.address || 'No disponible' }}</p>
+        <p><strong>Email:</strong> {{ clinic?.email || 'No disponible' }}</p>
+        <p><strong>Teléfono:</strong> {{ clinic?.telf || 'No disponible' }}</p>
+        <p><strong>Horario:</strong> {{ getFormattedTime(clinic?.openHour) }} - 
+          {{ getFormattedTime(clinic?.closeHour) }}</p>
+        <p><strong>Días de Apertura:</strong>
+          <span *ngIf="clinic?.openDays?.length > 0; else noDays">
+            {{ getTranslatedDays().join(', ') }}
+          </span>
+          <ng-template #noDays>No disponible</ng-template>
+        </p>
       </div>
     </div>
   </div>
+</div>

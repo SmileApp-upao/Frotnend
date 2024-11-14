@@ -27,7 +27,7 @@ export class ClinicService {
       'Content-Type': 'application/json'
     });
 
-    return this.http.post<ClinicRequestDTO>(this.baseURL, clinicData, { headers });
+    return this.http.post<ClinicRequestDTO>(`${this.baseURL}/add`, clinicData, { headers });
   }
 
   updateClinic(clinicData: ClinicRequestDTO): Observable<ClinicaResponse> {

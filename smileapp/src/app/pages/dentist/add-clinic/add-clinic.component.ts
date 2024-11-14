@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClinicService } from '../../../core/services/clinic/clinic.service';
+import { StorageService } from '../../../core/services/storage.service';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { CommonModule } from '@angular/common';
-import { ClinicRequest } from '../../../shared/models/clinica/clinica-request-model';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ClinicRequestDTO } from '../../../shared/models/clinica/clinica-request-model';
 
 @Component({
   selector: 'app-add-clinic',
@@ -15,26 +17,37 @@ import { ClinicRequest } from '../../../shared/models/clinica/clinica-request-mo
 })
 export class AddClinicComponent implements OnInit {
   clinicForm: FormGroup;
-  daysOfWeek = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'];
+  daysOfWeek = [
+    { value: 'MONDAY', label: 'Lunes' },
+    { value: 'TUESDAY', label: 'Martes' },
+    { value: 'WEDNESDAY', label: 'Miércoles' },
+    { value: 'THURSDAY', label: 'Jueves' },
+    { value: 'FRIDAY', label: 'Viernes' },
+    { value: 'SATURDAY', label: 'Sábado' },
+    { value: 'SUNDAY', label: 'Domingo' }
+  ];
+  isEditMode = false;
 
   constructor(
     private fb: FormBuilder,
     private clinicService: ClinicService,
+    private storageService: StorageService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {
     this.clinicForm = this.fb.group({
-      name: [''], // Opcional para actualización
-      openHour: [''], // Opcional para actualización
-      closeHour: [''], // Opcional para actualización
-      openDays: this.fb.array(this.daysOfWeek.map(() => false)), // Opcional para actualización
-      address: [''], // Opcional para actualización
-      desc: [''], // Opcional para actualización
-      telf: [''], // Opcional para actualización
-      email: ['', [Validators.email]], // Valida solo formato de email
-      latitude: [''],
-      longitude: ['']
-    }); 
+      name: [{ value: '', disabled: true }, [Validators.maxLength(255)]], // Máximo 255 caracteres
+      openHour: [{ value: '', disabled: true }, [Validators.pattern(/^([0-1]\d|2[0-3]):([0-5]\d)$/)]], 
+      closeHour: [{ value: '', disabled: true }, [Validators.pattern(/^([0-1]\d|2[0-3]):([0-5]\d)$/)]],
+      openDays: this.fb.array(this.daysOfWeek.map(() => this.fb.control({ value: false, disabled: true }))), 
+      address: [{ value: '', disabled: true }, [Validators.maxLength(255)]], 
+      desc: [{ value: '', disabled: true }, [Validators.maxLength(500)]], 
+      telf: [{ value: '', disabled: true }, [Validators.pattern(/^[0-9]{4,15}$/)]], 
+      email: [{ value: '', disabled: true }, [Validators.email, Validators.maxLength(100)]],
+      latitude: [{ value: '', disabled: true }, [Validators.pattern(/^[-+]?[0-9]{1,2}\.[0-9]+$/)]], // Formato decimal
+      longitude: [{ value: '', disabled: true }, [Validators.pattern(/^[-+]?[0-9]{1,3}\.[0-9]+$/)]]
+    });
   }
 
   ngOnInit(): void {
@@ -44,33 +57,61 @@ export class AddClinicComponent implements OnInit {
       console.log('Condicion: ', condition)
     });
   }
- 
+
 
   get openDaysArray(): FormArray {
     return this.clinicForm.get('openDays') as FormArray;
+  }
+
+  toggleEditMode(): void {
+    this.isEditMode = !this.isEditMode;
+
+    if (this.isEditMode) {
+      this.clinicForm.enable();
+      this.openDaysArray.controls.forEach(control => control.enable());
+    } else {
+      this.clinicForm.disable();
+      this.openDaysArray.controls.forEach(control => control.disable());
+    }
   }
 
   // Formatea los días seleccionados como un array de strings
   getSelectedDays(): string[] {
     return this.daysOfWeek
       .filter((_, i) => this.openDaysArray.at(i).value)
-      .map(day => day.toUpperCase());
+      .map(day => day.value);
   }
- 
+
+  getErrorMessage(controlName: string): string {
+    const control = this.clinicForm.get(controlName);
+    if (control?.hasError('required')) {
+      return 'Este campo es obligatorio';
+    }
+    if (control?.hasError('maxlength')) {
+      return `Este campo excede el máximo de caracteres permitidos`;
+    }
+    if (controlName === 'email' && control?.hasError('email')) {
+      return 'El email debe ser válido';
+    }
+    if (controlName === 'telf' && control?.hasError('pattern')) {
+      return 'El teléfono debe contener entre 4 a 15 dígitos';
+    }
+    return '';
+  }
 
   onSubmit(): void {
     if (this.clinicForm.valid) {
-      const clinicData: Partial<ClinicRequest> = {};
+      const clinicData: Partial<ClinicRequestDTO> = {};
 
       if (this.clinicForm.get('name')?.value) clinicData.name = this.clinicForm.get('name')?.value;
- 
+
       if (this.clinicForm.get('openHour')?.value) clinicData.openHour = this.clinicForm.get('openHour')?.value;
       if (this.clinicForm.get('closeHour')?.value) clinicData.closeHour = this.clinicForm.get('closeHour')?.value;
       // Verifica y agrega solo los campos con datos
       const selectedDays = this.getSelectedDays();
       if (selectedDays.length > 0) clinicData.openDays = selectedDays.join(',');
       console.log('Dias seleccionados:', selectedDays);
-      
+
       if (this.clinicForm.get('address')?.value) clinicData.address = this.clinicForm.get('address')?.value;
       if (this.clinicForm.get('desc')?.value) clinicData.desc = this.clinicForm.get('desc')?.value;
       if (this.clinicForm.get('telf')?.value) clinicData.telf = this.clinicForm.get('telf')?.value;
@@ -79,31 +120,66 @@ export class AddClinicComponent implements OnInit {
       if (this.clinicForm.get('longitude')?.value) clinicData.longitude = this.clinicForm.get('longitude')?.value;
 
       console.log('Datos que se están enviando:', clinicData);
-      // Intentar crear la clínica primero
-      this.clinicService.updateClinic(clinicData as ClinicRequest).subscribe({
+
+      this.clinicService.updateClinic(clinicData as ClinicRequestDTO).subscribe({
         next: () => {
+          this.snackBar.open('Clínica actualizada exitosamente', 'Cerrar', {
+            duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'center'
+          });
           console.log('Clínica actualizada exitosamente');
           this.router.navigate(['/dentist/profile']);
         },
         error: (error) => {
           console.error('Error al actulizar clínica:', error);
-          // Si la clínica ya existe, intentar actualizar
-          if (error?.error === 'La clinica ya existente' || (error?.error?.includes && error.error.includes('La clinica ya existente'))
-            || error?.error === 'Cannot invoke "com.jagija.smileapp.model.entity.Clinic.setDesc(String)" because "actuallClinic" is null') {
-            console.log('Intentando crear clínica...');
-            this.clinicService.addClinic(clinicData as ClinicRequest).subscribe({
+          this.snackBar.open('Error al actualizar clínica', 'Cerrar', {
+            duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'center'
+          });
+          console.log('Intentando crear clínica...');
+
+          const authData = this.storageService.getAuthData();
+          const token = authData ? authData.token : null;
+          console.log('token: ', token)
+          if (token) {
+            // Pasar el token a addClinic
+            this.clinicService.addClinic(clinicData as ClinicRequestDTO, token).subscribe({
               next: () => {
+                this.snackBar.open('Clínica creada exitosamente', 'Cerrar', {
+                  duration: 3000,
+                  verticalPosition: 'top',
+                  horizontalPosition: 'center'
+                });
                 console.log('Clínica creada exitosamente');
                 this.router.navigate(['/dentist/profile']);
               },
-              error: updateError => console.error('Error al crear clínica', updateError)
+              error: createError => {
+                console.error('Error al crear clínica', createError);
+                this.snackBar.open('Error al crear clínica', 'Cerrar', {
+                  duration: 3000,
+                  verticalPosition: 'top',
+                  horizontalPosition: 'center'
+                });
+              }
             });
           } else {
-            console.error('Error al crear clínica', error);
+            console.error('Error: No se pudo obtener el token');
+            this.snackBar.open('Error: No se pudo obtener el token', 'Cerrar', {
+              duration: 3000,
+              verticalPosition: 'top',
+              horizontalPosition: 'center'
+            });
           }
         }
       });
     } else {
+      this.snackBar.open('Formulario inválido', 'Cerrar', {
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'center'
+      });
       console.log('Formulario inválido');
     }
   }

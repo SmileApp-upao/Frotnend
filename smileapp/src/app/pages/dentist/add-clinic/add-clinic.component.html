@@ -10,25 +10,37 @@
         <!-- Campo para Nombre -->
         <div class="form-group mb-3">
           <label for="name" class="form-label">Nombre</label>
-          <input type="text" id="name" class="form-control" placeholder="Nombre del centro" formControlName="name">
+          <input type="text" id="name" placeholder="Nombre de su centro de trabajo" class="form-control" formControlName="name" [readonly]="!isEditMode">
+          <div *ngIf="clinicForm.get('name')?.invalid && clinicForm.get('name')?.touched">
+            <small class="text-danger">{{ getErrorMessage('name') }}</small>
+          </div>
         </div>
 
         <!-- Campo para Dirección -->
         <div class="form-group mb-3">
           <label for="address" class="form-label">Dirección</label>
-          <input type="text" id="address" class="form-control" placeholder="Dirección" formControlName="address">
+          <input type="text" id="address" placeholder="Dirección de su centro de trabajo" class="form-control" formControlName="address" [readonly]="!isEditMode">
+          <div *ngIf="clinicForm.get('address')?.invalid && clinicForm.get('address')?.touched">
+            <small class="text-danger">{{ getErrorMessage('address') }}</small>
+          </div>
         </div>
 
         <!-- Campo para Teléfono -->
         <div class="form-group mb-3">
           <label for="telf" class="form-label">Teléfono</label>
-          <input type="tel" id="telf" class="form-control" placeholder="Número de teléfono" formControlName="telf">
+          <input type="tel" id="telf" placeholder="Número de su centro de trabajo" class="form-control" formControlName="telf" [readonly]="!isEditMode">
+          <div *ngIf="clinicForm.get('telf')?.invalid && clinicForm.get('telf')?.touched">
+            <small class="text-danger">{{ getErrorMessage('telf') }}</small>
+          </div>
         </div>
 
         <!-- Campo para Email -->
         <div class="form-group mb-3">
           <label for="email" class="form-label">Email</label>
-          <input type="email" id="email" class="form-control" placeholder="Correo electrónico" formControlName="email">
+          <input type="email" id="email" placeholder="ejemplo@dominio.dominio" class="form-control" formControlName="email" [readonly]="!isEditMode">
+          <div *ngIf="clinicForm.get('email')?.invalid && clinicForm.get('email')?.touched">
+            <small class="text-danger">{{ getErrorMessage('email') }}</small>
+          </div>
         </div>
 
         <!-- Campo para Latitud -->
@@ -46,35 +58,46 @@
         <!-- Campo para Descripción -->
         <div class="form-group mb-3">
           <label for="desc" class="form-label">Descripción</label>
-          <textarea id="desc" class="form-control" rows="3" placeholder="Descripción del centro" formControlName="desc"></textarea>
+          <textarea id="desc" class="form-control" rows="3" placeholder="Cuéntale a los pacientes, ¿Como es tu centro de trabajo?" formControlName="desc"></textarea>
         </div>
 
         <!-- Campo para Días de Apertura -->
         <div class="form-group mb-3">
           <label class="form-label">Días de Apertura</label>
-          <div formArrayName="openDays">
-            <div *ngFor="let day of daysOfWeek; let i = index">
-              <input type="checkbox" [formControlName]="i"> {{ day }}
+          <div formArrayName="openDays" class="container text-center d-flex flex-wrap gap-2">
+            <div *ngFor="let day of daysOfWeek; let i = index" class="form-check form-check-inline">
+              <input type="checkbox" class="btn-check" [formControlName]="i" [id]="'day' + i">
+              <label class="btn btn-outline-light" [for]="'day' + i">{{ day.label }}</label>
             </div>
           </div>
         </div>
 
-        <!-- Campo para Hora de Apertura -->
-        <div class="form-group mb-3">
-          <label for="openHour" class="form-label">Hora de Apertura</label>
-          <input type="text" id="openHour" class="form-control" placeholder="HH:mm:ss" formControlName="openHour">
-        </div>
-
-        <!-- Campo para Hora de Cierre -->
-        <div class="form-group mb-3">
-          <label for="closeHour" class="form-label">Hora de Cierre</label>
-          <input type="text" id="closeHour" class="form-control" placeholder="HH:mm:ss" formControlName="closeHour">
+        <div class="row justify-content-evenly">
+          <div class="col-4">
+            <div class="form-group mb-3">
+              <label for="openHour" class="form-label">Hora de Apertura</label>
+              <input type="time" id="openHour" class="form-control" formControlName="openHour" [disabled]="!isEditMode">
+              <div *ngIf="clinicForm.get('openHour')?.invalid && clinicForm.get('openHour')?.touched">
+                <small class="text-danger">{{ getErrorMessage('openHour') }}</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group mb-3">
+              <label for="closeHour" class="form-label">Hora de Cierre</label>
+              <input type="time" id="closeHour" class="form-control" formControlName="closeHour" [disabled]="!isEditMode">
+              <div *ngIf="clinicForm.get('closeHour')?.invalid && clinicForm.get('closeHour')?.touched">
+                <small class="text-danger">{{ getErrorMessage('closeHour') }}</small>
+              </div>
+            </div> 
+          </div>
         </div> 
         
-        <!-- Botón para Crear/Actualizar Clínica -->
-        <button class="btn btn-dark px-5 btn-lg mt-4" type="submit" (click)="onSubmit()" [disabled]="clinicForm.invalid">
-          Guardar
-        </button>
+        <div class="container text-center">
+          <button class="btn btn-dark px-5 btn-lg mt-4" (click)="isEditMode ? onSubmit() : toggleEditMode()">
+            {{ isEditMode ? 'Guardar' : 'Editar' }}
+          </button>
+        </div> 
       </form>
     </div>
   </div>

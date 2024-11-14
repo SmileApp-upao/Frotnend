@@ -19,9 +19,9 @@ export class DentistProfileComponent implements OnInit {
   constructor(private dentistService: DentistService,
     private authService: AuthService) { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     const userData = this.authService.getUser();
-    if (userData && userData.id) { 
+    if (userData && userData.id) {
       this.loadDentistProfile(userData.id);
     } else {
       console.error('No se pudo obtener el ID del usuario autenticado');
@@ -30,7 +30,12 @@ export class DentistProfileComponent implements OnInit {
 
   private loadDentistProfile(id: number) {
     this.dentistService.getUserbyID(id).subscribe({
-      next: (profile: DentistResponse) => {
+      next: (profile: DentistResponse) => { 
+        if (profile.gender?.toLowerCase() === 'm' || profile.gender?.toLowerCase() === 'male') {
+          profile.gender = 'Masculino';
+        } else if (profile.gender?.toLowerCase() === 'f' || profile.gender?.toLowerCase() === 'female') {
+          profile.gender = 'Femenino';
+        }
         this.dentistProfile = profile;
       },
       error: (error: any) => {

@@ -1,6 +1,6 @@
 <div class="container-fluid h-100">
     <div class="row h-100">
-        <div class="col-md-2 bg-dark text-light d-flex flex-column align-items-center py-4">
+        <div class="col-1 bg-dark text-light d-flex flex-column align-items-center py-4">
             <button class="btn w-100 mb-3 text-light" [ngClass]="{'active-btn': isActive('profile')}"
                 routerLink="/dentist/profile">
                 <i class="fa-regular fa-user d-block mb-2"></i>
@@ -25,9 +25,9 @@
                 <span>Consultorio</span>
             </button>
 
-            <div class="row p-0 text-light">
+            <div class="mt-auto">
                 <button class="btn" (click)="logout()">
-                    <i class="fa-solid fa-right-from-bracket fa-rotate-180" style="color: #ffffff;"></i>
+                    <i class="fa-solid fa-right-from-bracket fa-rotate-180 text-white"></i>
                 </button>
             </div>
         </div>
