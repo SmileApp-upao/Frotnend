@@ -7,23 +7,45 @@ import { HistoriaClinicalRequest } from '../../../../shared/models/user/patient/
 import { HistoriaClinicalResponse } from '../../../../shared/models/user/patient/history-clinical-response.model';
 import { EmergencyInfoRequest } from '../../../../shared/models/user/patient/emercency-request.model';
 import { EmergencyInfoResponse } from '../../../../shared/models/user/patient/emergency-response.model';
+import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class PatientService {
   private baseURL = `${environment.baseURL}/user/profile`;
   private http = inject(HttpClient);
+  private emergencyInfoUpdated = new Subject<void>();
+  private clinicalHistoryUpdated = new Subject<void>();
+  emergencyInfoUpdated$ = this.emergencyInfoUpdated.asObservable();
+  clinicalHistoryUpdated$ = this.clinicalHistoryUpdated.asObservable();
+
+  notifyEmergencyInfoUpdated() {
+    this.emergencyInfoUpdated.next();
+  }
+
+  notifyClinicalHistoryUpdated() {
+    this.clinicalHistoryUpdated.next();
+  }
+
   constructor() { }
 
   getUserbyID(userID:number):Observable<PatientResponse>{
     return this.http.get<PatientResponse>(`${this.baseURL}/${userID}`)
   }
-
+  updatePatientProfile(userID:number,data: PatientResponse): Observable<PatientResponse> {
+    return this.http.put<PatientResponse>(`${this.baseURL}/${userID}`, data).pipe(
+      tap(() => this.notifyEmergencyInfoUpdated()));
+  }
+  
   createHistoryClinical(data: HistoriaClinicalRequest): Observable<HistoriaClinicalResponse> {
-    return this.http.post<HistoriaClinicalResponse>(`${this.baseURL}/add/History`, data);
+    return this.http.post<HistoriaClinicalResponse>(`${this.baseURL}/add/History`, data).pipe(
+      tap(() => this.notifyClinicalHistoryUpdated()) // Notificar al crear
+    );
   }
   updateHistoryClinical(data: HistoriaClinicalRequest): Observable<HistoriaClinicalResponse> {
-    return this.http.put<HistoriaClinicalResponse>(`${this.baseURL}/update/History`, data);
+    return this.http.put<HistoriaClinicalResponse>(`${this.baseURL}/update/History`, data).pipe(
+      tap(() => this.notifyClinicalHistoryUpdated()) // Notificar al actualizar
+    );
   }
 
   getHistoryClinical():Observable<HistoriaClinicalResponse>
@@ -32,7 +54,9 @@ export class PatientService {
   }
   createEmergencyInfo(data:EmergencyInfoRequest):Observable<EmergencyInfoResponse>
   {
-    return this.http.post<EmergencyInfoResponse>(`${this.baseURL}/add/emergencyInfo`,data);
+    return this.http.post<EmergencyInfoResponse>(`${this.baseURL}/add/emergencyInfo`,data).pipe(
+      tap(() => this.notifyEmergencyInfoUpdated()) // Notificar al crear
+    );
   }
 
   getEmercenCyInfo():Observable<EmergencyInfoResponse>

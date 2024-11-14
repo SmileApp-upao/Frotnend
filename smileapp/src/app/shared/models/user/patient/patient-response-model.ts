@@ -8,4 +8,9 @@ export interface PatientResponse{
     lastname: string;
     birthday: string;
     age: number;
+    parent:string;
+    pname:string;
+    pphone:string;
+    pdir:string;
+    otherRelationship?:string;
 }

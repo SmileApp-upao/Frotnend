@@ -9,11 +9,20 @@
                 </button>
             </div>
             <div class="row p-0 text-light">
-                <button class="btn" 
-                    [ngClass]="{'btn-outline-light': !isActive('/patient/cita'), 'btn-secondary': isActive('/patient/cita')}" 
-                    routerLink="/patient/cita">
-                    <i class="fa-regular fa-calendar"></i> Agendar Cita
-                </button>
+                
+                <ng-container *ngIf="hasEmergencyInfo===true && hasClinicalHistoric ===true; else DatosFaltantes">
+                    <button class="btn" 
+                            [ngClass]="{'btn-outline-light': !isActive('/patient/cita'), 'btn-secondary': isActive('/patient/cita')}" 
+                            routerLink="/patient/cita">
+                      <i class="fa-regular fa-calendar"></i> Agendar Cita
+                    </button>
+                  </ng-container>
+                  
+                  <ng-template #DatosFaltantes>
+                    <button class="btn" (click)="ErrorDatosIncompletos()">
+                      <i class="fa-regular fa-calendar"></i> Agendar Cita
+                    </button>
+                  </ng-template>
             </div>
             <div class="row p-0 text-light">
                 <button class="btn" 
