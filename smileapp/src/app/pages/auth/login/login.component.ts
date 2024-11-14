@@ -38,14 +38,20 @@ export class LoginComponent {
 
     this.authService.login(credentials).subscribe({
       next: () => {
-        this.router.navigateByUrl('/patient');
+          const role = this.authService.getUser()?.role; // Extrae el rol directamente
+          if (role === 'PATIENT') {
+              this.router.navigateByUrl('/patient');
+          } else if (role === 'DENTIST') {
+              this.router.navigateByUrl('/dentist');
+          } else {
+              this.showSnackbar('Rol no reconocido.');
+          }
       },
       error: (error) => {
         const errorMessage = error?.error?.error;
          this.showSnackbar(errorMessage);
       }
-    }
-    );
+  });
     this.showSnackbar('Inicio de sesion exitoso!');
   }
 

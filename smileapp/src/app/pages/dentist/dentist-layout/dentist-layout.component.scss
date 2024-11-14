@@ -1,0 +1,21 @@
+.btn {
+    color: #ccc;
+    background: none;
+    border: none;  
+    text-align: center;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.btn i {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.btn:hover {
+    color: #fff;
+}
+
+.active-btn {
+    background-color: #555; 
+    color: #fff;
+}

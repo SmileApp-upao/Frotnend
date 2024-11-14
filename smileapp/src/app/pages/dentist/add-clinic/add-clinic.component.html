@@ -1,56 +1,104 @@
 <div class="container clinic-form-container mt-5">
-    <div class="text-center my-4 p-2 card profile-card shadow-sm bg-dark rounded-2 ">
-        <p class="text-light fs-4">Añadir Centro Odontológico</p>
-    </div>
+  <div class="text-center my-4 p-2 card profile-card shadow-sm bg-dark rounded-2">
+    <p class="text-light fs-4">Centro Odontológico</p>
+  </div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <form class="shadow-sm p-5 text-light bg-dark rounded-2">
-                <div class="form-group mb-3">
-                    <label for="name" class="form-label">Nombre</label>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="address" class="form-label">Dirección</label>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="phone" class="form-label">Teléfono</label>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="email" class="form-label">Email</label>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="description" class="form-label">Descripción</label>
-                </div>
-
-                <div class="form-group mb-3">
-                    <div class="row justify-content-evenly">
-                        <div class="col">
-                            <label class="form-label">Abierto</label>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label class="form-label">Hora de Apertura</label>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label class="form-label">Hora de Cierre</label> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
+  <div class="row">
+    <div class="col-md-6">
+      <form [formGroup]="clinicForm" class="shadow-sm p-5 text-light bg-dark rounded-2">
+        
+        <!-- Campo para Nombre -->
+        <div class="form-group mb-3">
+          <label for="name" class="form-label">Nombre</label>
+          <input type="text" id="name" placeholder="Nombre de su centro de trabajo" class="form-control" formControlName="name" [readonly]="!isEditMode">
+          <div *ngIf="clinicForm.get('name')?.invalid && clinicForm.get('name')?.touched">
+            <small class="text-danger">{{ getErrorMessage('name') }}</small>
+          </div>
         </div>
- 
-        <div class="col-md-6 text-center">
-            <div class="map-container mb-3"> 
-                <img src="path-to-static-map-image" alt="Mapa" class="img-fluid rounded">
-                <p>Latitud: -12.03697014842405, Longitud: -77.05442174533948</p>
+
+        <!-- Campo para Dirección -->
+        <div class="form-group mb-3">
+          <label for="address" class="form-label">Dirección</label>
+          <input type="text" id="address" placeholder="Dirección de su centro de trabajo" class="form-control" formControlName="address" [readonly]="!isEditMode">
+          <div *ngIf="clinicForm.get('address')?.invalid && clinicForm.get('address')?.touched">
+            <small class="text-danger">{{ getErrorMessage('address') }}</small>
+          </div>
+        </div>
+
+        <!-- Campo para Teléfono -->
+        <div class="form-group mb-3">
+          <label for="telf" class="form-label">Teléfono</label>
+          <input type="tel" id="telf" placeholder="Número de su centro de trabajo" class="form-control" formControlName="telf" [readonly]="!isEditMode">
+          <div *ngIf="clinicForm.get('telf')?.invalid && clinicForm.get('telf')?.touched">
+            <small class="text-danger">{{ getErrorMessage('telf') }}</small>
+          </div>
+        </div>
+
+        <!-- Campo para Email -->
+        <div class="form-group mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" placeholder="ejemplo@dominio.dominio" class="form-control" formControlName="email" [readonly]="!isEditMode">
+          <div *ngIf="clinicForm.get('email')?.invalid && clinicForm.get('email')?.touched">
+            <small class="text-danger">{{ getErrorMessage('email') }}</small>
+          </div>
+        </div>
+
+        <!-- Campo para Latitud -->
+        <div class="form-group mb-3">
+          <label for="latitude" class="form-label">Latitud</label>
+          <input type="text" id="latitude" class="form-control" placeholder="Latitud" formControlName="latitude">
+        </div>
+
+        <!-- Campo para Longitud -->
+        <div class="form-group mb-3">
+          <label for="longitude" class="form-label">Longitud</label>
+          <input type="text" id="longitude" class="form-control" placeholder="Longitud" formControlName="longitude">
+        </div>
+
+        <!-- Campo para Descripción -->
+        <div class="form-group mb-3">
+          <label for="desc" class="form-label">Descripción</label>
+          <textarea id="desc" class="form-control" rows="3" placeholder="Cuéntale a los pacientes, ¿Como es tu centro de trabajo?" formControlName="desc"></textarea>
+        </div>
+
+        <!-- Campo para Días de Apertura -->
+        <div class="form-group mb-3">
+          <label class="form-label">Días de Apertura</label>
+          <div formArrayName="openDays" class="container text-center d-flex flex-wrap gap-2">
+            <div *ngFor="let day of daysOfWeek; let i = index" class="form-check form-check-inline">
+              <input type="checkbox" class="btn-check" [formControlName]="i" [id]="'day' + i">
+              <label class="btn btn-outline-light" [for]="'day' + i">{{ day.label }}</label>
             </div>
+          </div>
         </div>
+
+        <div class="row justify-content-evenly">
+          <div class="col-4">
+            <div class="form-group mb-3">
+              <label for="openHour" class="form-label">Hora de Apertura</label>
+              <input type="time" id="openHour" class="form-control" formControlName="openHour" [disabled]="!isEditMode">
+              <div *ngIf="clinicForm.get('openHour')?.invalid && clinicForm.get('openHour')?.touched">
+                <small class="text-danger">{{ getErrorMessage('openHour') }}</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group mb-3">
+              <label for="closeHour" class="form-label">Hora de Cierre</label>
+              <input type="time" id="closeHour" class="form-control" formControlName="closeHour" [disabled]="!isEditMode">
+              <div *ngIf="clinicForm.get('closeHour')?.invalid && clinicForm.get('closeHour')?.touched">
+                <small class="text-danger">{{ getErrorMessage('closeHour') }}</small>
+              </div>
+            </div> 
+          </div>
+        </div> 
+        
+        <div class="container text-center">
+          <button class="btn btn-dark px-5 btn-lg mt-4" (click)="isEditMode ? onSubmit() : toggleEditMode()">
+            {{ isEditMode ? 'Guardar' : 'Editar' }}
+          </button>
+        </div> 
+      </form>
     </div>
- 
-    <div class="text-center mt-4">
-        <button class="btn btn-dark px-5 btn-lg" (click)="navigateToEdit()">Editar</button>
-    </div>
+  </div>
 </div>
