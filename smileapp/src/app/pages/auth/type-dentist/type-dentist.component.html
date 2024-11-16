@@ -10,15 +10,25 @@
             </div>
         </div>
         <div class="row">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <button class="btn" routerLink="/auth/type-acount"><i class="fa-solid fa-chevron-left fa-2xl" style="color: #000000;"></i></button>
+                </div>
+                <div class="col">
+                    <h2 class="text-center fw-bold">Condicion</h2>
+                </div>
 
-            <h2>Registrate</h2>
-            <p>Elije el tipo de cuenta que deseas ESTUDIANTE o DENTISTA PROFESIONAL</p>
-            <button class="btn btn-outline-dark" routerLink="/auth/type-acount/type-dentist/register-estudent-dentist"> Estudiante</button>
-            <button class="btn btn-outline-dark" routerLink="/auth/type-acount/type-dentist/validation-cop"> Dentista Profesional</button>
-
+            </div>
+            <div class="row">
+                <p>Elije el tipo de cuenta que deseas ESTUDIANTE o DENTISTA PROFESIONAL</p>
+                <button class="btn btn-outline-dark" routerLink="/auth/type-acount/type-dentist/register-estudent-dentist"> Estudiante</button>
+                <button class="btn btn-outline-dark" routerLink="/auth/type-acount/type-dentist/validation-cop"> Dentista Profesional</button>    
+            </div>
         </div>
         <div class="row">
-            <button class="btn btn-outline-dark" routerLink="/auth/login"> Iniciar Sesion</button>
+            <p>¿Ya tienes una cuenta? <a routerLink="/auth/login"
+                class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Iniciar
+                Sesión</a></p>
         </div>
     </div>
 </div>

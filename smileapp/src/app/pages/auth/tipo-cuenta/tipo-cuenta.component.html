@@ -10,15 +10,26 @@
             </div>
         </div>
         <div class="row">
-
-            <h2>Registrate</h2>
-            <p>Elije el tipo de cuenta que deseas DENTISTA o PACIENTE</p>
-            <button class="btn btn-outline-dark" routerLink="/auth/type-acount/type-dentist"> Dentista</button>
-            <button class="btn btn-outline-dark" routerLink="/auth/type-acount/register-patient"> Paciente</button>
-
+            <div class="row align-items-center">
+                <div class="col-auto">
+                  <button class="btn" routerLink="/auth/login">
+                    <i class="fa-solid fa-chevron-left fa-2xl" style="color: #000000;"></i>
+                  </button>
+                </div>
+                <div class="col">
+                  <h2 class="text-center fw-bold">Tipo de cuenta</h2>
+                </div>
+              </div>
+            <div class="row">
+                <p>Elije el tipo de cuenta que deseas DENTISTA o PACIENTE</p>
+                <button class="btn btn-outline-dark" routerLink="/auth/type-acount/type-dentist"> Dentista</button>
+                <button class="btn btn-outline-dark" routerLink="/auth/type-acount/register-patient"> Paciente</button>
+            </div>
         </div>
         <div class="row">
-            <button class="btn btn-outline-dark" routerLink="/auth/login"> Iniciar Sesion</button>
+            <p>¿Ya tienes una cuenta? <a routerLink="/auth/login"
+                        class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Iniciar
+                        Sesión</a></p>
         </div>
     </div>
 </div>

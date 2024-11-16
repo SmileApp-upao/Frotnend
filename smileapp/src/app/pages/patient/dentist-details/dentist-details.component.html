@@ -13,7 +13,7 @@
                     <h3 class="ms-3 fs-1">{{dentista.name}} {{dentista.lastname}}</h3>
                 </div>
                 <div class="row">
-                    <h3 class="ms-3 fs-4 text-white-50">Dentista {{dentista.condition}}</h3>
+                    <h3 class="ms-3 fs-4 text-white-50">Dentista: {{dentista.condition}}</h3>
                 </div>
                 
             </div>
@@ -34,33 +34,35 @@
     </div>
 </div>
 <div class="row ">
-    <div class="col-md-4">
+    <div class="col-md-12 col-lg-8 col-xl-6 col-xxl-6">
         <div class="row m-4 bg-black rounded p-4 text-white-50">
-            <h1 class="fs-4 text-light">Sobre mí :</h1>
-            <p class="fs-6">{{dentista.gender}}</p>
-            <p class="fs-6">{{dentista.birthday}}</p>
-            <p class="fs-6">{{clinica.address}}</p>
-            <p class="fs-6">{{dentista.email}}</p>
-            <p class="fs-6">{{dentista.phone}}</p>
-            <p class="fs-6">{{clinica.openHour}} - {{clinica.closeHour}}</p>
+            <h1 class="fs-4 text-white">Sobre mí :</h1>
+            <p class="fs-6"><i class="fa-solid fa-user " style="color: #ffffff;"></i> {{dentista.gender}}</p>
+            <p class="fs-6"><i class="fa-solid fa-cake-candles" style="color: #ffffff;" ></i> {{dentista.birthday}}</p>
+            <p class="fs-6"><i class="fa-solid fa-location-dot" style="color: #ffffff;"></i> {{clinica.address}}</p>
+            <p class="fs-6"><i class="fa-solid fa-envelope" style="color: #ffffff;"></i> {{dentista.email}}</p>
+            <p class="fs-6"><i class="fa-solid fa-phone" style="color: #ffffff;"></i> {{dentista.phone}}</p>
+            <p class="fs-6"><i class="fa-solid fa-calendar-days" style="color: #ffffff;"></i> {{clinica.openDays}}</p>
+            <p class="fs-6"><i class="fa-solid fa-clock"style="color: #ffffff;"></i> {{clinica.openHour}} - {{clinica.closeHour}}</p>
         </div>
         
 
     </div>
-    <div class="col-md-4 ">
-        <div class="row m-4 border border-start-0 border-end-0 border-top-0 border-black border-3s">
-            <h1 class="fs-4">Publicaciones</h1>
-        </div> 
-        <div class="row m-4 bg-black rounded p-4 text-white-50">
-
-        </div>   
-    </div>
-    <div class="col-md-4">
-        <div class="card m-4 border border-3">
+    <div class="col-md-12  col-lg-4 col-xl-5 col-xxl-5">
+        <div class="card mt-4 border border-3">
             <div class="card-body m-3">
               <h2 class="fw-bold fs-3">Descripcion</h2>
               <p class="card-text">{{dentista.description}}</p>
             </div>
         </div>
     </div>
+    <div class="col-md-12  col-lg-12 col-xl-8 col-xxl-10">
+        <div class="row m-4 border border-start-0 border-end-0 border-top-0 border-black border-3s">
+            <h1 class="fs-4">Publicaciones</h1>
+            </div> 
+        <div class="row m-4 bg-black rounded p-4 text-white-50">
+
+        </div>   
+    </div>
+
 </div>
