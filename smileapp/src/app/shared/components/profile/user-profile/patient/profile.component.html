@@ -10,45 +10,48 @@
             </div>
             <div class="row">
                 <div class="col offset-md-10">
-                    <button class="btn btn-outline-light" (click)="Editar(paciente.userId)">Editar perfil</button>
+                    <button class="btn btn-outline-light" (click)="Editar(paciente.userId)">
+                      <i class="fa-solid fa-pen-to-square"></i>
+                       Editar perfil
+                      </button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row ">
-        <div class="col-md-8">
-            <div class="row m-4">
+    <div class="row">
+        <div class="col-7 m-4">
+            <div class="row">
                 <h1>Sobre mí :</h1>
             </div>
-            <div class="row m-4">
-                <div class="col-md-4 ms-4">
-                    <p class="fs-4">{{paciente.gender}}</p>
+            <div class="row  p-3">
+                <div class="col">
+                    <p class="fs-5"> <i class="fa-solid fa-user"></i> {{paciente.gender}}</p>
                 </div>
-                <div class="col-md-4">
-                    <p class="fs-4">{{edad}} años</p>
+                <div class="col">
+                    <p class="fs-5"><i class="fa-regular fa-star"></i> {{edad}} años</p>
                 </div>
-                <div class="col-md-2">
-                    <p class="fs-4">{{paciente.phone}}</p>
+                <div class="col">
+                    <p class="fs-5"><i class="fa-solid fa-phone"></i> {{paciente.phone}}</p>
                 </div>
             </div>
-            <div class="row m-4">
-                <div class="col-md-4 ms-4">
-                    <p class="fs-4">{{paciente.birthday}}</p>
+            <div class="row  p-3">
+                <div class="col-4">
+                    <p class="fs-5"><i class="fa-solid fa-cake-candles"></i> {{paciente.birthday}}</p>
                 </div>
-                <div class="col-md-4">
-                    <p class="fs-4">{{paciente.email}}</p>
+                <div class="col-8">
+                    <p class="fs-5"> <i class="fa-solid fa-envelope"></i> {{paciente.email}}</p>
                 </div>
             </div>
         </div>
         
-        <div class="col-md-4">
-            <div class="card h-100 m-4 center">
-                <div class="card-body m-3"  *ngIf="existEmergencyInfo===true  ; else Create ">
-                  <h2 class="fw-bold fs-4">Informacion de emergencia</h2>
-                  <p class="card-text">Nombre contacto: {{emergencyInfo.name}}</p>
-                  <p class="card-text">Parentesco: {{emergencyInfo.parent}}</p>
-                  <p class="card-text">Domicilio: {{emergencyInfo.dir}}</p>
-                  <p class="card-text">Telefono: {{emergencyInfo.phone}}</p>
+        <div class="col m-4">
+            <div class="text-start border-start border-2 border-black">
+                <div class="ms-4 me-5"  *ngIf="existEmergencyInfo===true  ; else Create ">
+                  <h2 class="fw-bold fs-2 p-3 me-5">En caso de emergencia llamar a</h2>
+                  <p class=" ps-3 "><i class="fa-solid fa-user"></i> Nombre contacto: {{emergencyInfo.name}}</p>
+                  <p class=" ps-3 "><i class="fa-solid fa-users"></i> Parentesco: {{emergencyInfo.parent}}</p>
+                  <p class=" ps-3 "><i class="fa-solid fa-location-dot"></i> Domicilio: {{emergencyInfo.dir}}</p>
+                  <p class=" ps-3 "><i class="fa-solid fa-phone"></i> Telefono: {{emergencyInfo.phone}}</p>
                 </div>
                 <ng-template #Create>
                     <div class="card-body m-3">

@@ -13,7 +13,8 @@
                 <button class="btn btn-outline-light" routerLink="/patient">Cancelar</button>
             </div>
             <div class="col-md-2">
-                <button class="btn btn-outline-light" (click)="onSubmit()" >Guardar Cambios</button>
+                <button class="btn btn-outline-light" (click)="onSubmit()" >
+                    <i class="fa-solid fa-floppy-disk"></i> Guardar Cambios</button>
             </div>
         </div>
     </div>
@@ -27,7 +28,9 @@
 
         <div class="row m-4">
             <div class="col-md-3 ms-4">
-                <label class="text-start">Genero</label>
+                <label class="text-start">
+                    <i class="fa-solid fa-user"></i>
+                    Genero</label>
                 <select formControlName="gender" class="form-select">
                     <option value="" disabled>Selecciona tu género</option>
                     <option value="Masculino">Masculino</option>
@@ -38,9 +41,9 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <label class="text-start">Fecha de Nacimiento</label>
+                <label class="text-start"><i class="fa-solid fa-cake-candles"></i> Fecha de Nacimiento</label>
                     <input type="date" class="form-control" formControlName="birthday" placeholder="Ingrese su fecha de nacimiento" 
-                        [min]="'2000-01-01'" [max]="'2024-12-31'">
+                    [min]="'1924-01-01'" [max]="'2024-12-31'">
                     <div class="alert alert-danger mt-2" *ngIf="updateUserForm.get('birthday')?.invalid && (updateUserForm.get('birthday')?.dirty || updateUserForm.get('birthday')?.touched)">
                         <span *ngIf="updateUserForm.get('birthday')?.errors?.['required']">
                             La fecha de nacimiento es obligatoria.
@@ -48,7 +51,8 @@
                     </div>
             </div>
             <div class="col-md-4">
-                <label class="text-start">Numero de telefono</label>
+                <label class="text-start"><i class="fa-solid fa-phone"></i>
+                     Numero de telefono</label>
                 <input type="text" class="form-control" formControlName="phone" placeholder="Ingrese su teléfono">
                     <div class="alert alert-danger mt-2" *ngIf="updateUserForm.get('phone')?.invalid && (updateUserForm.get('phone')?.dirty || updateUserForm.get('phone')?.touched)">
                         <span *ngIf="updateUserForm.get('phone')?.errors?.['required']">
@@ -65,18 +69,21 @@
         </div>
         <div class="row m-4">
             <div class="col-md-3 ms-4">
+                <label class="text-start"><i class="fa-solid fa-user"></i> Nombre</label>
                 <input type="text" formControlName="name" class="form-control" placeholder="Nombre">
                 <div *ngIf="updateUserForm.get('name')?.invalid && updateUserForm.get('name')?.touched" class="text-danger">
                     <small>El nombre es obligatorio.</small>
                 </div>
             </div>
             <div class="col-md-4">
+                <label class="text-start"><i class="fa-solid fa-user"></i> Apellido</label>
                 <input type="text" formControlName="lastname" class="form-control" placeholder="lastname">
                 <div *ngIf="updateUserForm.get('lastname')?.invalid && updateUserForm.get('lastname')?.touched" class="text-danger">
                     <small>El apellido es obligatorio.</small>
                 </div>
             </div>
             <div class="col-md-4">
+                <label class="text-start"><i class="fa-solid fa-envelope"></i> Correo</label>
                 <input type="email" formControlName="email" class="form-control" placeholder="Email">
                 <div *ngIf="updateUserForm.get('email')?.invalid && updateUserForm.get('email')?.touched" class="text-danger">
                     <small>El correo electrónico es obligatorio y debe tener un formato válido.</small>
@@ -93,7 +100,15 @@
                 <div *ngIf="existEmercency === true; else anothercase">
                 <form [formGroup]="updateUserForm" (ngSubmit)="onSubmit()">
                     <div class="form-group">
-                        <label for="parent">Tipo de parentesco</label>
+                        <label for="name" class=" mt-3"><i class="fa-solid fa-user"></i> Nombre</label>
+                        <input type="text" id="pname" formControlName="pname" class="form-control border border-black" placeholder="Nombre">
+                    </div>
+                      <div class="text-danger" *ngIf="updateUserForm.get('pname')?.invalid && updateUserForm.get('pname')?.touched" class="error">
+                        <p class="text-danger fs-6">El nombre es requerido</p>
+                    </div>
+
+                    <div class="form-group" class= "mt-3">
+                        <label for="parent"><i class="fa-solid fa-users"></i> Tipo de parentesco</label>
                         <select id="parent" formControlName="parent" class="form-select border border-black" (change)="onRelationshipChange($event)">
                             <option value="" disabled selected>Seleccione el parentesco</option>
                             <option value="Padre">Padre</option>
@@ -117,22 +132,14 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="name" class=" mt-3">Nombre</label>
-                        <input type="text" id="pname" formControlName="pname" class="form-control border border-black" placeholder="Nombre">
-                      </div>
-                      <div class="text-danger" *ngIf="updateUserForm.get('pname')?.invalid && updateUserForm.get('pname')?.touched" class="error">
-                        <p class="text-danger fs-6">El nombre es requerido</p>
-                    </div>
-        
-                    <div class="form-group">
-                        <label for="pdir" class=" mt-3">Dirección</label>
+                        <label for="pdir" class=" mt-3"><i class="fa-solid fa-location-dot"></i> Dirección</label>
                         <input type="text" id="pdir" formControlName="pdir" class="form-control border border-black" placeholder="Dirección">
                       </div>
                       <div class="text-danger" *ngIf="updateUserForm.get('pdir')?.invalid && updateUserForm.get('pdir')?.touched" class="error">
                         <p class="text-danger fs-6">La Dirección es requerido</p>
                     </div>        
                     <div class="form-group">
-                        <label for="pphone" class="mt-3">Teléfono</label>
+                        <label for="pphone" class="mt-3"><i class="fa-solid fa-phone"></i> Teléfono</label>
                         <input
                           type="tel"
                           id="pphone"

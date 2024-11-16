@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { PatientLayoutComponent } from './patient-layout/patient-layout.component';
-import { ProfileComponent } from '../../shared/components/profile/user-profile/profile.component';
+import { ProfileComponent } from '../../shared/components/profile/user-profile/patient/profile.component';
 import { CitaLayoutComponent } from './cita-mapa-layout/cita-layout.component';
 import { ListofdentistComponent } from './List-of-Dentist/List-of-Dentist.component';
 import { DentistDetailsComponent } from './dentist-details/dentist-details.component';

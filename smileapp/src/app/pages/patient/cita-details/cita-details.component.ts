@@ -113,7 +113,7 @@ export class CitaDetailsComponent {
 
   Volver():void
   {
-    this.router.navigate(["patient/cita/dentista"])
+    this.router.navigate(["patient/cita/dentistas/dentista"])
   }
 
   private showSnackBar(message:string) : void{

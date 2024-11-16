@@ -1,12 +1,13 @@
 .fondo{
     background: linear-gradient(143deg, #FFF 8.54%, #444040 52.84%, #000 115.2%);
     min-height: 100vh;
-    text-align: center;
+
     font-family: Montserrat;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
+    color: #FFF;
 }
 
 .reg{
@@ -17,12 +18,12 @@
     flex-direction: column;
     align-items: center;
     border-radius: 30px;
-    background: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    background: #000;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .fondo {
-    background-color: #f8f9fa;
+    background-color: #000;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -36,19 +37,35 @@
       }
 
     .form-group {
+      
       margin-bottom: 1rem;
-  
       input, select {
+        color: #ffffffe4;
+        background-color: transparent;
         border-radius: 10px;
-        border: 1px solid #9F9393;
+        border: 1px solid #FFF;
         width: 100%;
         transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  
+        
         &:focus {
           border-color: #9F9393;
           outline: 0;
           box-shadow: 0 0 0 0.2rem #9F9393;
         }
+
+      }
+      input::placeholder {
+        color: #787878; 
+        opacity: 1; 
+      }
+      select option {
+        background-color: #444; /* Fondo del menú desplegable */
+        color: #FFF; /* Color del texto */
+      }
+      
+      input[type="date"]::-webkit-calendar-picker-indicator {
+        background-color: #ffffff; /* Cambia el fondo */
+        border-radius: 50%; /* Ejemplo de personalización */
       }
     }
   
@@ -67,8 +84,8 @@
       font-size: 1rem;
       border-radius: 10px;
       transition: all 0.15s ease-in-out;
-  
-      &-outline-dark {
+
+      &-light {
         &:hover {
           background-color: #343a40;
           color: white;

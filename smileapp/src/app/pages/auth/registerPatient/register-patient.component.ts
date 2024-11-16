@@ -32,6 +32,7 @@ export class RegisterComponent {
       phone: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(9), Validators.pattern('^[0-9]*$')]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
+      termsAccepted: [false, Validators.requiredTrue]
 
     });
   }

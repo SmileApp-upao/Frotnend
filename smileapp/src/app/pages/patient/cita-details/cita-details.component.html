@@ -4,20 +4,20 @@
 <div class="container-fluid fondo">
   <div class="ini">
    <div class="row">
-      <div class="col-md-8">
+      <div class="col-sm-4 col-md-4 col-xl-3 offset-2">
           <h1>Smile 
              <strong>App</strong> </h1>
       </div>
-      <div class="col-md-4">
+      <div class="col-sm-6 col-md-6 col-xl-7">
           <img src="muela.png"/>
       </div>
    </div>
    <div class="row">
-      <h2>Agendar Cita</h2>
+      <h2 class="text-center">Agendar Cita</h2>
       <form [formGroup]="quoteForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="date">Fecha</label>
-          <input id="date" type="date" formControlName="date" class="form-control" [min]="minDate">
+          <input id="date" type="date" formControlName="date" class="form-control" [min]="minDate" [max]="'2027-12-31'">>
           <div *ngIf="date?.invalid && date?.touched" class="text-danger">
             <small *ngIf="date?.hasError('required')">La fecha es obligatoria.</small>
           </div>

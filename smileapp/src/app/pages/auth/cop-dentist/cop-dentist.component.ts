@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, FormGroup, Validators, FormBuilder} from '@angular/forms';
 import {MatSnackBarModule,MatSnackBar} from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
@@ -9,7 +9,7 @@ import { SharedDataService } from '../../../core/services/auth/shared-data.servi
 @Component({
   selector: 'app-cop-dentist',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, MatSnackBarModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, MatSnackBarModule, CommonModule,RouterLink],
   templateUrl: './cop-dentist.component.html',
   styleUrl: './cop-dentist.component.scss'
 })
@@ -41,6 +41,7 @@ export class CopDentistComponent {
           this.copStatus = response;
           if (response.trim() === 'Habilitado') {
             this.sharedDataService.setCop(copValue);
+            localStorage.setItem("copDentista",copValue);
             this.showSnackbar('COP válido y habilitado!');
             this.router.navigate(['/auth/type-acount/type-dentist/validation-cop/register-profesional-dentist']);
           } else {
