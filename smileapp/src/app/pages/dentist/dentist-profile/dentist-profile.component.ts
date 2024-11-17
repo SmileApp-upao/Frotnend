@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { AuthResponse } from '../../../shared/models/auth/auth-response-model';
 import { profileResponse } from '../../../shared/models/user/user-profile-model';
+import { PostService } from '../../../core/services/posts-j/posts-service';
 
 @Component({
   selector: 'app-dentist-profile',
@@ -69,6 +70,8 @@ export class DentistProfileComponent implements OnInit {
           },
           error: (error) => console.log('Error al cargar la clinica', error)
         });
+        
+       
       },
       error: (error: any) => {
         console.error('Error fetching dentist profile', error);

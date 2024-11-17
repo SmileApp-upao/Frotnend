@@ -43,9 +43,9 @@
                 <button 
                   class="btn btn-outline-dark text-start fs-5 m-2 d-flex flex-column align-items-center text-center" 
                   *ngFor="let dentist of filterDentist" 
-                  (click)="DentistDetails(dentist.userId)">
+                  (click)="DentistDetails(dentist.id,dentist.userId)">
                   <img 
-                    [src]="dentist.image ?? 'https://i.imgur.com/m0gM5xy.jpeg'" 
+                    [src]="dentist.image" 
                     alt="Profile Image" 
                     class="img-thumbnail rounded-pill small-thumbnail">
                   <span>{{dentist.name}} {{dentist.lastname}}</span>

@@ -135,7 +135,15 @@ export class ProfileComponent {
   }
 
   Editar(userId: number): void {
-    this.router.navigate(['patient/actualizar']);
+    console.log(this.paciente);
+    if(this.paciente.parent!=null&&this.paciente.pname!=null)
+    {
+      this.router.navigate(['patient/actualizar']);
+    }
+  
+    else{
+        this.showSnackBar("Debes completar tu informacion de emergencia para editar el perfil");
+    }
   }
 
   onRelationshipChange(event: Event) {

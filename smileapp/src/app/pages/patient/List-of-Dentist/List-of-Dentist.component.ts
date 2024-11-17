@@ -102,8 +102,9 @@ export class ListofdentistComponent {
     this.filterDentist = [...this.dentistas]; // Restablecemos la lista completa
   }
 
-  DentistDetails(dentistId: number): void {
+  DentistDetails(dentistId: number,userId :number): void {
     localStorage.setItem('selectedDentistId', dentistId.toString());
+    localStorage.setItem('SelecterUserId',userId.toString())
     console.log("id seleccionado: " , dentistId)
     this.router.navigate(['patient/cita/dentistas/dentista'])
   }
