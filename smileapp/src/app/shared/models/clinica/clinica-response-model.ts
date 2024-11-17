@@ -13,4 +13,5 @@ export interface ClinicaResponse{
     latitude: string;
     longitude: string;
     dentists: DentistResponse[];
+    image: string;
 }

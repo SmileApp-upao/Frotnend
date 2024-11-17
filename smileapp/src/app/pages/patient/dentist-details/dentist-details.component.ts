@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-dentist-details',
   standalone: true,
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule],
   templateUrl: './dentist-details.component.html',
   styleUrl: './dentist-details.component.scss'
 })

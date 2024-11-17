@@ -12,4 +12,5 @@ export interface ClinicRequestDTO {
     latitude?: string;
     longitude?: string;
     dentists: DentistResponse[];
+    image: string;
 }
