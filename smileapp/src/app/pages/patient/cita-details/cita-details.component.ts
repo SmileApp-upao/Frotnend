@@ -31,6 +31,7 @@ export class CitaDetailsComponent {
   clinicOpenHour : string=""; 
   clinicCloseHour: string=""; 
   clinicOpenDays:string[]=[]; 
+  selectedFiles: File[] = [];
 
   ngOnInit(): void {
     console.log(localStorage.getItem('selectedDentistId'))
@@ -84,20 +85,20 @@ export class CitaDetailsComponent {
   // Enviar la solicitud de cita
   onSubmit(): void {
     if (this.quoteForm.valid && this.validateAppointment()) {
-    console.log('Formulario válido y listo para enviar:', this.quoteForm.value);
-    
-    const quoteRequest: citaModel = {
-      dentistId :this.selectedDentistId,
-      reason: this.quoteForm.value.reason,
-      date: this.quoteForm.value.date,
-      hour: this.quoteForm.value.hour
-    };
-    this.citaService.createCita(quoteRequest).subscribe(
-      {
-        next:() =>
-        {
+      console.log('Formulario válido y listo para enviar:', this.quoteForm.value);
+  
+      const quoteRequest: citaModel = {
+        dentistId: this.selectedDentistId,
+        reason: this.quoteForm.value.reason,
+        date: this.quoteForm.value.date,
+        hour: this.quoteForm.value.hour,
+        images: this.selectedFiles // Añadir los archivos
+      };
+  
+      this.citaService.createCita(quoteRequest).subscribe({
+        next: () => {
           this.showSnackBar('Cita creada exitosamente.');
-          this.router.navigate(["/patient/MisCitas"]);
+          this.router.navigate(['/patient/MisCitas']);
           this.submitSuccess = true;
         },
         error: (error) => {
@@ -105,10 +106,8 @@ export class CitaDetailsComponent {
           console.log('Error al crear la cita:', errorMessage);
           this.showSnackBar(errorMessage);
         }
-      }
-    );
-    
-    } 
+      });
+    }
   }
 
   Volver():void
@@ -152,6 +151,15 @@ export class CitaDetailsComponent {
     }
 
     return true;
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      // Convertimos FileList a un arreglo y lo almacenamos
+      this.selectedFiles = Array.from(input.files);
+      console.log('Archivos seleccionados:', this.selectedFiles);
+    }
   }
 
 }
