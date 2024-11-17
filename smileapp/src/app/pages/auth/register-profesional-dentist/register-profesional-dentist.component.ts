@@ -22,36 +22,47 @@ export class RegisterProfesionalDentistComponent {
   private snackbar = inject(MatSnackBar);
   private authService = inject(AuthService);
   private sharedDataService = inject(SharedDataService);
+  cop:string|null="";
 
   
   constructor() {
 
     const copValidado = this.sharedDataService.getCop();
+    if(copValidado==null)
+    {
+      const copValidado = localStorage.getItem("copDentista");
+    }
+    
     this.registerDentistForm = this.fb.group({
       name: ['', [Validators.required]],
       lastname: ['', [Validators.required]],
       birthday: ['', [Validators.required]],
       gender: ['', [Validators.required]],
       condition: ['', [Validators.required]],
-      cop: [{ value: copValidado, disabled: true }, [Validators.required]],
+      cop: [{ value: copValidado}, [Validators.required,Validators.maxLength(5), Validators.minLength(5)]],
       dni: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern('^[0-9]*$')]],
       phone: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(9), Validators.pattern('^[0-9]*$')]],
       studyCenter: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-
+      termsAccepted: [false, Validators.requiredTrue]
     });
     
   }
   ngOnInit(): void {
+    this.cop= localStorage.getItem("copDentista");
+    this.registerDentistForm.get('cop')?.setValue(this.cop);
     this.registerDentistForm.get('birthday')?.setValue('2000-01-01');
+    this.registerDentistForm.get('condition')?.setValue('Profesional');
   }
 
   onSubmit(){
     if(this.registerDentistForm.valid){
       const userData = this.registerDentistForm.value;
+      console.log(userData);
       this.authService.registerDentist(userData).subscribe({
         next: () => {
+          localStorage.removeItem("copDentista");
           this.showSnackbar('Registro de Dentista exitoso!');
           this.router.navigateByUrl('/auth/login');
         },
@@ -61,6 +72,7 @@ export class RegisterProfesionalDentistComponent {
         }
       });
     };
+
   }
   onSubmit2() {
     if (this.registerDentistForm.valid) {

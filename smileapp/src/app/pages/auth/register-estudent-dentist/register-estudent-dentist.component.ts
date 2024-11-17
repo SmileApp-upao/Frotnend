@@ -20,7 +20,6 @@ export class RegisterEstudentDentistComponent {
   private router = inject(Router);
   private snackbar = inject(MatSnackBar);
   private authService = inject(AuthService);
-
   constructor() {
     this.registerEstudentForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -34,10 +33,13 @@ export class RegisterEstudentDentistComponent {
       studyCenter: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
+      termsAccepted: [false, Validators.requiredTrue]
 
     });
   }
   ngOnInit(): void {
+    this.registerEstudentForm.get('condition')?.setValue('Estudiante');
+    this.registerEstudentForm.get('studyCenter')?.setValue('Upao');
     this.registerEstudentForm.get('birthday')?.setValue('2000-01-01');
   }
 

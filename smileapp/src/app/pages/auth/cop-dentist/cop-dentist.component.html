@@ -10,38 +10,49 @@
             </div>
         </div>
         <div class="row">
-            <h3>Validaremos tu Identidad</h3>
-
-            <form [formGroup]="validarCopForm" (ngSubmit)="onSubmit()">
-                <div class="form-group">
-                    <label for="cop">Número de COP</label>
-                    <input type="text" id="cop" class="form-control" formControlName="cop" placeholder="Ingrese su número de COP">
-                    <div class="alert alert-danger mt-2" *ngIf="validarCopForm.get('cop')?.invalid && (validarCopForm.get('cop')?.dirty || validarCopForm.get('cop')?.touched)">
-                        <span *ngIf="validarCopForm.get('cop')?.errors?.['required']">
-                            El número de COP es obligatorio.
-                        </span>
-                        <span *ngIf="validarCopForm.get('cop')?.errors?.['pattern']">
-                            Ingrese un número de COP válido.
-                        </span>
-                        <span *ngIf="validarCopForm.get('cop')?.errors?.['minlength'] || validarCopForm.get('cop')?.errors?.['maxlength']">
-                            El COP no puede ser mayor o menor a 5.
-                        </span>
-                    </div>
+            <div class="row align-items-center">
+                <div class="col-auto">
+                  <button class="btn" routerLink="/auth/type-acount/type-dentist">
+                    <i class="fa-solid fa-chevron-left fa-2xl" style="color: #000000;"></i>
+                  </button>
                 </div>
-                <button type="submit" class="btn btn-primary mt-3" [disabled]="validarCopForm.invalid">Validar COP</button>
-            </form>
+                <div class="col">
+                  <h2 class="text-center fw-bold">Validaremos tu Identidad</h2>
+                </div>
+              </div>
+              <div class="row">
+                  <form [formGroup]="validarCopForm" (ngSubmit)="onSubmit()">
+                      <div class="form-group">
+                          <label for="cop">Número de COP</label>
+                          <input type="text" id="cop" class="form-control" formControlName="cop" placeholder="Ingrese su número de COP">
+                          <div class="alert alert-danger mt-2" *ngIf="validarCopForm.get('cop')?.invalid && (validarCopForm.get('cop')?.dirty || validarCopForm.get('cop')?.touched)">
+                              <span *ngIf="validarCopForm.get('cop')?.errors?.['required']">
+                                  El número de COP es obligatorio.
+                              </span>
+                              <span *ngIf="validarCopForm.get('cop')?.errors?.['pattern']">
+                                  Ingrese un número de COP válido.
+                              </span>
+                              <span *ngIf="validarCopForm.get('cop')?.errors?.['minlength'] || validarCopForm.get('cop')?.errors?.['maxlength']">
+                                  El COP no puede ser mayor o menor a 5.
+                              </span>
+                          </div>
+                      </div>
+                      <button type="submit" class="btn btn-dark p-2 rounded-pill fw-bold fs-5 btn-lg" [disabled]="validarCopForm.invalid">Validar</button>
+                  </form>
+              </div>
             
             <div *ngIf="copStatus" class="mt-3">
                 <div class="alert" [ngClass]="{'alert-success': copStatus === 'Habilitado', 'alert-danger': copStatus !== 'Habilitado'}">
                     {{ copStatus === 'Habilitado' ? 'COP válido y habilitado!' : 'COP no habilitado. Por favor, verifique su estado.' }}
                 </div>
-            </div>
-            
+            </div>            
         </div>
 
         
         <div class="row mt-4 text-center">
-                <a>¿Olvidaste tu contraseña?</a>
+            <p>¿Ya tienes una cuenta? <a routerLink="/auth/login"
+                class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Iniciar
+                Sesión</a></p>
         </div>
     </div>
 </div>

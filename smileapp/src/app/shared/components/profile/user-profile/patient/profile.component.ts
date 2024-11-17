@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { PatientResponse } from '../../../models/user/patient/patient-response-model';
-import { PatientService } from '../../../../core/services/user/patient/patient.service';
-import { AuthService } from '../../../../core/services/auth/auth.service';
+import { PatientResponse } from '../../../../models/user/patient/patient-response-model';
+import { PatientService } from '../../../../../core/services/user/patient/patient.service';
+import { AuthService } from '../../../../../core/services/auth/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { EmergencyInfoResponse } from '../../../models/user/patient/emergency-response.model';
-import { EmergencyInfoRequest } from '../../../models/user/patient/emercency-request.model';
+import { EmergencyInfoResponse } from '../../../../models/user/patient/emergency-response.model';
+import { EmergencyInfoRequest } from '../../../../models/user/patient/emercency-request.model';
 import {
   FormBuilder,
   FormsModule,
