@@ -8,6 +8,9 @@ import { CitasResponse } from '../../../shared/models/cita/citas.response.model'
   providedIn: 'root'
 })
 export class CitaService {
+  static calendarCitas(): Observable<unknown> {
+      throw new Error('Method not implemented.');
+  }
   private baseURL = `${environment.baseURL}/citas`; //clinic/clinics
   private http = inject(HttpClient);
   constructor() { }
@@ -21,21 +24,6 @@ export class CitaService {
   }
 
   calendarCitas(): Observable<CitasResponse[]> {
-    return this.http.get<CitasResponse[]>(`${this.baseURL}/propias`).pipe(
-      map((citas) =>
-        citas.map((cita) => ({
-          title: `${cita.patientName} - ${cita.reason}`, // El título será el nombre del paciente y la razón
-          start: `${cita.date}T${cita.hour}`,  // El evento inicia con la fecha y hora
-          extendedProps: {
-            clinicName: cita.clinicname,
-            clinicDescription: cita.clinicdescription,
-            patientName: cita.patientName,
-            dentistName: cita.dentistName,
-            dentistLastName: cita.dentistLastName,
-            reason: cita.reason
-          }
-        }))
-      )
-    );
+    return this.http.get<CitasResponse[]>(`${this.baseURL}/calendar`);
   }
 }
