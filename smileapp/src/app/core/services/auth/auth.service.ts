@@ -13,6 +13,7 @@ import { RegisterDentistRequest } from "../../../shared/models/auth/register-den
 import { RegisterDentistResponse } from "../../../shared/models/auth/register-dentist-profesional-response.model"; 
 import { Cop } from "../../../shared/models/auth/cop-model";
 import { DentistResponse } from "../../../shared/models/user/dentist/dentist-response-model";
+import { profileResponse } from "../../../shared/models/user/user-profile-model";
 
 @Injectable({
   providedIn: "root"
@@ -81,5 +82,8 @@ export class AuthService {
     getUserProfile(): Observable<DentistResponse> {
         const userId = this.getUser()?.id; 
         return this.http.get<DentistResponse>(`${environment.baseURL}/user/profile/${userId}`);
+    } 
+    getProfile(userId:number): Observable<profileResponse> {
+        return this.http.get<profileResponse>(`${environment.baseURL}/user/profile/${userId}`);
     } 
 }

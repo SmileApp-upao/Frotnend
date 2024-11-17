@@ -10,6 +10,9 @@ import { ClinicaResponse } from '../../../shared/models/clinica/clinica-response
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { AuthResponse } from '../../../shared/models/auth/auth-response-model';
+import { profileResponse } from '../../../shared/models/user/user-profile-model';
+import { PostService } from '../../../core/services/posts-j/posts-service';
 
 @Component({
   selector: 'app-dentist-profile',
@@ -19,7 +22,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
   styleUrls: ['./dentist-profile.component.scss']
 })
 export class DentistProfileComponent implements OnInit {
-  dentistProfile!: DentistResponse;
+  profileResponse!:profileResponse;
   imagePreview: SafeUrl | null = null;
 
   private clinicService= inject(ClinicService);
@@ -35,8 +38,10 @@ export class DentistProfileComponent implements OnInit {
     private authService: AuthService) { }
 
   ngOnInit(): void {
+    
     const userData = this.authService.getUser();
     if (userData && userData.id) {
+
       this.loadDentistProfile(userData.id);
 
     } else {
@@ -45,25 +50,28 @@ export class DentistProfileComponent implements OnInit {
   }
 
   private loadDentistProfile(id: number) {
-    this.dentistService.getUserbyID(id).subscribe({
-      next: (profile: DentistResponse) => { 
+    
+    this.authService.getProfile(id).subscribe({
+      next: (profile: profileResponse) => { 
         if (profile.gender?.toLowerCase() === 'm' || profile.gender?.toLowerCase() === 'male') {
           profile.gender = 'Masculino';
         } else if (profile.gender?.toLowerCase() === 'f' || profile.gender?.toLowerCase() === 'female') {
           profile.gender = 'Femenino';
         }
-        this.dentistProfile = profile;
+        this.profileResponse = profile;
         console.log("Perfil",profile);
         if (profile.image != null) {
           this.loadUserImage(profile.image);
         }
-        this.clinicService.getClinicByDentisId( this.dentistProfile.id).subscribe({
+        this.clinicService.getClinicByDentisId( this.profileResponse.idDentista).subscribe({
           next: (clinic) => {
             this.clinica = clinic;
             console.log(clinic);
           },
           error: (error) => console.log('Error al cargar la clinica', error)
         });
+        
+       
       },
       error: (error: any) => {
         console.error('Error fetching dentist profile', error);
@@ -87,8 +95,8 @@ export class DentistProfileComponent implements OnInit {
   }
 
   navigateUpdateProfile(){
-    console.log('Condition: ', this.dentistProfile.condition);
-    if(this.dentistProfile.condition === 'Estudiante'){
+    console.log('Condition: ', this.profileResponse.condition);
+    if(this.profileResponse.condition === 'Estudiante'){
       this.router.navigate(['/dentist/profile/estudiante/update']);
     }else{
       this.router.navigate(['/dentist/profile/profesional/update']);

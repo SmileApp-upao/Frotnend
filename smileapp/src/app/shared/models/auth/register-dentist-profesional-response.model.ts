@@ -1,5 +1,6 @@
 export interface RegisterDentistResponse {
     id: number;
+    idDentista:number;
     role:string;
     name: string;
     lastname: string;

@@ -1,4 +1,4 @@
-<div class="container profile-container mt-5" *ngIf="dentistProfile">
+<div class="container profile-container mt-5" *ngIf="profileResponse">
     <div class="card profile-card p-5 shadow-sm bg-dark rounded-2">
         <div class="row align-items-center">
             <div class="col-md-2 text-center">
@@ -7,8 +7,8 @@
             <div class="col-md-10">
                 <div class="row justify-content-between">
                     <div class="col-12 col-md-8">
-                        <h2 class="mb-0 text-light fw-medium fs-2">{{ dentistProfile.name }}</h2>
-                        <p class="mb-2 text-light fw-light">Odontólogo Profesional</p>
+                        <h2 class="mb-0 text-light fw-medium fs-2">{{ profileResponse.name }}</h2>
+                        <p class="mb-2 text-light fw-light">Odontólogo {{profileResponse.condition}}</p>
                     </div>
                     <div class="col-12 col-md-4 text-md-end mt-3 mt-md-0">
                         <button type="button" class="btn btn-outline-light" (click)="navigateUpdateProfile()">Editar
@@ -23,11 +23,11 @@
     <div class="col-md-12 col-lg-8 col-xl-6 col-xxl-6">
         <div class="row m-4 bg-black rounded p-4 text-white-50">
             <h1 class="fs-4 text-white">Sobre mí :</h1>
-            <p class="fs-6"><i class="fa-solid fa-user " style="color: #ffffff;"></i> {{dentistProfile.gender}}</p>
-            <p class="fs-6"><i class="fa-solid fa-cake-candles" style="color: #ffffff;" ></i> {{dentistProfile.birthday}}</p>
+            <p class="fs-6"><i class="fa-solid fa-user " style="color: #ffffff;"></i> {{profileResponse.gender}}</p>
+            <p class="fs-6"><i class="fa-solid fa-cake-candles" style="color: #ffffff;" ></i> {{profileResponse.birthday}}</p>
             <p class="fs-6"><i class="fa-solid fa-location-dot" style="color: #ffffff;"></i> {{clinica.address}}</p>
-            <p class="fs-6"><i class="fa-solid fa-envelope" style="color: #ffffff;"></i> {{dentistProfile.email}}</p>
-            <p class="fs-6"><i class="fa-solid fa-phone" style="color: #ffffff;"></i> {{dentistProfile.phone}}</p>
+            <p class="fs-6"><i class="fa-solid fa-envelope" style="color: #ffffff;"></i> {{profileResponse.email}}</p>
+            <p class="fs-6"><i class="fa-solid fa-phone" style="color: #ffffff;"></i> {{profileResponse.phone}}</p>
             <p class="fs-6"><i class="fa-solid fa-calendar-days" style="color: #ffffff;"></i> {{clinica.openDays}}</p>
             <p class="fs-6"><i class="fa-solid fa-clock"style="color: #ffffff;"></i> {{clinica.openHour}} - {{clinica.closeHour}}</p>
         </div>
@@ -38,7 +38,7 @@
         <div class="card mt-4 border border-3">
             <div class="card-body m-3">
               <h2 class="fw-bold fs-3">Descripcion</h2>
-              <p class="card-text">{{dentistProfile.description}}</p>
+              <p class="card-text">{{profileResponse.description}}</p>
             </div>
         </div>
     </div>
