@@ -2,8 +2,7 @@
     <div class="card profile-card p-5 shadow-sm bg-dark rounded-2">
         <div class="row align-items-center">
             <div class="col-md-2 text-center">
-                <img [src]="'default-avatar.png'" alt="Avatar"
-                    class="rounded-circle img-fluid profile-avatar mb-3">
+                <img [src]="imagePreview" alt="Profile Image" class="img-thumbnail rounded-pill">
             </div>
             <div class="col-md-10">
                 <div class="row justify-content-between">
@@ -12,7 +11,7 @@
                         <p class="mb-2 text-light fw-light">Odontólogo Profesional</p>
                     </div>
                     <div class="col-12 col-md-4 text-md-end mt-3 mt-md-0">
-                        <button type="button" class="btn btn-outline-light">Editar
+                        <button type="button" class="btn btn-outline-light" (click)="navigateUpdateProfile()">Editar
                             <i class="fa-regular fa-pen-to-square ms-3"></i>
                         </button>
                     </div>

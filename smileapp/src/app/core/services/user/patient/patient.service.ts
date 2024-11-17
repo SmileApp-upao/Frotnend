@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../../environments/environments.prod';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { PatientResponse } from '../../../../shared/models/user/patient/patient-response-model';
 import { HistoriaClinicalRequest } from '../../../../shared/models/user/patient/history-clinical-request-model';
@@ -8,6 +8,8 @@ import { HistoriaClinicalResponse } from '../../../../shared/models/user/patient
 import { EmergencyInfoRequest } from '../../../../shared/models/user/patient/emercency-request.model';
 import { EmergencyInfoResponse } from '../../../../shared/models/user/patient/emergency-response.model';
 import { Subject } from 'rxjs';
+import { RegisterPatientResponse } from '../../../../shared/models/auth/register-patient-response.model';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -62,6 +64,23 @@ export class PatientService {
   getEmercenCyInfo():Observable<EmergencyInfoResponse>
   {
     return this.http.get<EmergencyInfoResponse>(`${this.baseURL}/emergencyInfo`);
+  }
+
+  getPatientProfile(id: number): Observable<RegisterPatientResponse> {
+    return this.http.get<RegisterPatientResponse>(`${this.baseURL}/${id}`);
+  }
+
+  updatePhoto(id: number, image: File): Observable<HttpResponse<string>> {
+    const formData = new FormData();
+    formData.append('image', image);
+    return this.http.put(`${this.baseURL}/${id}/image`, formData, {
+      observe:'response',
+      responseType: 'text'
+    });
+  }
+
+  viewPhoto(filename: string): Observable<Blob> {
+    return this.http.get(`${this.baseURL}/uploads/${filename}`, { responseType: 'blob' });
   }
 
 }

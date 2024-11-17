@@ -1,0 +1,154 @@
+<div class="container-fluid">
+    <div class="row encabezado"> 
+        <div class="col-md-4 text-center">
+            <button class="btn btn-outline-dark" (click)="navigateBack()"> <i class="fa-solid fa-chevron-left fa-2xl" ></i> Atras</button>
+        </div>
+        <div class="col-md-8">
+            <p>Edita tu perfil</p>
+        </div>
+    </div>
+    <div class="row cuerpo"> 
+        <div class="col-md-6 formu">
+            <strong>Ingresa tus Datos</strong>
+            <form [formGroup]="updateDentistForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-3">
+                        <label class="text">Nombre</label>
+                        <input type="text" class="form-control" formControlName="name" placeholder="Ingrese su nombre">
+                        <div class="alert alert-danger mt-2" *ngIf="updateDentistForm.get('name')?.invalid && (updateDentistForm.get('name')?.dirty || updateDentistForm.get('name')?.touched)">
+                            <span *ngIf="updateDentistForm.get('name')?.errors?.['required']">
+                                El nombre es obligatorio.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label class="text-start">Apellido</label>
+                        <input type="text" class="form-control" formControlName="lastname" placeholder="Ingrese su apellido">
+                        <div class="alert alert-danger mt-2" *ngIf="updateDentistForm.get('lastname')?.invalid && (updateDentistForm.get('lastname')?.dirty || updateDentistForm.get('lastname')?.touched)">
+                            <span *ngIf="updateDentistForm.get('lastname')?.errors?.['required']">
+                                El apellido es obligatorio.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label class="text-start">Fecha de Nacimiento</label>
+                        <input type="date" class="form-control" formControlName="birthday" placeholder="Ingrese su fecha de nacimiento" 
+                            [min]="'1924-01-01'" [max]="'2015-12-31'">
+                        <div class="alert alert-danger mt-2" *ngIf="updateDentistForm.get('birthday')?.invalid && (updateDentistForm.get('birthday')?.dirty || updateDentistForm.get('birthday')?.touched)">
+                            <span *ngIf="updateDentistForm.get('birthday')?.errors?.['required']">
+                                La fecha de nacimiento es obligatoria.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label class="text">Genero</label>
+                        <select class="form-select" formControlName="gender">
+                            <option value="">Seleccione su género</option>
+                            <option value="male">Masculino</option>
+                            <option value="female">Femenino</option>
+                            <option value="other">Otro</option>
+                        </select>
+                        <div class="alert alert-danger mt-2" *ngIf="updateDentistForm.get('gender')?.invalid && (updateDentistForm.get('gender')?.dirty || updateDentistForm.get('gender')?.touched)">
+                            <span *ngIf="updateDentistForm.get('gender')?.errors?.['required']">
+                                El género es obligatorio.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group mt-3">
+                        <label class="text">Ciclo</label>
+                        <select class="form-select" formControlName="cicle">
+                            <option value="">Seleccione su ciclo</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                        <div class="alert alert-danger mt-2" *ngIf="updateDentistForm.get('cicle')?.invalid && (updateDentistForm.get('cicle')?.dirty || updateDentistForm.get('cicle')?.touched)">
+                            <span *ngIf="updateDentistForm.get('cicle')?.errors?.['required']">
+                                El ciclo es obligatorio.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label class="text">Telefono</label>
+                        <input type="text" class="form-control" formControlName="phone" placeholder="Ingrese su teléfono">
+                        <div class="alert alert-danger mt-2" *ngIf="updateDentistForm.get('phone')?.invalid && (updateDentistForm.get('phone')?.dirty || updateDentistForm.get('phone')?.touched)">
+                            <span *ngIf="updateDentistForm.get('phone')?.errors?.['required']">
+                                El teléfono es obligatorio.
+                            </span>
+                            <span *ngIf="updateDentistForm.get('phone')?.errors?.['minlength'] || updateDentistForm.get('phone')?.errors?.['maxlength']">
+                                El número de teléfono debe tener 9 dígitos.
+                            </span>
+                            <span *ngIf="updateDentistForm.get('phone')?.errors?.['pattern']">
+                                Introduzca un número de teléfono válido (solo números).
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label class="text">DNI</label>
+                        <input type="text" class="form-control" formControlName="dni" placeholder="Ingrese su DNI">
+                        <div class="alert alert-danger mt-2" *ngIf="updateDentistForm.get('dni')?.invalid && (updateDentistForm.get('dni')?.dirty || updateDentistForm.get('dni')?.touched)">
+                            <span *ngIf="updateDentistForm.get('dni')?.errors?.['required']">
+                                El DNI es obligatorio.
+                            </span>
+                            <span *ngIf="updateDentistForm.get('dni')?.errors?.['pattern']">
+                                El DNI debe contener 8 dígitos numéricos.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label class="text">Descripción</label>
+                        <textarea class="form-control" formControlName="description" rows="3" placeholder="Ingrese una breve descripción sobre usted"></textarea>
+                        <div class="alert alert-danger mt-2" *ngIf="updateDentistForm.get('description')?.invalid && (updateDentistForm.get('description')?.dirty || updateDentistForm.get('description')?.touched)">
+                            <span *ngIf="updateDentistForm.get('description')?.errors?.['required']">
+                                La descripción es obligatoria.
+                            </span>
+                            <span *ngIf="updateDentistForm.get('description')?.errors?.['maxlength']">
+                                La descripción no debe exceder los 500 caracteres.
+                            </span>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-primary" [disabled]="updateDentistForm.invalid">Actualizar Perfil</button>
+                </div>
+            </div>
+        </form>
+        </div>
+        <div class="col-md-6 foto">
+            <div class="row mb-3">
+                <strong>Sube o actualiza tu foto de perfil</strong>
+            </div>
+            <div class="row mb-3">
+                <div class="image-container">
+                    <img *ngIf="imagePreview; else defaultImage" [src]="imagePreview" alt="Profile Image" class="img-thumbnail">
+                    <ng-template #defaultImage>
+                        <img src="https://banffventureforum.com/wp-content/uploads/2019/08/no-photo-icon-22.png" alt="Profile Image" class="img-thumbnail rounded-circle">
+                    </ng-template>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: none;" #fileInput>
+                    <button class="btn btn-outline-dark" (click)="fileInput.click()">Subir Foto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

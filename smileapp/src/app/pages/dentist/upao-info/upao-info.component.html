@@ -1,6 +1,11 @@
 <div class="container clinic-info-container mt-5">
   <div class="text-center my-4 p-2 card profile-card shadow-sm bg-dark rounded-2">
-    <p class="text-light fs-4">{{ clinic?.name || 'Centro Odontológico' }}</p>
+    <div class="col text-light">
+      <img src="https://scontent-lim1-1.xx.fbcdn.net/v/t39.30808-6/414850126_407251714969818_7350880059826478217_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=mGzQKTe_oaQQ7kNvgHnhY2y&_nc_zt=23&_nc_ht=scontent-lim1-1.xx&_nc_gid=AbyMQNGM9CAo6rKemP6W0TW&oh=00_AYCEiKoGAzxZEz-HufBnroFbJQs40nSp2_QAs3N_h5h-Ag&oe=6737D7D0" class="img-thumbnail small-thumbnail rounded-circle" >
+    </div>
+    <div class="col">
+      <p class="text-light fs-4">{{ clinic?.name || 'Centro Odontológico' }}</p>
+    </div>
   </div>
 
   <div class="row">
@@ -16,12 +21,12 @@
     <div class="col-md-6">
       <div class="card p-3">
         <h5>Acerca de Centro Odontológico UPAO</h5>
-        <p><strong>Dirección:</strong> {{ clinic?.address || 'No disponible' }}</p>
-        <p><strong>Email:</strong> {{ clinic?.email || 'No disponible' }}</p>
-        <p><strong>Teléfono:</strong> {{ clinic?.telf || 'No disponible' }}</p>
-        <p><strong>Horario:</strong> {{ getFormattedTime(clinic?.openHour) }} - 
+        <p><strong><i class="fa-solid fa-location-dot"></i> Dirección:</strong> {{ clinic?.address || 'No disponible' }}</p>
+        <p><strong><i class="fa-solid fa-envelope"></i> Email:</strong> {{ clinic?.email || 'No disponible' }}</p>
+        <p><strong><i class="fa-solid fa-phone"></i> Teléfono:</strong> {{ clinic?.telf || 'No disponible' }}</p>
+        <p><strong><i class="fa-solid fa-clock"></i> Horario:</strong> {{ getFormattedTime(clinic?.openHour) }} - 
           {{ getFormattedTime(clinic?.closeHour) }}</p>
-        <p><strong>Días de Apertura:</strong>
+        <p><i class="fa-solid fa-calendar-days"></i> <strong> Días de Apertura:</strong>
           <span *ngIf="clinic?.openDays?.length > 0; else noDays">
             {{ getTranslatedDays().join(', ') }}
           </span>

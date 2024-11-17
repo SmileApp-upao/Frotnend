@@ -1,8 +1,8 @@
-    <div class="row p-4">
+    <div class="row p-4 animate-fade-in">
         <div class="div bg-black text-light p-4">
             <div class="row align-items-center p-4">
                 <div class="col-md-1 p-0 text-center" >
-                    <img src="https://banffventureforum.com/wp-content/uploads/2019/08/no-photo-icon-22.png" alt="Profile Image" class="img-thumbnail rounded-circle">
+                  <img [src]="imagePreview" alt="Profile Image" class="img-thumbnail rounded-pill">
                 </div>
                 <div class="col-md-10 ">
                     <h3 class="ms-3">{{paciente.name}} {{paciente.lastname}}</h3>
@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-7 m-4">
+        <div class="col-7 m-4 sobremi animate-slide-in">
             <div class="row">
                 <h1>Sobre mí :</h1>
             </div>
@@ -44,7 +44,7 @@
             </div>
         </div>
         
-        <div class="col m-4">
+        <div class="col m-4 animate-slide-in">
             <div class="text-start border-start border-2 border-black">
                 <div class="ms-4 me-5"  *ngIf="existEmergencyInfo===true  ; else Create ">
                   <h2 class="fw-bold fs-2 p-3 me-5">En caso de emergencia llamar a</h2>
