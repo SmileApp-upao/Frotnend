@@ -12,4 +12,5 @@ export interface DentistResponse{
     cicle: number;
     cop: string;
     studyCenter: string;
+    image: string;
 }

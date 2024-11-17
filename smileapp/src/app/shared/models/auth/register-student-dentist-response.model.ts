@@ -1,7 +1,6 @@
 export interface RegisterEstudentResponse {
     id: number;
     email: string;
-    role: string;
     name: string;
     lastname: string;
     gender: string;
@@ -11,4 +10,6 @@ export interface RegisterEstudentResponse {
     cicle: string;
     condition: string;
     studyCenter: string;
+    description: string;
+    image: string;
 }

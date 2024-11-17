@@ -11,4 +11,5 @@ export interface RegisterDentistResponse {
     studyCenter: string;
     email: string;
     password: string;
+    image: string;
 }
