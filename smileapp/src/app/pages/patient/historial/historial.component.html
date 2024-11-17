@@ -1,8 +1,8 @@
 <div class="container mt-5">
     <div class="row">
-        <div class="col-md-8">
-            <div class="row ms-5" *ngFor="let cita of filtercitas" >
-                <div class="col-md-3 ms-3">
+        <div class="col-11 col-md-11 col-xl-8">
+            <div class="row" *ngFor="let cita of filtercitas | sortCitas" >
+                <div class="col-3 col-md-4 col-xl-2 ">
                         <img *ngIf="cita.clinicId === 1; else otherImage" 
                         src="https://scontent-lim1-1.xx.fbcdn.net/v/t39.30808-6/414850126_407251714969818_7350880059826478217_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=mGzQKTe_oaQQ7kNvgHnhY2y&_nc_zt=23&_nc_ht=scontent-lim1-1.xx&_nc_gid=AbyMQNGM9CAo6rKemP6W0TW&oh=00_AYCEiKoGAzxZEz-HufBnroFbJQs40nSp2_QAs3N_h5h-Ag&oe=6737D7D0" 
                        
@@ -16,69 +16,91 @@
                         </ng-template>
                 
                 </div>
-                <div class="col-md-8">
+                <div class="col-9 col-md-8 col-xl-9 mb-3">
                     <div class="row ">
-                        <h3 class="fs-5">{{cita.clinicname}}</h3>
+
+                        <h3 class="fs-5">Nombre clinica : {{cita.clinicname}}</h3>
                     </div>
                     <div class="row">
-                        <div class="col-md-8">
-                            <p>{{cita.dentistName}} {{cita.dentistLastName}}</p>
-                            <p>{{cita.clinicdirection}}</p>
+                        <div class="col-12 col-md-8 col-xl-8">
+                            <p>Dentista : {{cita.dentistName}} {{cita.dentistLastName}}</p>
+                            <p>Direccion : {{cita.clinicdirection}}</p>
                         </div>
-                        <div class="col-md-4">
-                            <p>{{cita.date}}</p>
-                            <p>{{cita.hour}}</p>
+                        <div class="col-12 col-md-4 col-md-4">
+                            <p>
+                                Fecha: {{ cita.date }}
+                                <span *ngIf="isPast(cita.date, cita.hour)" class="text-danger">
+                                  (Pasada)
+                                </span>
+                              </p>
+                            <p>Hora {{cita.hour}}</p>
                         </div>
                     </div>
         
                 </div>
+
+            </div>
+            <div class="alert alert-warning mt-3" *ngIf="filtercitas.length === 0">
+                No tienes citas para el período seleccionado.
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card" style="width: 100%;">
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">
-                    <div class="row">
-                        <div class="col">
-                            <p class="fs-5">Filtros</p>
-                        </div>  
-                        <div class="col-md-2">
-                            <button class="btn-close mt-1" (click)="clearFilter()"></button>
-                        </div>
-                    </div>
-                  </li>
-                  <li class="list-group-item ">
-                    <div class="row">
-                        <p class="fs-5">Periodo</p>
-                    </div>
-                    <div class="row ">
-                        <div class="col ">
-                            <div class="d-grid gap-2">
-                                <button class="btn btn-outline-dark" (click)="filterToday()">Hoy</button>
-                            </div>
-                            
-                        </div>
-                        <div class="col">
-                            <div class="d-grid gap-2">
-                                <button class="btn btn-outline-dark" (click)="filterTomorrow()">Mañana</button>
+        <div class="col-1 col-md-1 col-xl-4">
+            <button class="btn btn-primary d-xl-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive">
+                <i class="fa-solid fa-filter"></i>
+            </button>
+
+            <div class="offcanvas-xl offcanvas-end" tabindex="-1" id="offcanvasResponsive" aria-labelledby="offcanvasResponsiveLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasResponsiveLabel">Filtros</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasResponsive" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                <div class="card" style="width: 100%;">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-10">
+                                <p class="fs-5">Borrar filtros</p>
+                            </div>  
+                            <div class="col-2">
+                                <button class="btn" (click)="clearFilter()"><i class="fa-solid fa-trash-can"></i></button>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col">
-                            <div class="d-grid gap-2">
-                                <button class="btn btn-outline-dark" (click)="filterThisWeek()">Esta Semana</button>
+                      </li>
+                      <li class="list-group-item ">
+                        <div class="row">
+                            <p class="fs-5">Periodo</p>
+                        </div>
+                        <div class="row ">
+                            <div class="col ">
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-outline-dark" (click)="filterToday()">Hoy</button>
+                                </div>
+                                
+                            </div>
+                            <div class="col">
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-outline-dark" (click)="filterTomorrow()">Mañana</button>
+                                </div>
                             </div>
                         </div>
-                        <div class="col">
-                            <div class="d-grid gap-2">
-                                <button class="btn btn-outline-dark" (click)="filterNextWeek()">Próxima Semana</button>
+                        <div class="row mt-3">
+                            <div class="col">
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-outline-dark" (click)="filterThisWeek()">Esta Semana</button>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-outline-dark" (click)="filterNextWeek()">Próxima Semana</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                </li>
-                </ul>
+                        
+                    </li>
+                    </ul>
+                </div>
+
               </div>
         </div>
     </div>

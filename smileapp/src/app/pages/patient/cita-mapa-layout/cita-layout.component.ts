@@ -39,13 +39,19 @@ export class CitaLayoutComponent {
  {  
 
   const content = `
-  <div class = "row-md-4">
-  <h5 class = "fw-bold">${clinica.name}</h5>
-  <p>${clinica.desc}</p>
-  <p>Horario: ${clinica.openHour} - ${clinica.closeHour}</p>
-  <p>Dias: ${clinica.openDays}</p>
-  <button class ="btn btn-primary" id="selectClinicaButton">Seleccionar</button>
-  <div>`
+  <div class="row">
+    <h5 class="fw-bold text-center">${clinica.name}</h5>
+    <div class="col-12 col-xl-6">
+      <p>${clinica.desc}</p>
+    </div>
+    <div class="col-12 col-xl-6">
+      <p><strong>Horario:</strong> ${clinica.openHour} - ${clinica.closeHour}</p>
+      <p><strong>Días:</strong> ${clinica.openDays}</p>
+    </div>
+    <div class="text-center mt-2">
+      <button class="btn btn-primary" id="selectClinicaButton">Seleccionar</button>
+    </div>
+  </div>`;
   this.infoWindowRef().open(marker,false,content);
   setTimeout(() => {
     const selectButton = document.getElementById('selectClinicaButton');

@@ -1,19 +1,23 @@
-
-    <google-map
+<div class="map-container">
+  <google-map
     mapId="f647ae78466faec3"
     height="100%"
     width="100%"
     [center]="center"
     [zoom]="zoom">
-    @for (clinica of clinicas; track clinica) {
-        <map-advanced-marker 
-        #marker="mapAdvancedMarker"
-        (mapClick)="MarkerClick(clinica,marker)"
-        [position]="{ lat: +clinica.latitude, lng: +clinica.longitude }"></map-advanced-marker>
-      }
-      <map-info-window/>
-    </google-map>
-
+    
+    <!-- Iterar las clínicas y generar marcadores -->
+    <map-advanced-marker 
+      *ngFor="let clinica of clinicas"
+      #marker="mapAdvancedMarker"
+      (mapClick)="MarkerClick(clinica, marker)"
+      [position]="{ lat: +clinica.latitude, lng: +clinica.longitude }">
+    </map-advanced-marker>
+    
+    <!-- InfoWindow -->
+    <map-info-window></map-info-window>
+  </google-map>
+</div>
 
 
 

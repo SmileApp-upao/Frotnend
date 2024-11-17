@@ -1,17 +1,18 @@
-<div class="container clinic-form-container mt-5">
+
   <div class="text-center my-4 p-2 card profile-card shadow-sm bg-dark rounded-2">
-    <p class="text-light fs-4">Centro Odontológico</p>
+    <h2 class="text-light fs-3">Centro Odontológico</h2>
   </div>
 
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-10 col-md-10 col-xl-7">
       <form [formGroup]="clinicForm" class="shadow-sm p-5 text-light bg-dark rounded-2">
         
         <!-- Campo para Nombre -->
         <div class="form-group mb-3">
           <label for="name" class="form-label">Nombre</label>
           <input type="text" id="name" placeholder="Nombre de su centro de trabajo" class="form-control" formControlName="name" [readonly]="!isEditMode">
-          <div *ngIf="clinicForm.get('name')?.invalid && clinicForm.get('name')?.touched">
+          <div *ngIf="clinicForm.get('name')?.invalid && (clinicForm.get('name')?.dirty || clinicForm.get('name')?.touched)">
+           
             <small class="text-danger">{{ getErrorMessage('name') }}</small>
           </div>
         </div>
@@ -24,14 +25,44 @@
             <small class="text-danger">{{ getErrorMessage('address') }}</small>
           </div>
         </div>
-
+        <div class="row">
+          <div class="col">
+            <div class="form-group mb-3">
+              <label for="latitude" class="form-label">Latitud</label>
+              <input type="text" id="latitude" class="form-control" placeholder="{{ latitude }}" formControlName="latitude">
+              <div *ngIf="clinicForm.get('latitude')?.invalid && clinicForm.get('latitude')?.touched">
+                <small class="text-danger">{{ getErrorMessage('latitude') }}</small>
+              </div>
+            </div>
+    
+          </div>
+          <div class="col">
+            <div class="form-group mb-3">
+              <label for="longitude" class="form-label">Longitud</label>
+              <input type="text" id="longitude" class="form-control" placeholder="{{ longitude }}" formControlName="longitude">
+              <div *ngIf="clinicForm.get('longitude')?.invalid && clinicForm.get('longitude')?.touched">
+                <small class="text-danger">{{ getErrorMessage('longitude') }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+       
         <!-- Campo para Teléfono -->
         <div class="form-group mb-3">
           <label for="telf" class="form-label">Teléfono</label>
           <input type="tel" id="telf" placeholder="Número de su centro de trabajo" class="form-control" formControlName="telf" [readonly]="!isEditMode">
-          <div *ngIf="clinicForm.get('telf')?.invalid && clinicForm.get('telf')?.touched">
-            <small class="text-danger">{{ getErrorMessage('telf') }}</small>
+          <div  class="alert alert-danger mt-2" *ngIf="clinicForm.get('telf')?.invalid && (clinicForm.get('telf')?.dirty || clinicForm.get('telf')?.touched)">
+                <span *ngIf="clinicForm.get('telf')?.errors?.['required']">
+                  El telefono es obligatorio.
+                </span>
+                <span *ngIf="clinicForm.get('telf')?.errors?.['minlength'] || clinicForm.get('dni')?.errors?.['maxlength']">
+                  Su telefono no puede ser menor a 9 o mayor a 15 digitos.
+                </span>
+                <span *ngIf="clinicForm.get('telf')?.errors?.['pattern']">
+                  Introduzca un telefono válido.
+                </span>
           </div>
+         
         </div>
 
         <!-- Campo para Email -->
@@ -43,29 +74,21 @@
           </div>
         </div>
 
-        <!-- Campo para Latitud -->
-        <div class="form-group mb-3">
-          <label for="latitude" class="form-label">Latitud</label>
-          <input type="text" id="latitude" class="form-control" placeholder="Latitud" formControlName="latitude">
-        </div>
-
-        <!-- Campo para Longitud -->
-        <div class="form-group mb-3">
-          <label for="longitude" class="form-label">Longitud</label>
-          <input type="text" id="longitude" class="form-control" placeholder="Longitud" formControlName="longitude">
-        </div>
 
         <!-- Campo para Descripción -->
         <div class="form-group mb-3">
           <label for="desc" class="form-label">Descripción</label>
           <textarea id="desc" class="form-control" rows="3" placeholder="Cuéntale a los pacientes, ¿Como es tu centro de trabajo?" formControlName="desc"></textarea>
+          <div *ngIf="clinicForm.get('desc')?.invalid && clinicForm.get('desc')?.touched">
+            <small class="text-danger">{{ getErrorMessage('desc') }}</small>
+          </div>
         </div>
 
-        <!-- Campo para Días de Apertura -->
         <div class="form-group mb-3">
           <label class="form-label">Días de Apertura</label>
           <div formArrayName="openDays" class="container text-center d-flex flex-wrap gap-2">
             <div *ngFor="let day of daysOfWeek; let i = index" class="form-check form-check-inline">
+              <!-- Checkbox para cada día -->
               <input type="checkbox" class="btn-check" [formControlName]="i" [id]="'day' + i">
               <label class="btn btn-outline-light" [for]="'day' + i">{{ day.label }}</label>
             </div>
@@ -94,11 +117,26 @@
         </div> 
         
         <div class="container text-center">
-          <button class="btn btn-dark px-5 btn-lg mt-4" (click)="isEditMode ? onSubmit() : toggleEditMode()">
-            {{ isEditMode ? 'Guardar' : 'Editar' }}
+          <button class="btn btn-outline-light px-5 btn-lg mt-4" (click)="onSubmit()"[disabled]="clinicForm.invalid" >
+            Guardar
           </button>
         </div> 
       </form>
     </div>
+    <div class="col-2 col-md-2 col-xl-5">
+      <button class="btn btn-primary d-xl-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive">
+        <i class="fa-solid fa-location-dot"></i>
+      </button>
+
+      <div class="offcanvas-xl offcanvas-end" tabindex="-1" id="offcanvasResponsive" aria-labelledby="offcanvasResponsiveLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasResponsiveLabel">Ubicación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasResponsive" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body row">
+          <h2 class="text-center"> Seleccione la ubicacion de su clinica:
+          </h2>
+          <div id="map" style="width: 100%; height: 400px;"></div>    
+        </div>
   </div>
-</div>
+  </div>

@@ -46,7 +46,7 @@
           </div>
         </div>
       <div class="col d-grid gap-2 mt-4">
-        <button type="submit" class="btn btn-dark p-2 rounded-pill fw-bold fs-5 btn-lg">Agendar Cita</button>
+        <button type="submit" class="btn btn-dark p-2 rounded-pill fw-bold fs-5 btn-lg" [disabled]="quoteForm.invalid">Agendar Cita</button>
       </div>
       </form>
       <div *ngIf="submitSuccess" class="alert alert-success mt-3">

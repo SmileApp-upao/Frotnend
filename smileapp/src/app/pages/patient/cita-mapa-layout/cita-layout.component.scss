@@ -1,0 +1,6 @@
+.map-container {
+    width: 100%; /* Toma el ancho completo del padre */
+    height: 100vh; /* Ocupa 60% de la altura de la pantalla */
+    min-height: 300px; /* Altura mínima para pantallas pequeñas */
+    position: relative; /* Asegura posicionamiento relativo */
+  }
