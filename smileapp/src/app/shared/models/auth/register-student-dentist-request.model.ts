@@ -10,4 +10,5 @@ export interface RegisterEstudentRequest {
     studyCenter: string;
     email: string;
     password: string;
+    image: string;
 }

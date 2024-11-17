@@ -62,6 +62,31 @@ export class RegisterProfesionalDentistComponent {
       });
     };
   }
+  onSubmit2() {
+    if (this.registerDentistForm.valid) {
+      const userData = this.registerDentistForm.value;
+      console.log(userData);
+      this.authService.registerDentist(userData).subscribe({
+        next: () => {
+          this.showSnackbar('Registro de Dentista exitoso!');
+          this.router.navigateByUrl('/auth/login');
+        },
+        error: (error) => {
+          let errorMessage = 'Ocurrió un error durante el registro';
+          if (error.error && typeof error.error === 'object') {
+            // Si el error es un objeto, intentamos obtener el mensaje
+            errorMessage = error.error.message || error.error.error || errorMessage;
+          } else if (typeof error.error === 'string') {
+            // Si el error es una cadena, la usamos directamente
+            errorMessage = error.error;
+          }
+          this.showSnackbar(errorMessage);
+        }
+      });
+    } else {
+      this.showSnackbar('Por favor, complete todos los campos requeridos correctamente.');
+    }
+  }
 
   showSnackbar(message: string) {
     this.snackbar.open(message, 'Cerrar', {

@@ -11,7 +11,7 @@
         </div>
         <div class="row">
             <h5>Ingresa tus datos</h5>
-            <form [formGroup]="registerDentistForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="registerDentistForm" (ngSubmit)="onSubmit2()">
                 <div class="form-group mt-3">
                     <input type="text" class="form-control" formControlName="name" placeholder="Ingrese su nombre">
                     <div class="alert alert-danger mt-2" *ngIf="registerDentistForm.get('name')?.invalid && (registerDentistForm.get('name')?.dirty || registerDentistForm.get('name')?.touched)">

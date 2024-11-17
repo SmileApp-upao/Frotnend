@@ -34,15 +34,27 @@ export class AuthService {
     }
     
     registerPatient(registerPatientRequest: RegisterPatientRequest): Observable<RegisterPatientResponse> {
-        return this.http.post<RegisterPatientResponse>(`${this.baseUrl}/register/patient`, registerPatientRequest);
+        const formData = new FormData();
+        Object.keys(registerPatientRequest).forEach(key => {
+            formData.append(key, registerPatientRequest[key as keyof RegisterPatientRequest].toString());
+        });
+        return this.http.post<RegisterPatientResponse>(`${this.baseUrl}/register/patient`, formData);
     }
 
     registerEstudentDentist(registerEstudentRequest: RegisterEstudentRequest): Observable<RegisterEstudentResponse> {
-        return this.http.post<RegisterEstudentResponse>(`${this.baseUrl}/register/dentist`, registerEstudentRequest);
+        const formData = new FormData();
+        Object.keys(registerEstudentRequest).forEach(key => {
+            formData.append(key, registerEstudentRequest[key as keyof RegisterEstudentRequest].toString());
+        });
+        return this.http.post<RegisterEstudentResponse>(`${this.baseUrl}/register/dentist`, formData);
     }
     
     registerDentist(registerDentistRequest: RegisterDentistRequest): Observable<RegisterDentistResponse> {
-        return this.http.post<RegisterDentistResponse>(`${this.baseUrl}/register/dentist`, registerDentistRequest);
+        const formData = new FormData();
+        Object.keys(registerDentistRequest).forEach(key => {
+            formData.append(key, registerDentistRequest[key as keyof RegisterDentistRequest].toString());
+        });
+        return this.http.post<RegisterDentistResponse>(`${this.baseUrl}/register/dentist`, formData);
     }
     
     // validarCop(cop: Cop): Observable<string> {
