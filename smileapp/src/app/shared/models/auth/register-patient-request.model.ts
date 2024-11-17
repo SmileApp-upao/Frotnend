@@ -7,4 +7,5 @@ export interface RegisterPatientRequest {
     phone: string,
     email: string,
     password: string
+    image: string
 }
