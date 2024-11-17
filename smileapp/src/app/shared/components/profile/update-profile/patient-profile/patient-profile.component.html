@@ -1,7 +1,7 @@
 <div class="row p-4">
     <div class="div bg-black text-light p-4">
         <div class="row align-items-center p-4">
-            <div class="col-md-1 p-0 text-center">
+            <div class="col-md-4 col-sm-5 col-xl-2 p-0 text-center">
                     <div class="row mb-3">
                         <div class="image-container">
                             
@@ -21,23 +21,23 @@
                         </div>
                     </div>
             </div>
-            <div class="col-md-10">
-                <h3 class="ms-3">{{ UserProfile.name }} {{ UserProfile.lastname }}</h3>
+            <div class="col-md-8 col-sm-7">
+                <h3 class="ms-3 text-break">{{ UserProfile.name }} {{ UserProfile.lastname }}</h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-1 offset-md-9">
+            <div class="col-md-4 col-xl-2 col-sm-4 col-4 offset-xl-8 offset-md-2 offset-2">
                 <button class="btn " routerLink="/patient">Cancelar</button>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-4 col-xl-2 col-sm-4 col-4">
                 <button class="btn " (click)="onSubmit()" >
-                    <i class="fa-solid fa-floppy-disk"></i> Guardar Cambios</button>
+                    <i class="fa-solid fa-floppy-disk"></i> Guardar</button>
             </div>
         </div>
     </div>
 </div>
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-12 col-xl-8 col-sm-12">
         <div class="row m-4">
             <h1>Sobre mí :</h1>
         </div>
@@ -110,7 +110,7 @@
         </form>
     </div>
     
-    <div class="col-md-4">
+    <div class="col-md-12 col-xl-4 col-sm-12">
         <div class="card m-4 center">
             <div class="card-body m-3">
                 <h2 class="fw-bold fs-4">Información de emergencia</h2>

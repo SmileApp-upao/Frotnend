@@ -1,8 +1,8 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="color col-md-1 d-grid gap-2">
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <div class="col-sm-2 col-md-2   col-xl-1 bg-dark text-light d-flex flex-column align-items-center py-4">
             <div class="row p-0">
-                <button class="btn" 
+                <button class="btn w-100 mb-3" 
                     [ngClass]="{'btn-outline-light': !isActive('/patient'), 'btn-secondary': isActive('/patient')}" 
                     routerLink="/patient">
                     <i class="fa-regular fa-user"></i> Cuenta           
@@ -11,7 +11,7 @@
             <div class="row p-0 text-light">
                 
                 <ng-container *ngIf="hasEmergencyInfo===true && hasClinicalHistoric ===true; else DatosFaltantes">
-                    <button class="btn" 
+                    <button class="btn w-100 mb-3" 
                             [ngClass]="{'btn-outline-light': !isActive('/patient/cita'), 'btn-secondary': isActive('/patient/cita')}" 
                             routerLink="/patient/cita">
                       <i class="fa-regular fa-calendar"></i> Agendar Cita
@@ -19,33 +19,33 @@
                   </ng-container>
                   
                   <ng-template #DatosFaltantes>
-                    <button class="btn" (click)="ErrorDatosIncompletos()">
+                    <button class="btn border-secondary-subtle w-100 mb-3 " (click)="ErrorDatosIncompletos()">
                       <i class="fa-regular fa-calendar"></i> Agendar Cita
                     </button>
                   </ng-template>
             </div>
             <div class="row p-0 text-light">
-                <button class="btn" 
+                <button class="btn w-100 mb-3" 
                     [ngClass]="{'btn-outline-light': !isActive('/patient/HistoriaClinica'), 'btn-secondary': isActive('/patient/HistoriaClinica')}" 
                     routerLink="/patient/HistoriaClinica">
                     <i class="fa-solid fa-notes-medical"></i> Historia Clinica
                 </button>
             </div>
             <div class="row p-0 text-light">
-                <button class="btn" 
+                <button class="btn w-100 mb-3" 
                     [ngClass]="{'btn-outline-light': !isActive('/patient/MisCitas'), 'btn-secondary': isActive('/patient/MisCitas')}" 
                     routerLink="/patient/MisCitas">
                     <i class="fa-solid fa-clock-rotate-left" style="color: #ffffff;"></i> Historial
                 </button>
             </div>
-            <div class="row p-0 text-light">
+            <div class="mt-auto">
                 <button class="btn" 
                 (click)="logout()">
                 <i class="fa-solid fa-right-from-bracket fa-rotate-180" style="color: #ffffff;"></i>
                 </button>
             </div>
         </div>
-        <div class="col-md-11">
+        <div class="col-sm-10 col-md-10  col-xl-11 bg-light">
             <router-outlet></router-outlet>
         </div>     
     </div>
