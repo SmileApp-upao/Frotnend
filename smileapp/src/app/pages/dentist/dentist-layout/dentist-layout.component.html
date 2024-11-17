@@ -1,6 +1,6 @@
 <div class="container-fluid h-100">
     <div class="row h-100">
-        <div class="col-1 bg-dark text-light d-flex flex-column align-items-center py-4">
+        <div class="col-sm-2 col-md-2   col-xl-1 bg-dark text-light d-flex flex-column align-items-center py-4">
             <button class="btn w-100 mb-3 text-light" [ngClass]="{'active-btn': isActive('profile')}"
                 routerLink="/dentist/profile">
                 <i class="fa-regular fa-user d-block mb-2"></i>
@@ -9,7 +9,7 @@
 
             <button class="btn w-100 mb-3 text-light" [ngClass]="{'active-btn': isActive('')}" routerLink="">
                 <i class="fa-regular fa-file-alt d-block mb-2"></i>
-                <span>Documentos</span>
+                <span>Docs</span>
             </button>
 
             <button class="btn w-100 mb-3 text-light" [ngClass]="{'active-btn': isActive('')}" routerLink="">
@@ -17,7 +17,6 @@
                 <span>Agenda</span>
             </button>
 
-            <!-- Mostrar Consultorio para Estudiantes o Profesionales -->
             <button class="btn w-100 mb-3 text-light"
                 [ngClass]="{'active-btn': isActive(isStudent ? 'upao-info' : 'add-clinic')}"
                 [routerLink]="isStudent ? 'upao-info' : 'add-clinic'">
@@ -31,8 +30,7 @@
                 </button>
             </div>
         </div>
-
-        <div class="col-md-10 bg-light p-4">
+        <div class="col-sm-10 col-md-8  col-xl-11 bg-light">
             <router-outlet></router-outlet>
         </div>
     </div>

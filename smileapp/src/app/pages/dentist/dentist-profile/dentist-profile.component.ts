@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { DentistService } from '../../../core/services/user/dentist/dentist.service';
 import { DentistResponse } from '../../../shared/models/user/dentist/dentist-response-model';
 import { AuthService } from '../../../core/services/auth/auth.service';
+import { ClinicService } from '../../../core/services/clinic/clinic.service';
+import { ClinicaResponse } from '../../../shared/models/clinica/clinica-response-model';
 
 @Component({
   selector: 'app-dentist-profile',
@@ -15,6 +17,8 @@ import { AuthService } from '../../../core/services/auth/auth.service';
 })
 export class DentistProfileComponent implements OnInit {
   dentistProfile!: DentistResponse;
+  private clinicService= inject(ClinicService);
+  clinica!: ClinicaResponse;
 
   constructor(private dentistService: DentistService,
     private authService: AuthService) { }
@@ -23,6 +27,7 @@ export class DentistProfileComponent implements OnInit {
     const userData = this.authService.getUser();
     if (userData && userData.id) {
       this.loadDentistProfile(userData.id);
+
     } else {
       console.error('No se pudo obtener el ID del usuario autenticado');
     }
@@ -37,10 +42,18 @@ export class DentistProfileComponent implements OnInit {
           profile.gender = 'Femenino';
         }
         this.dentistProfile = profile;
+        this.clinicService.getClinicByDentisId( this.dentistProfile.id).subscribe({
+          next: (clinic) => {
+            this.clinica = clinic;
+            console.log(clinic);
+          },
+          error: (error) => console.log('Error al cargar la clinica', error)
+        });
       },
       error: (error: any) => {
         console.error('Error fetching dentist profile', error);
       }
     });
+    
   }
 }

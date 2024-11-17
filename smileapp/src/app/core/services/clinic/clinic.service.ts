@@ -21,20 +21,19 @@ export class ClinicService {
     return this.http.get<ClinicaResponse>(`${this.baseURL}/${clinicId}`)
   }
 
-  addClinic(clinicData: ClinicRequestDTO, token: string): Observable<ClinicRequestDTO> {
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-
-    return this.http.post<ClinicRequestDTO>(`${this.baseURL}/add`, clinicData, { headers });
+  addClinic(clinicData: ClinicRequestDTO): Observable<ClinicRequestDTO> {
+    return this.http.post<ClinicRequestDTO>(`${this.baseURL}/add`, clinicData);
   }
 
   updateClinic(clinicData: ClinicRequestDTO): Observable<ClinicaResponse> {
-    // Convertir `openDays` a una cadena separada por comas si es un array
+
     if (Array.isArray(clinicData.openDays)) {
-      clinicData.openDays = clinicData.openDays.join(','); // Convertir a cadena separada por comas
+      clinicData.openDays = clinicData.openDays.join(',');
     }
     return this.http.put<ClinicaResponse>(`${this.baseURL}/update`, clinicData);
+  }
+  getClinicByDentisId(dentistId: number):Observable<ClinicaResponse>
+  {
+    return this.http.get<ClinicaResponse>(`${this.baseURL}/dentist/${dentistId}`)
   }
 }

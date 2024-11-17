@@ -8,10 +8,11 @@ import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CitasResponse } from '../../../shared/models/cita/citas.response.model';
 import { CitaService } from '../../../core/services/cita/cita.service';
+import { SortCitasPipe } from '../../../core/pipes/order-citas.pipe';
 @Component({
   selector: 'app-historial',
   standalone: true,
-  imports: [CommonModule,RouterLink,FormsModule],
+  imports: [SortCitasPipe,CommonModule,RouterLink,FormsModule],
   templateUrl: './historial.component.html',
   styleUrl: './historial.component.scss'
 })
@@ -20,7 +21,6 @@ export class HistorialComponent {
   miscitas:CitasResponse[]=[];
   filtercitas: CitasResponse[] = [];
   searchQuery: string = '';
-
   private citaService= inject(CitaService);
   private router = inject(Router)
 
@@ -53,6 +53,12 @@ export class HistorialComponent {
     this.filtercitas = this.miscitas.filter(cita => cita.date === today);
   }
 
+  isPast(date:string,hour:string):boolean{
+    const today = new Date().getTime(); 
+    const dateofquote=  new Date(`${date}T${hour}`).getTime();
+    return dateofquote < today; // Compara los timestamps
+
+  }
   filterTomorrow(): void {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
