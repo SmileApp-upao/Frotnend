@@ -13,4 +13,5 @@ export interface PatientResponse{
     pphone:string;
     pdir:string;
     otherRelationship?:string;
+    image: string;
 }

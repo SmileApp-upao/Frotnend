@@ -14,6 +14,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile',
@@ -24,8 +25,11 @@ import {
 })
 export class ProfileComponent {
   paciente!: PatientResponse;
+  imagePreview: SafeUrl | null = null;
+
 
   edad: number = 0;
+  private sanitizer = inject(DomSanitizer);
   private patienService = inject(PatientService);
   private authService = inject(AuthService);
   private snackbar = inject(MatSnackBar);
@@ -64,6 +68,9 @@ export class ProfileComponent {
         next: (profile) => {
           this.paciente = profile;
           this.edad = this.calculateAge(profile.birthday);
+          if (profile.image != null) {
+            this.loadUserImage(profile.image);
+          }
           this.showSnackBar('Perfil cargado con éxito.');
         },
         error: (error) => {
@@ -87,6 +94,19 @@ export class ProfileComponent {
     );
   }
 
+  loadUserImage(filename: string): void {
+    this.patienService.viewPhoto(filename).subscribe({
+      next: (imageBlob: Blob) => {
+        const objectURL = URL.createObjectURL(imageBlob);
+        this.imagePreview = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+        console.log('Image URL:', this.imagePreview);
+      },
+      error: (error) => {
+        console.error('Error al cargar la imagen del usuario', error);
+        this.showSnackBar('Error al cargar la imagen del usuario');
+      }
+    });
+  }
 
   private showSnackBar(message: string): void {
     this.snackbar.open(message, 'Close', {

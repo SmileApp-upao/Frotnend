@@ -7,6 +7,9 @@ import { DentistResponse } from '../../../shared/models/user/dentist/dentist-res
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { ClinicService } from '../../../core/services/clinic/clinic.service';
 import { ClinicaResponse } from '../../../shared/models/clinica/clinica-response-model';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dentist-profile',
@@ -17,8 +20,16 @@ import { ClinicaResponse } from '../../../shared/models/clinica/clinica-response
 })
 export class DentistProfileComponent implements OnInit {
   dentistProfile!: DentistResponse;
+  imagePreview: SafeUrl | null = null;
+
   private clinicService= inject(ClinicService);
+  private sanitizer = inject(DomSanitizer);
+  private snackbar = inject(MatSnackBar);
+
+
   clinica!: ClinicaResponse;
+
+  private router = inject(Router);
 
   constructor(private dentistService: DentistService,
     private authService: AuthService) { }
@@ -42,6 +53,10 @@ export class DentistProfileComponent implements OnInit {
           profile.gender = 'Femenino';
         }
         this.dentistProfile = profile;
+        console.log("Perfil",profile);
+        if (profile.image != null) {
+          this.loadUserImage(profile.image);
+        }
         this.clinicService.getClinicByDentisId( this.dentistProfile.id).subscribe({
           next: (clinic) => {
             this.clinica = clinic;
@@ -55,5 +70,35 @@ export class DentistProfileComponent implements OnInit {
       }
     });
     
+  }
+
+  loadUserImage(filename: string): void {
+    this.dentistService.viewPhoto(filename).subscribe({
+      next: (imageBlob: Blob) => {
+        const objectURL = URL.createObjectURL(imageBlob);
+        this.imagePreview = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+        console.log('Image URL:', this.imagePreview);
+      },
+      error: (error) => {
+        console.error('Error al cargar la imagen del usuario', error);
+        this.showSnackBar('Error al cargar la imagen del usuario');
+      }
+    });
+  }
+
+  navigateUpdateProfile(){
+    console.log('Condition: ', this.dentistProfile.condition);
+    if(this.dentistProfile.condition === 'Estudiante'){
+      this.router.navigate(['/dentist/profile/estudiante/update']);
+    }else{
+      this.router.navigate(['/dentist/profile/profesional/update']);
+    }
+  }
+
+  private showSnackBar(message:string) : void{
+    this.snackbar.open(message,'Close',{
+      duration : 2000,
+      verticalPosition : 'top'
+    });
   }
 }
