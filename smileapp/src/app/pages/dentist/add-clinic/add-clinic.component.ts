@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ClinicService } from '../../../core/services/clinic/clinic.service';
@@ -7,6 +7,8 @@ import { AuthService } from '../../../core/services/auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ClinicRequestDTO } from '../../../shared/models/clinica/clinica-request-model';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+
 declare const google: any;
 @Component({
   selector: 'app-add-clinic',
@@ -21,6 +23,9 @@ export class AddClinicComponent implements OnInit {
   longitude: number = 0;
   map: any;
   marker: any;
+  imagePreview: SafeUrl | null = null;
+
+  private sanitizer = inject(DomSanitizer);
 
 
   clinicForm: FormGroup;
@@ -69,7 +74,8 @@ export class AddClinicComponent implements OnInit {
       longitude: ['', [
         Validators.pattern(/^[-+]?([1]?[0-7]?[0-9](\.[0-9]+)?|180(\.0+)?)$/), // Longitud: -180 a 180
         Validators.required
-      ]]
+      ]],
+      image:['',Validators.required]
     });
   }
 
@@ -166,7 +172,7 @@ export class AddClinicComponent implements OnInit {
       this.clinicService.addClinic(clinicData).subscribe({
         next: () => {
           this.showSnackBar('Clínica creada exitosamente');
-          // this.router.navigate(['/dentist/profile']); // Navega al perfil
+          this.router.navigate(['/dentist/profile']); // Navega al perfil
         },
         error: (error) => {
           const errorMessage = error?.error?.error;
@@ -176,6 +182,22 @@ export class AddClinicComponent implements OnInit {
     } else {
       console.log(this.clinicForm.value);
       this.showSnackBar('Formulario inválido');
+    }
+  }
+
+  
+
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imagePreview = this.sanitizer.bypassSecurityTrustUrl(e.target.result);
+        this.clinicForm.patchValue({
+          image: file
+        });
+      };
+      reader.readAsDataURL(file);
     }
   }
 

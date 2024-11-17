@@ -114,7 +114,27 @@
               </div>
             </div> 
           </div>
-        </div> 
+        </div>
+        
+        <div class="col-md-6 foto">
+          <div class="row mb-3">
+              <strong>Suba foto del Consultorio</strong>
+          </div>
+          <div class="row mb-3">
+              <div class="image-container">
+                  <img *ngIf="imagePreview; else defaultImage" [src]="imagePreview" alt="Profile Image" class="img-thumbnail">
+                  <ng-template #defaultImage>
+                      <img src="https://banffventureforum.com/wp-content/uploads/2019/08/no-photo-icon-22.png" alt="Profile Image" class="img-thumbnail">
+                  </ng-template>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-12">
+                  <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: none;" #fileInput>
+                  <button class="btn btn-outline-light" (click)="fileInput.click()">Subir Foto</button>
+              </div>
+          </div>
+      </div>
         
         <div class="container text-center">
           <button class="btn btn-outline-light px-5 btn-lg mt-4" (click)="onSubmit()"[disabled]="clinicForm.invalid" >

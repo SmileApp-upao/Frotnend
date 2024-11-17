@@ -1,0 +1,49 @@
+<div class="clinic-detail-container">
+  <header class="clinic-header">
+    <h1 class="animate-fade-in">Detalles de la Clínica</h1>
+  </header>
+
+  <main class="clinic-content">
+    <section class="clinic-image animate-fade-in">
+        <img [src]="imagePreview || 'assets/default-clinic-image.jpg'" alt="Imagen de la clínica {{ clinic.name }}" class="clinic-photo">
+      </section>
+    <section class="clinic-info animate-slide-in-left">
+      <h2>Información General</h2>
+      <div class="info-item">
+        <i class="fas fa-hospital"></i>
+        <p> Nombre de Clinica: {{ clinic.name }}</p>
+      </div>
+      <div class="info-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <p>Ubicacion: {{ clinic.address }}</p>
+      </div>
+      <div class="info-item">
+        <i class="fas fa-phone"></i>
+        <p>Telefono: {{ clinic.telf }}</p>
+      </div>
+      <div class="info-item">
+        <i class="fas fa-envelope"></i>
+        <p>Email: {{ clinic.email }}</p>
+      </div>
+    </section>
+
+    <section class="clinic-hours animate-slide-in-right">
+        <h2>Horario de Atención</h2>
+        <div class="hours-grid">
+          <div *ngFor="let day of clinic.openDays" class="day-item">
+            <span class="day">{{ translateDay(day) }}</span>
+            <span class="hours">{{ clinic.openHour }} - {{ clinic.closeHour }}</span>
+          </div>
+        </div>
+      </section>
+
+    <section class="clinic-description animate-fade-in">
+      <h2>Descripción</h2>
+      <p>{{ clinic.desc }}</p>
+    </section>
+  </main>
+
+  <footer class="clinic-footer animate-slide-up">
+    <button class="btn-edit" (click)="editClinic()">Editar Información</button>
+  </footer>
+</div>
