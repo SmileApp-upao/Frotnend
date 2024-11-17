@@ -12,8 +12,23 @@ export class CitaService {
   private http = inject(HttpClient);
   constructor() { }
 
-  createCita(data: citaModel): Observable<citaModel> {
-    return this.http.post<citaModel>(`${this.baseURL}/create`, data);
+  createCita(data: citaModel): Observable<any> {
+    const formData = new FormData();
+  
+    // Agregar los datos básicos
+    formData.append('dentistId', data.dentistId.toString());
+    formData.append('reason', data.reason);
+    formData.append('date', data.date);
+    formData.append('hour', data.hour);
+  
+    // Agregar múltiples imágenes
+    if (data.images) {
+      data.images.forEach((file) => {
+        formData.append('images', file, file.name);
+      });
+    }
+  
+    return this.http.post<any>(`${this.baseURL}/create`, formData);
   }
 
   myCitas(): Observable<CitasResponse[]> {

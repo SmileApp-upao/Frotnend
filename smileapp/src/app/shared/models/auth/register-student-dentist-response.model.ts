@@ -1,5 +1,6 @@
 export interface RegisterEstudentResponse {
     id: number;
+    idDentista:number;
     email: string;
     name: string;
     lastname: string;
