@@ -1,0 +1,172 @@
+
+
+<div class="container mt-5" >
+    <div class="row">
+        <div *ngIf="docResponse.length === 0" class="alert alert-info text-center  col-lg-9 col-md-10 col-9">
+            No tienes archivos subidos.
+        </div>
+      <!-- Columna principal -->
+      <div class="col-lg-10 col-md-11 col-10" *ngIf="docResponse.length > 0">
+        <div class="row">
+          <div class="col-md-6 col-lg-4 mb-3 col-5" *ngFor="let doc of docResponse">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="card-title">{{ doc.name }}</h2>
+                <p class="card-text">{{ doc.dateUpload }}</p>
+                <p class="card-text">{{ doc.description }}</p>
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-primary" (click)="downloadFile(doc.docpath)">
+                        <i class="fa-solid fa-download"></i>
+                      </button>
+                      <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal" (click)="setSelectedDoc(doc.id)">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                      </button>
+
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModal" (click)="setSelectedDoc(doc.id)">
+                        <i class="fa-solid fa-trash-can"></i>
+                      </button>
+                    </div>
+
+                    
+              </div>
+                <!-- Modal de confirmación -->
+                <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="confirmModalLabel">Confirmar Eliminación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        ¿Estás seguro de que deseas eliminar este documento?
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"  id="confirmDeleteButton" (click)="deleteFile()">Confirmar</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="editModalLabel">Editar Documento</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form #editForm="ngForm">
+                            <div class="mb-3">
+                              <label for="name" class="form-label">Nombre Documento</label>
+                              <input
+                                type="text"
+                                id="name"
+                                class="form-control"
+                                [(ngModel)]="editedDoc.name"
+                                name="name"
+                                required
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="description" class="form-label">Descripción</label>
+                              <textarea
+                                id="description"
+                                class="form-control"
+                                [(ngModel)]="editedDoc.description"
+                                name="description"
+                                required
+                              ></textarea>
+                            </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-primary"  data-bs-dismiss="modal" (click)="onSubmitEdit()">Guardar cambios</button>
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Columna lateral -->
+      <div class="col-lg-2 col-md-1 col-1">
+        <div class="d-grid gap-2">
+            <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal"> 
+                <i class="fa-solid fa-plus"></i>
+                Agregar
+            </button>
+        </div>
+      </div>
+    </div> 
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Documento</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form [formGroup]="docForm" (ngSubmit)="onSubmit()">
+          <div class="modal-body">
+            <!-- Nombre -->
+            <div class="mb-3">
+              <label for="docName" class="form-label">Nombre del Documento</label>
+              <input
+                type="text"
+                id="docName"
+                class="form-control"
+                formControlName="name"
+                placeholder="Ingrese el nombre del documento"
+              />
+              <div *ngIf="docForm.get('name')?.invalid && docForm.get('name')?.touched" class="text-danger">
+                El nombre es obligatorio (mínimo 3 caracteres).
+              </div>
+            </div>
+  
+            <!-- Descripción -->
+            <div class="mb-3">
+              <label for="docDescription" class="form-label">Descripción</label>
+              <textarea
+                id="docDescription"
+                class="form-control"
+                formControlName="description"
+                placeholder="Ingrese una descripción"
+              ></textarea>
+              <div *ngIf="docForm.get('description')?.invalid && docForm.get('description')?.touched" class="text-danger">
+                La descripción es obligatoria.
+              </div>
+            </div>
+  
+            <!-- Archivo -->
+            <div class="mb-3">
+              <label for="docFile" class="form-label">Archivo</label>
+              <input
+                type="file"
+                id="docFile"
+                class="form-control"
+                (change)="onFileSelect($event)"
+                required
+              />
+              <div *ngIf="!selectedFile && fileTouched" class="text-danger">
+                Seleccione un archivo.
+              </div>
+            </div>
+          </div>
+  
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-dark" data-bs-dismiss="modal" [disabled]="docForm.invalid || !selectedFile">
+              Guardar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  

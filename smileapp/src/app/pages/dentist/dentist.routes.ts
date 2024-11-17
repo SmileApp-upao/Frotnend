@@ -3,6 +3,7 @@ import { DentistLayoutComponent } from './dentist-layout/dentist-layout.componen
 import { AddClinicComponent } from './add-clinic/add-clinic.component';
 import { DentistProfileComponent } from './dentist-profile/dentist-profile.component'; 
 import { UpaoInfoComponent } from './upao-info/upao-info.component';
+import { RepositoryComponent } from './repository/repository.component';
 
 export const dentistRoutes: Routes = [
     {
@@ -12,7 +13,8 @@ export const dentistRoutes: Routes = [
             { path: '', redirectTo: 'profile', pathMatch: 'full' },
             { path: "profile", component: DentistProfileComponent },
             { path: "add-clinic", component: AddClinicComponent },
-            { path: "upao-info", component: UpaoInfoComponent }
+            { path: "upao-info", component: UpaoInfoComponent },
+            { path: "repository", component: RepositoryComponent }
         ]
     }
 ];
