@@ -8,4 +8,5 @@ export interface RegisterPatientResponse {
     birthday: string,
     dni: string,
     phone: string,
+    image: string,
 }
