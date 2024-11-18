@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { PostResponse } from '../../../shared/models/post/post.response.model';
 import { PostService } from '../../../core/services/posts-j/posts-service';
 import { profileResponse } from '../../../shared/models/user/user-profile-model';
+import { ContentObserver } from '@angular/cdk/observers';
 @Component({
   selector: 'app-dentist-details',
   standalone: true,
@@ -25,7 +26,7 @@ export class DentistDetailsComponent {
   dentista!:DentistResponse;
   post : PostResponse[]=[];
   dentistId: number | null = null; 
-  userId:number | null =null;
+  userId!:number;
   hover: boolean = false;
   private clinicService= inject(ClinicService);
   private dentistService= inject(DentistService);
@@ -50,22 +51,23 @@ export class DentistDetailsComponent {
       }
     });
 
-    this.postService.getPostByDentistId( parseInt(localStorage.getItem('selectedDentistId') || '', 10)).subscribe({
 
-      next :(posts) =>
-      { 
-        this.post=posts;
-      },
-      error : (error)=>
-      {
-        this.showSnackBar(error?.error?.value)
-      }
-
-    });
     
     if(localStorage.getItem('selectedDentistId')!=null)
     {
-     
+      this.postService.getPostByDentistId( parseInt(localStorage.getItem('selectedDentistId') || '', 10)).subscribe({
+
+        next :(posts) =>
+        { 
+          this.post=posts;
+        },
+        error : (error)=>
+        {
+          this.showSnackBar(error?.error?.value)
+        }
+  
+      });
+
       this.dentistId= parseInt(localStorage.getItem('selectedDentistId') || '', 10);
       
       console.log("id seleccionado: " , this.dentistId)
@@ -91,14 +93,31 @@ export class DentistDetailsComponent {
 
     }
     else{
+      console.log("Flujo dentista profesional")
+
       this.clinicId = localStorage.getItem('selectedClinicId') || "";
+
     this.clinicService.getClinicById(+this.clinicId).subscribe({
       next: (clinic) => {
         this.clinica = clinic;
         console.log(clinic);
         if (this.clinica.dentists && this.clinica.dentists.length > 0) {
-          this.dentistId = this.clinica.dentists[0].userId;
+          this.userId = this.clinica.dentists[0].userId;
+          this.dentistId = this.clinica.dentists[0].id;
+
           this.fetchDentistDetails(this.dentistId);
+          this.postService.getPostByDentistId( parseInt(localStorage.getItem('selectedDentistId') || '', 10)).subscribe({
+
+            next :(posts) =>
+            { 
+              this.post=posts;
+            },
+            error : (error)=>
+            {
+              this.showSnackBar(error?.error?.value)
+            }
+      
+          });
         }
       },
       error: (error) => console.log('Error al cargar la clinica', error)
@@ -117,7 +136,7 @@ export class DentistDetailsComponent {
         },
         error: (error) => {
           console.error('Error al cargar la imagen del usuario', error);
-          this.showSnackBar('Error al cargar la imagen del usuario');
+          //this.showSnackBar('Error al cargar la imagen del usuario');
           reject(error);
         }
       });
@@ -126,7 +145,25 @@ export class DentistDetailsComponent {
 
 
   fetchDentistDetails(dentistId: number): void {
-    this.userId = parseInt(localStorage.getItem('SelecterUserId') || '', 10);
+    if(localStorage.getItem('selectedDentistId')==null)
+    {
+      this.clinicService.getClinicById(+this.clinicId).subscribe({
+        next: (clinic) => {
+          this.clinica = clinic;
+          console.log(clinic);
+          
+          if (this.clinica.dentists && this.clinica.dentists.length > 0) {
+            this.userId = this.clinica.dentists[0].userId;
+  
+          }
+        },
+        error: (error) => console.log('Error al cargar la clinica', error)
+      });
+    }
+
+    else{
+      this.userId = parseInt(localStorage.getItem('SelecterUserId') || '', 10);
+    }
   
     this.dentistService.getUserbyID(this.userId).subscribe({
       next: (dentist) => {

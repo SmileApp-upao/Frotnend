@@ -13,13 +13,13 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
   styleUrl: './quote-view.component.scss'
 })
 export class QuoteViewComponent {
-  patientId: number | null = null; 
-  quoteId: number | null = null;  
-  patientDetails: any = null;  
-  patientImage: SafeUrl | null = null; 
+  patientId!: number;
+  quoteId!: number;
+  patientDetails: any = null;
+  patientImage: SafeUrl | null = null;
 
-  appointmentDate: string | null = null; 
-  appointmentTime: string | null = null; 
+  appointmentDate: string | null = null;
+  appointmentTime: string | null = null;
   reason: string | null = null;
 
   constructor(
@@ -27,7 +27,7 @@ export class QuoteViewComponent {
     private patientService: PatientService,
     private pdfService: PdfService,
     private sanitizer: DomSanitizer
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -48,8 +48,9 @@ export class QuoteViewComponent {
 
       // Cargar los detalles e imagen del paciente si tenemos el ID
       if (this.patientId) {
-        this.loadPatientDetails(this.patientId); 
+        this.loadPatientDetails(this.patientId);
       }
+
     });
   }
 
@@ -63,19 +64,26 @@ export class QuoteViewComponent {
   }
 
   // Cargar la imagen del paciente
-   
+
 
   downloadPdf(): void {
-    if (this.patientId && this.quoteId) {
+    const pacienteId = parseInt(localStorage.getItem("PacienteId") || '0', 10);
+    const citaId = parseInt(localStorage.getItem("CitaId") || '0', 10);
+
+    if (this.patientId, this.quoteId) {
       this.pdfService.downloadPdf(this.patientId, this.quoteId).subscribe({
         next: (response) => {
-          const blob = new Blob([response], { type: 'application/pdf' });
-          const url = window.URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'reporte-cita-paciente.pdf';
-          a.click();
-          window.URL.revokeObjectURL(url);
+          if (response instanceof Blob) {
+            const blob = response;
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'reporte-cita-paciente.pdf';
+            a.click();
+            window.URL.revokeObjectURL(url);
+          } else {
+            console.error('Respuesta inesperada:', response);
+          }
         },
         error: (err) => {
           console.error('Error al descargar el PDF:', err);
