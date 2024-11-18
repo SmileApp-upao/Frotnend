@@ -1,1 +1,44 @@
-<full-calendar [options]="calendarOptions"></full-calendar>
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="pb-2 border-bottom border-dark">
+                PX en agenda
+            </h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Columna 1: Calendario pequeño y Detalles del evento -->
+        <div class="col-md-3 col-sm-12 border border-1 border-gray p-3 mb-3 mb-md-0">
+            <div class="row">
+                <!-- Fila 1: Calendario pequeño (1/4 de la pantalla en móviles y 1/6 en pantallas más grandes) -->
+                <div class="col-12 mb-3">
+                    <full-calendar [options]="monthlyCalendarOptions" style="max-width: 100%;"></full-calendar>
+                </div>
+
+                <!-- Fila 2: Detalles del evento -->
+                <div class="col-12">
+                    <div *ngIf="selectedEventDetails" class="card">
+                        <div class="card-header">
+                            <h4>Detalles de la cita</h4>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Título:</strong> {{ selectedEventDetails.title }}</p>
+                            <p><strong>Fecha:</strong> {{ selectedEventDetails.start | date: 'fullDate' }}</p>
+                            <p><strong>Hora:</strong> {{ selectedEventDetails.start | date: 'shortTime' }}</p>
+                            <p><strong>Paciente:</strong> {{ selectedEventDetails.patientName }}</p>
+                            <p><strong>Razón:</strong> {{ selectedEventDetails.reason }}</p>
+                            <p><strong>Clínica:</strong> {{ selectedEventDetails.clinicName }}</p>
+                        </div>
+                        <button class="btn btn-dark" (click)="goToPatientProfile()">Ver mas detalles</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna 2: Calendario principal (ocupa el 2/3 en pantallas grandes y 100% en móviles) -->
+        <div class="col-md-9 col-sm-12 border border-1 border-gray p-3">
+            <full-calendar [options]="calendarOptions"></full-calendar>
+        </div>
+    </div>
+</div>
