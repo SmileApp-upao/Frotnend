@@ -14,7 +14,7 @@ import { profileResponse } from '../../../shared/models/user/user-profile-model'
 @Component({
   selector: 'app-dentist-details',
   standalone: true,
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule],
   templateUrl: './dentist-details.component.html',
   styleUrl: './dentist-details.component.scss'
 })

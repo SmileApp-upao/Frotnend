@@ -1,5 +1,5 @@
 <div class="container profile-container mt-5" *ngIf="profileResponse">
-    <div class="card profile-card p-5 shadow-sm bg-dark rounded-2">
+    <div class=" card profile-card p-5 shadow-sm bg-dark rounded-2">
         <div class="row align-items-center">
             <div class="col-md-2 text-center">
                 <img [src]="imagePreview" alt="Profile Image" class="img-thumbnail rounded-pill">
@@ -21,8 +21,8 @@
     </div>
  
     <div class="col-md-12 col-lg-8 col-xl-6 col-xxl-6">
-        <div class="row m-4 bg-black rounded p-4 text-white-50">
-            <h1 class="fs-4 text-white">Sobre mí :</h1>
+        <div class=" card row m-4 bg-black rounded p-4 text-white-50 sobremi">
+            <h1 class="fs-4 text-white ">Sobre mí :</h1>
             <p class="fs-6"><i class="fa-solid fa-user " style="color: #ffffff;"></i> {{profileResponse.gender}}</p>
             <p class="fs-6"><i class="fa-solid fa-cake-candles" style="color: #ffffff;" ></i> {{profileResponse.birthday}}</p>
             <p class="fs-6"><i class="fa-solid fa-location-dot" style="color: #ffffff;"></i> {{clinica.address}}</p>

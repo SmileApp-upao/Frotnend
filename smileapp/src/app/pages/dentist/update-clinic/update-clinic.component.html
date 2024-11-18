@@ -1,0 +1,184 @@
+<div class="text-center my-4 p-2 card profile-card shadow-sm bg-dark rounded-2">
+  <h2 class="text-light fs-3">Actualizar Centro Odontológico</h2>
+</div>
+<button class="btn fs-3 hover" (click)="gotoBack()"> <i class="fa-solid fa-arrow-left"></i> Volver</button>
+
+
+<div class="row">
+  <div class="col-md-10 col-sm-10  col-lg-10 col-xl-6">
+    <form [formGroup]="clinicForm" class="shadow-sm p-5 text-light bg-dark rounded-2" (ngSubmit)="onSubmit()">
+        <!-- Campo para Nombre -->
+         <div class="row">
+            <div class="col">
+              <div class="form-group mb-3">
+                <label for="name" class="form-label">Nombre</label>
+                <input type="text" id="name" placeholder="Nombre de su centro de trabajo" class="form-control" formControlName="name">
+                <div class="alert alert-danger mt-2" *ngIf="clinicForm.get('name')?.invalid && (clinicForm.get('name')?.dirty || clinicForm.get('name')?.touched)">
+                  <span *ngIf="clinicForm.get('name')?.errors?.['required']">
+                    El nombre es obligatorio.
+                  </span>
+                </div>
+              </div>
+            
+              <!-- Campo para Dirección -->
+              <div class="form-group mb-3">
+                <label for="address" class="form-label">Dirección</label>
+                <input type="text" id="address" placeholder="Dirección de su centro de trabajo" class="form-control" formControlName="address">
+                <div class="alert alert-danger mt-2" *ngIf="clinicForm.get('address')?.invalid && clinicForm.get('address')?.touched">
+                  <span *ngIf="clinicForm.get('address')?.errors?.['required']">
+                    La dirección es obligatoria.
+                  </span>
+                </div>
+              </div>
+      
+            
+              <!-- Campo para Teléfono -->
+              <div class="form-group mb-3">
+                <label for="telf" class="form-label">Teléfono</label>
+                <input type="tel" id="telf" placeholder="Número de su centro de trabajo" class="form-control" formControlName="telf">
+                <div class="alert alert-danger mt-2" *ngIf="clinicForm.get('telf')?.invalid && (clinicForm.get('telf')?.dirty || clinicForm.get('telf')?.touched)">
+                  <span *ngIf="clinicForm.get('telf')?.errors?.['required']">
+                    El teléfono es obligatorio.
+                  </span>
+                  <span *ngIf="clinicForm.get('telf')?.errors?.['minlength'] || clinicForm.get('telf')?.errors?.['maxlength']">
+                    Su teléfono debe tener entre 9 y 15 dígitos.
+                  </span>
+                  <span *ngIf="clinicForm.get('telf')?.errors?.['pattern']">
+                    Introduzca un teléfono válido.
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="row">
+                <div class="row mb-3">
+                    <strong>Foto de perfil</strong>
+                </div>
+                <form (ngSubmit)="onImageSubmit()">
+                  <div class="row mb-3">
+                    <div class="image-container text-center">
+                      <!-- Previsualización de la imagen seleccionada -->
+                      <img *ngIf="imagePreview; else defaultImage" 
+                           [src]="imagePreview" 
+                           alt="Profile Image" 
+                           class="img-thumbnail small-thumbnail">
+                      <ng-template #defaultImage>
+                        <!-- Imagen predeterminada -->
+                        <img src="https://banffventureforum.com/wp-content/uploads/2019/08/no-photo-icon-22.png" 
+                             alt="Default Profile Image" 
+                             class="img-thumbnail rounded-circle small-thumbnail">
+                      </ng-template>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 text-center">
+                      <!-- Input oculto para seleccionar el archivo -->
+                      <input type="file" (change)="onFileSelected($event)" 
+                             accept="image/*" 
+                             style="display: none;" 
+                             #fileInput>
+                      <!-- Botón para abrir el diálogo de selección de archivos -->
+                      <button type="button" class="btn btn-light" (click)="fileInput.click()">Subir Foto</button>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-12 text-center">
+                      <!-- Botón para enviar el formulario al backend -->
+                      <button type="submit" class="btn btn-light" [disabled]="!imageFile" (click)="onImageSubmit()">Guardar Imagen</button>
+                    </div>
+                  </div>
+                </form>
+          </div>      
+            </div>
+         </div>
+
+      
+        <!-- Campo para Email -->
+        <div class="form-group mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" placeholder="ejemplo@dominio.com" class="form-control" formControlName="email">
+          <div class="alert alert-danger mt-2" *ngIf="clinicForm.get('email')?.invalid && clinicForm.get('email')?.touched">
+            <span *ngIf="clinicForm.get('email')?.errors?.['required']">
+              El email es obligatorio.
+            </span>
+            <span *ngIf="clinicForm.get('email')?.errors?.['email']">
+              Introduzca un email válido.
+            </span>
+          </div>
+        </div>
+      
+        <!-- Campo para Descripción -->
+        <div class="form-group mb-3">
+          <label for="desc" class="form-label">Descripción</label>
+          <textarea id="desc" class="form-control" rows="3" placeholder="Cuéntale a los pacientes, ¿Cómo es tu centro de trabajo?" formControlName="desc"></textarea>
+          <div class="alert alert-danger mt-2" *ngIf="clinicForm.get('desc')?.invalid && clinicForm.get('desc')?.touched">
+            <span *ngIf="clinicForm.get('desc')?.errors?.['required']">
+              La descripción es obligatoria.
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label class="form-label">Días de Apertura</label>
+          <div formArrayName="openDays" class="container text-center d-flex flex-wrap gap-2">
+            <div *ngFor="let day of daysOfWeek; let i = index" class="form-check form-check-inline">
+              <!-- Checkbox para cada día -->
+              <input type="checkbox" class="btn-check" [formControlName]="i" [id]="'day' + i">
+              <label class="btn btn-outline-light" [for]="'day' + i">{{ day.label }}</label>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Horario de Apertura y Cierre -->
+        <div class="row justify-content-evenly">
+          <div class="col-4">
+            <div class="form-group mb-3">
+              <label for="openHour" class="form-label">Hora de Apertura</label>
+              <input type="time" id="openHour" class="form-control" formControlName="openHour">
+              <div class="alert alert-danger mt-2" *ngIf="clinicForm.get('openHour')?.invalid && clinicForm.get('openHour')?.touched">
+                <span *ngIf="clinicForm.get('openHour')?.errors?.['required']">
+                  La hora de apertura es obligatoria.
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group mb-3">
+              <label for="closeHour" class="form-label">Hora de Cierre</label>
+              <input type="time" id="closeHour" class="form-control" formControlName="closeHour">
+              <div class="alert alert-danger mt-2" *ngIf="clinicForm.get('closeHour')?.invalid && clinicForm.get('closeHour')?.touched">
+                <span *ngIf="clinicForm.get('closeHour')?.errors?.['required']">
+                  La hora de cierre es obligatoria.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <div class="container text-center">
+        <button type="submit" class="btn btn-outline-light px-5 btn-lg mt-4" [disabled]="clinicForm.invalid">
+          Actualizar
+        </button>
+      </div>
+      </form>
+  </div>
+  <div class="col-md-2 col-sm-2   col-lg-2 col-xl-6">
+
+
+    <button class="btn btn-primary d-xl-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive">
+      <i class="fa-solid fa-location-dot"></i>
+    </button>
+
+    <div class="offcanvas-xl offcanvas-end" tabindex="-1" id="offcanvasResponsive" aria-labelledby="offcanvasResponsiveLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasResponsiveLabel">Ubicación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasResponsive" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body row">
+        <h2 class="text-center"> Seleccione la ubicacion de su clinica:
+        </h2>
+        <div id="map" style="width: 100%; height: 400px;"></div>    
+      </div>
+    </div>
+</div>
+</div>
