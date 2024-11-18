@@ -4,16 +4,18 @@
             <div class="row" *ngFor="let cita of filtercitas | sortCitas" >
                 <div class="col-3 col-md-4 col-xl-2 ">
                         <img *ngIf="cita.clinicId === 1; else otherImage" 
-                        src="https://scontent-lim1-1.xx.fbcdn.net/v/t39.30808-6/414850126_407251714969818_7350880059826478217_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=mGzQKTe_oaQQ7kNvgHnhY2y&_nc_zt=23&_nc_ht=scontent-lim1-1.xx&_nc_gid=AbyMQNGM9CAo6rKemP6W0TW&oh=00_AYCEiKoGAzxZEz-HufBnroFbJQs40nSp2_QAs3N_h5h-Ag&oe=6737D7D0" 
+                        src="https://i.imgur.com/m0gM5xy.jpeg" 
                        
                         alt="Profile Image" 
                         class="img-thumbnail rounded-circle small-thumbnail">
                
                         <ng-template #otherImage>
-                            <img src="https://banffventureforum.com/wp-content/uploads/2019/08/no-photo-icon-22.png" 
-                                alt="Alternative Image" 
-                                class="img-thumbnail rounded-circle small-thumbnail">
-                        </ng-template>
+                            <img
+                              [src]="dentistImages.get(cita.dentistUserId) || defaultImage"
+                              alt="Profile Image"
+                              class="img-thumbnail rounded-pill small-thumbnail"
+                            />
+                          </ng-template>
                 
                 </div>
                 <div class="col-9 col-md-8 col-xl-9 mb-3">

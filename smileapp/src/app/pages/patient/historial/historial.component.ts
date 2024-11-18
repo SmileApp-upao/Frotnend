@@ -9,6 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { CitasResponse } from '../../../shared/models/cita/citas.response.model';
 import { CitaService } from '../../../core/services/cita/cita.service';
 import { SortCitasPipe } from '../../../core/pipes/order-citas.pipe';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { DentistService } from '../../../core/services/user/dentist/dentist.service';
 @Component({
   selector: 'app-historial',
   standalone: true,
@@ -17,25 +19,77 @@ import { SortCitasPipe } from '../../../core/pipes/order-citas.pipe';
   styleUrl: './historial.component.scss'
 })
 export class HistorialComponent {
-
+  private dentistService= inject(DentistService);
+  private sanitizer = inject(DomSanitizer);
+  dentista!:DentistResponse;
   miscitas:CitasResponse[]=[];
   filtercitas: CitasResponse[] = [];
+  dentistImages = new Map<number, string>();
+  defaultImage = 'https://banffventureforum.com/wp-content/uploads/2019/08/no-photo-icon-22.png';
   searchQuery: string = '';
   private citaService= inject(CitaService);
   private router = inject(Router)
-
+  imagePreview: SafeUrl | null = null;
   ngOnInit(): void {
   
     this.citaService.myCitas().subscribe({
       next:(cita) => {
         this.miscitas = cita;
         this.filtercitas=cita;
+        
         console.log(this.miscitas);
+        this.loadDentistImages();
+      
       },
       error:(error) => console.log('No tienes Citas',error)
     });;
 
   }
+
+  loadDentistImages(): void {
+    this.filtercitas.forEach((cita) => {
+      const dentistUserId = cita.dentistUserId;
+
+      // Verifica si ya se cargó la imagen de este dentista
+      if (!this.dentistImages.has(dentistUserId)) {
+        this.dentistService.getUserbyID(dentistUserId).subscribe({
+          next: (dentist) => {
+            if (dentist.image) {
+              // Convierte el Blob a una URL y guárdala en el mapa
+              this.loadUserImage(dentist.image).then((url) => {
+                this.dentistImages.set(dentistUserId, url);
+              });
+            } else {
+              // Usa la imagen por defecto si no hay imagen
+              this.dentistImages.set(dentistUserId, this.defaultImage);
+            }
+          },
+          error: (err) => {
+            console.error(`Error cargando el dentista con ID ${dentistUserId}`, err);
+            this.dentistImages.set(dentistUserId, this.defaultImage);
+          },
+        });
+      }
+    });
+  }
+
+  loadUserImage(filename: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      this.dentistService.viewPhoto(filename).subscribe({
+        next: (imageBlob: Blob) => {
+          const objectURL = URL.createObjectURL(imageBlob);
+          const sanitizedUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL) as string;
+          resolve(sanitizedUrl); // Resolver con la URL generada
+        },
+        error: (error) => {
+          console.error('Error al cargar la imagen del usuario', error);
+          //this.showSnackBar('Error al cargar la imagen del usuario');
+          reject(error);
+        }
+      });
+    });
+  }
+
   onSearch(): void {
     const query = this.searchQuery; 
     if (!this.searchQuery) {
@@ -87,5 +141,25 @@ export class HistorialComponent {
       const citaDate = new Date(cita.date);
       return citaDate >= startOfNextWeek && citaDate <= endOfNextWeek;
     });
+  }
+
+  buscarImg(dentistUserId:number)
+  {
+    this.dentistService.getUserbyID(dentistUserId).subscribe({
+      next: (dentist) => {
+        this.dentista = dentist;
+        console.log(this.dentista)
+        if (this.dentista.image != null) {
+          this.loadUserImage(this.dentista.image).then((url) => {
+            console.log(this.dentista.image)
+            this.dentista.image = url; // Actualiza la URL procesada
+            this.imagePreview=url;
+            console.log(this.dentista.image)
+            console.log(this.dentista)
+          });
+        }
+      }
+    }
+   );
   }
 }

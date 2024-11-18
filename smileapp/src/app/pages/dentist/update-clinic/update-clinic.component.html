@@ -54,7 +54,7 @@
                 <div class="row mb-3">
                     <strong>Foto de perfil</strong>
                 </div>
-                <form (ngSubmit)="onImageSubmit()">
+                <form>
                   <div class="row mb-3">
                     <div class="image-container text-center">
                       <!-- Previsualización de la imagen seleccionada -->
@@ -84,7 +84,7 @@
                   <div class="row mt-3">
                     <div class="col-12 text-center">
                       <!-- Botón para enviar el formulario al backend -->
-                      <button type="submit" class="btn btn-light" [disabled]="!imageFile" (click)="onImageSubmit()">Guardar Imagen</button>
+                      <button type="button" class="btn btn-light" [disabled]="!imageFile" (click)="onImageSubmit()">Guardar Imagen</button>
                     </div>
                   </div>
                 </form>

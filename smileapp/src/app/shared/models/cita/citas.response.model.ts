@@ -2,6 +2,7 @@ export interface CitasResponse{
     id:number;
     patientId:number;
     dentistId:number; 
+    dentistUserId: 3;
     date: string;  
     hour: string;  
     clinicId:number;

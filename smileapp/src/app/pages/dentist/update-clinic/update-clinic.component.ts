@@ -109,6 +109,7 @@ export class UpdateClinicComponent implements OnInit {
         next: () => {
           console.log('Imagen de la clínica actualizada correctamente');
           this.showSnackBar('Imagen actualizada correctamente');
+          this.router.navigate(["dentist/clinicDetail"]);
         },
         error: (error) => {
           // Extraer el mensaje de error del backend
