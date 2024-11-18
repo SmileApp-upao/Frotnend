@@ -58,6 +58,7 @@ export class CitaLayoutComponent {
     if (selectButton) {
       selectButton.addEventListener('click', () => {
         localStorage.setItem('selectedClinicId', clinica.id.toString());
+        console.log("id clinica",clinica.id);
         if(clinica.id===1)
         {
           this.router.navigate(['patient/cita/dentistas']);
