@@ -106,9 +106,11 @@ export class CalendarComponent {
     this.selectedEventDetails.quoteId = quoteId;
   } 
 
-  goToPatientProfile(): void {
-    const patientId = this.selectedEventDetails?.patientId; 
-    const quoteId = this.selectedEventDetails?.quoteId; 
+  goToPatientProfile(citaId:number, pacienteId:number): void {
+    const patientId = pacienteId; 
+    localStorage.setItem("PacienteId",pacienteId.toString());
+    const quoteId = citaId; 
+    localStorage.setItem("CitaId",quoteId.toString());
     this.router.navigate(['/dentist/quote-view'], { queryParams: { patientId, quoteId } });
   }
   

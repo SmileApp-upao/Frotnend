@@ -30,7 +30,7 @@
                             <p><strong>Razón:</strong> {{ selectedEventDetails.reason }}</p>
                             <p><strong>Clínica:</strong> {{ selectedEventDetails.clinicName }}</p>
                         </div>
-                        <button class="btn btn-dark" (click)="goToPatientProfile()">Ver mas detalles</button>
+                        <button class="btn btn-dark" (click)="goToPatientProfile(selectedEventDetails.id,selectedEventDetails.patientId)">Ver mas detalles</button>
                     </div>
                 </div>
             </div>

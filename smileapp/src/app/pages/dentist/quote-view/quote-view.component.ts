@@ -11,8 +11,8 @@ import { PdfService } from '../../../core/services/pdf/pdf.service';
   styleUrl: './quote-view.component.scss'
 })
 export class QuoteViewComponent {
-  patientId: number | null = null;
-  quoteId: number | null = null;
+  patientId!: number;
+  quoteId!: number;
   patientDetails: any = null;
 
   constructor(
@@ -30,6 +30,7 @@ export class QuoteViewComponent {
       if (this.patientId) {
         this.loadPatientDetails(this.patientId); // Cargamos la información del paciente
       }
+      
     });
   }
 
@@ -42,16 +43,23 @@ export class QuoteViewComponent {
   }
 
   downloadPdf(): void {
-    if (this.patientId && this.quoteId) {
-      this.pdfService.downloadPdf(this.patientId, this.quoteId).subscribe({
+    const pacienteId = parseInt(localStorage.getItem("PacienteId") || '0', 10);
+const citaId = parseInt(localStorage.getItem("CitaId") || '0', 10);
+
+if (pacienteId && citaId) {
+  this.pdfService.downloadPdf(pacienteId, citaId).subscribe({
         next: (response) => {
-          const blob = new Blob([response], { type: 'application/pdf' });
-          const url = window.URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'reporte-cita-paciente.pdf';
-          a.click();
-          window.URL.revokeObjectURL(url);
+          if (response instanceof Blob) {
+            const blob = response;
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'reporte-cita-paciente.pdf';
+            a.click();
+            window.URL.revokeObjectURL(url);
+          } else {
+            console.error('Respuesta inesperada:', response);
+          }
         },
         error: (err) => {
           console.error('Error al descargar el PDF:', err);
@@ -60,3 +68,6 @@ export class QuoteViewComponent {
     }
   }
 }
+
+
+
