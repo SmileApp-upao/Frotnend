@@ -106,6 +106,7 @@ export class DentistDetailsComponent {
           this.dentistId = this.clinica.dentists[0].id;
 
           this.fetchDentistDetails(this.dentistId);
+         
           this.postService.getPostByDentistId( parseInt(localStorage.getItem('selectedDentistId') || '', 10)).subscribe({
 
             next :(posts) =>
@@ -147,9 +148,11 @@ export class DentistDetailsComponent {
   fetchDentistDetails(dentistId: number): void {
     if(localStorage.getItem('selectedDentistId')==null)
     {
+      
       this.clinicService.getClinicById(+this.clinicId).subscribe({
         next: (clinic) => {
           this.clinica = clinic;
+          
           console.log(clinic);
           
           if (this.clinica.dentists && this.clinica.dentists.length > 0) {
@@ -171,8 +174,10 @@ export class DentistDetailsComponent {
         console.log(this.dentista)
         if (this.dentista.image != null) {
           this.loadUserImage(this.dentista.image).then((url) => {
+            console.log(this.dentista.image)
             this.dentista.image = url; // Actualiza la URL procesada
             this.imagePreview=url;
+            console.log(this.dentista.image)
             console.log(this.dentista)
           });
         }

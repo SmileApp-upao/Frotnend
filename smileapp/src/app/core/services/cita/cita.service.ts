@@ -12,6 +12,7 @@ export class CitaService {
       throw new Error('Method not implemented.');
   }
   private baseURL = `${environment.baseURL}/citas`; //clinic/clinics
+  private ImageURL=`${environment.baseURL}/publications/file`; 
   private http = inject(HttpClient);
   constructor() { }
 
@@ -32,6 +33,14 @@ export class CitaService {
     }
   
     return this.http.post<any>(`${this.baseURL}/create`, formData);
+  }
+
+  CitaByCitaId(citaId:number):Observable<CitasResponse>{
+    return this.http.get<CitasResponse>(`${this.baseURL}/${citaId}`);
+  }
+
+  viewPhoto(filename: string): Observable<Blob> {
+    return this.http.get(`${this.ImageURL}/${filename}`, { responseType: 'blob' });
   }
 
   myCitas(): Observable<CitasResponse[]> {

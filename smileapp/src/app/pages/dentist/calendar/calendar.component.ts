@@ -67,6 +67,7 @@ export class CalendarComponent {
   loadCalendarEvents(): void {
     this.citaService.calendarCitas().subscribe({
       next: (events) => {
+        console.log(events);
         const formattedEvents = this.calendarService.formatEvents(events);
         // Asignamos los eventos formateados a las opciones del calendario
         this.calendarOptions = {
@@ -95,6 +96,7 @@ export class CalendarComponent {
     
     // Datos adicionales para pasar a la vista de la cita
     const patientId = extendedProps['patientId'];
+    const citaId = extendedProps['IdCita'];
     const appointmentDate = start; // Usamos la fecha del evento (start)
     const appointmentTime = start; // Usamos el mismo valor si es necesario
     const reason = extendedProps['reason']; // Recuperamos la razón de la cita
@@ -103,10 +105,11 @@ export class CalendarComponent {
     this.selectedEventDetails.appointmentDate = appointmentDate;
     this.selectedEventDetails.appointmentTime = appointmentTime;
     this.selectedEventDetails.reason = reason;
+    this.selectedEventDetails.citaId=citaId;
   } 
 
   goToPatientProfile(): void {
-    const { patientId, appointmentDate, appointmentTime, reason } = this.selectedEventDetails;
+    const { patientId, appointmentDate, appointmentTime, reason,citaId } = this.selectedEventDetails;
   
     // Navegar hacia la vista de la cita pasando los datos como parámetros
     this.router.navigate(['/dentist/quote-view'], { 
@@ -114,7 +117,7 @@ export class CalendarComponent {
         patientId, 
         appointmentDate: appointmentDate,
         appointmentTime: appointmentTime,
-        reason 
+        reason ,citaId
       } 
     });
   }

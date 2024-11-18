@@ -8,6 +8,7 @@ export interface CitasResponse{
     clinicname:string;
     clinicdescription:string;
     clinicdirection:string;
+    filePaths :string[];
     patientName:string;
     reason: string;
     dentistName:string;
