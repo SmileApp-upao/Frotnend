@@ -67,14 +67,7 @@ export class CalendarComponent {
   loadCalendarEvents(): void {
     this.citaService.calendarCitas().subscribe({
       next: (events) => {
-        const formattedEvents = this.calendarService.formatEvents(events).map(event => ({
-          ...event,
-          extendedProps: {
-            ...event.extendedProps,    
-            patientId: event['patientId'], 
-            quoteId: event.id          
-          }
-        }));
+        const formattedEvents = this.calendarService.formatEvents(events);
         // Asignamos los eventos formateados a las opciones del calendario
         this.calendarOptions = {
           ...this.calendarOptions,
@@ -100,16 +93,30 @@ export class CalendarComponent {
       ...extendedProps,
     };
     
+    // Datos adicionales para pasar a la vista de la cita
     const patientId = extendedProps['patientId'];
-    const quoteId = extendedProps['quoteId'];
+    const appointmentDate = start; // Usamos la fecha del evento (start)
+    const appointmentTime = start; // Usamos el mismo valor si es necesario
+    const reason = extendedProps['reason']; // Recuperamos la razón de la cita
+    
     this.selectedEventDetails.patientId = patientId;
-    this.selectedEventDetails.quoteId = quoteId;
+    this.selectedEventDetails.appointmentDate = appointmentDate;
+    this.selectedEventDetails.appointmentTime = appointmentTime;
+    this.selectedEventDetails.reason = reason;
   } 
 
   goToPatientProfile(): void {
-    const patientId = this.selectedEventDetails?.patientId; 
-    const quoteId = this.selectedEventDetails?.quoteId; 
-    this.router.navigate(['/dentist/quote-view'], { queryParams: { patientId, quoteId } });
+    const { patientId, appointmentDate, appointmentTime, reason } = this.selectedEventDetails;
+  
+    // Navegar hacia la vista de la cita pasando los datos como parámetros
+    this.router.navigate(['/dentist/quote-view'], { 
+      queryParams: { 
+        patientId, 
+        appointmentDate: appointmentDate,
+        appointmentTime: appointmentTime,
+        reason 
+      } 
+    });
   }
   
 }

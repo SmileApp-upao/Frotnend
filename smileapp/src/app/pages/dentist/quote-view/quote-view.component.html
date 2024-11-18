@@ -1,11 +1,21 @@
-<!-- quote-view.component.html -->
-<div>
-    <h1>Detalles de la Cita</h1>
-
-    <!-- Aquí se mostrarán los detalles de la cita, usa el patientId para cargar la información necesaria -->
-    <p>Paciente ID: {{ patientId }}</p>
-    <!-- Otros detalles de la cita aquí -->
-
-    <!-- Botón para descargar el PDF -->
-    <button (click)="downloadPdf()">Descargar PDF</button>
-</div>
+<div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <!-- Card con detalles del paciente -->
+        <div class="card">
+          <img *ngIf="patientImage" [src]="patientImage" class="card-img-top" alt="Imagen del paciente">
+          <div class="card-body">
+            <h5 class="card-title">{{ patientDetails?.name }}</h5>
+            <p class="card-text">Motivo: {{ patientDetails?.reason }}</p>
+            <p class="card-text">Fecha: {{ patientDetails?.date | date }}</p>
+            <p class="card-text">Hora: {{ patientDetails?.time }}</p>
+            <button (click)="downloadPdf()" class="btn btn-primary">Descargar PDF</button>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-md-6">
+        <!-- Aquí puedes agregar más detalles del paciente si es necesario -->
+      </div>
+    </div>
+  </div>
