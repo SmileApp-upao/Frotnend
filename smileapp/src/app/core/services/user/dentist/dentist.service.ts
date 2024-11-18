@@ -7,12 +7,15 @@ import { RegisterEstudentRequest } from '../../../../shared/models/auth/register
 import { RegisterEstudentResponse } from '../../../../shared/models/auth/register-student-dentist-response.model';
 import { RegisterDentistRequest } from '../../../../shared/models/auth/register-dentist-profesional-request.model';
 import { RegisterDentistResponse } from '../../../../shared/models/auth/register-dentist-profesional-response.model';
+import { PublicationRequest } from '../../../../shared/models/publication/publication-request.model';
+import { PublicationResponse } from '../../../../shared/models/publication/publication-response.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DentistService {
   private baseURL = `${environment.baseURL}/user/profile`;
+  private baseURL2 = `${environment.baseURL}/publications`;
   private http = inject(HttpClient);
   constructor() { }
 
@@ -50,5 +53,20 @@ export class DentistService {
     return this.http.get(`${this.baseURL}/uploads/${filename}`, { responseType: 'blob' });
   }
 
+  createPublication(publicationRequest: PublicationRequest): Observable<PublicationResponse> {
+    const formData = new FormData();
+    formData.append('image', publicationRequest.image);
+    formData.append('description', publicationRequest.description);
 
+    return this.http.post<PublicationResponse>(`${this.baseURL2}/create`, formData);
+  }
+
+  myPublications(): Observable<PublicationResponse[]> {
+    return this.http.get<PublicationResponse[]>(`${this.baseURL2}/dentist`);
+  }
+
+  viewImagePublication(filename: string): Observable<Blob> {
+    return this.http.get(`${this.baseURL2}/uploads/${filename}`, { responseType: 'blob' });
+  }
+  
 }

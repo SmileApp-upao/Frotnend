@@ -45,9 +45,33 @@
     <div class="col-md-12  col-lg-12 col-xl-8 col-xxl-10">
         <div class="row m-4 border border-start-0 border-end-0 border-top-0 border-black border-3s">
             <h1 class="fs-4">Publicaciones</h1>
-            </div> 
+        </div> 
         <div class="row m-4 bg-black rounded p-4 text-white-50">
-
+            <div *ngFor="let publication of publicationResponse">
+                <img [src]="imagePublicationview" alt="Publication Image" class="img-thumbnail rounded-3">
+                <p class="text-light" >{{publication.description}}</p>
+            </div>
         </div>   
     </div>
+
+    <form [formGroup]="publicationForm" (ngSubmit)="onSubmitPublication()">
+        <div class="form-group">
+          <label for="image">Imagen</label>
+          <input type="file" id="image" (change)="onFileSelected($event)" accept="image/*" />
+          <div *ngIf="publicationForm.get('image')?.invalid && publicationForm.get('image')?.touched" class="alert alert-danger">
+            La imagen es obligatoria.
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <label for="description">Descripción</label>
+          <textarea id="description" formControlName="description" rows="3" class="form-control"></textarea>
+          <div *ngIf="publicationForm.get('description')?.invalid && publicationForm.get('description')?.touched" class="alert alert-danger">
+            La descripción es obligatoria .
+          </div>
+        </div>
+      
+        <button type="submit" class="btn btn-primary" [disabled]="publicationForm.invalid">Publicar</button>
+    </form>
+
 </div>
