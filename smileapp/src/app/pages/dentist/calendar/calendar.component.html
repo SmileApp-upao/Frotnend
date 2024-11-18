@@ -22,15 +22,14 @@
                         <div class="card-header">
                             <h4>Detalles de la cita</h4>
                         </div>
-                        <div class="card-body">
-                            <p><strong>Título:</strong> {{ selectedEventDetails.title }}</p>
+                        <div class="card-body"> 
                             <p><strong>Fecha:</strong> {{ selectedEventDetails.start | date: 'fullDate' }}</p>
                             <p><strong>Hora:</strong> {{ selectedEventDetails.start | date: 'shortTime' }}</p>
                             <p><strong>Paciente:</strong> {{ selectedEventDetails.patientName }}</p>
                             <p><strong>Razón:</strong> {{ selectedEventDetails.reason }}</p>
                             <p><strong>Clínica:</strong> {{ selectedEventDetails.clinicName }}</p>
                         </div>
-                        <button class="btn btn-dark" (click)="goToPatientProfile(selectedEventDetails.id,selectedEventDetails.patientId)">Ver mas detalles</button>
+                        <button class="btn btn-dark" (click)="goToPatientProfile()">Ver mas detalles</button>
                     </div>
                 </div>
             </div>

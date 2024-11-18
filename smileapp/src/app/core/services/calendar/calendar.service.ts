@@ -13,27 +13,41 @@ export class CalendarService {
   }
 
   private formatEvent(event: any): EventInput {
-    const colors = this.getEventColors();
-    const color = this.getRandomColor(colors);
+    const backgroundColors = this.getBackgroundColors();  // Colores para el fondo
+    const borderColors = this.getBorderColors(); 
+
+    const eventIndex = Math.floor(Math.random() * backgroundColors.length);
+
+    const backgroundColor = backgroundColors[eventIndex];
+    const borderColor = borderColors[eventIndex];
+
     return {
       ...event,
-      backgroundColor: color, 
+      backgroundColor: backgroundColor, 
+      color: borderColor,
+      textColor: 'black',
     };
   }
  
-  private getRandomColor(colors: string[]): string {
-    const randomIndex = Math.floor(Math.random() * colors.length);
-    return colors[randomIndex];
-  }
- 
-  private getEventColors(): string[] {
+  private getBackgroundColors(): string[] {
     return [
-      '#BDFFDB',   
-      '#FFEBB7',  
-      '#D6C8FF',  
-      '#BFC6FF',   
-      '#FFDDDD',  
-      '#A384FF',  
+      '#BDFFDB',   // Verde suave
+      '#FFEBB7',    // Amarillo pastel
+      '#D6C8FF',    // Lila claro
+      '#BFC6FF',    // Azul claro
+      '#FFDDDD',    // Rosa claro
+      '#A384FF',    // Morado claro
+    ];
+  }
+
+  private getBorderColors(): string[] {
+    return [
+      '#2ECC71',    // Verde (más intenso)
+      '#F39C12',    // Naranja
+      '#9B59B6',    // Púrpura
+      '#3498DB',    // Azul (más intenso)
+      '#E74C3C',    // Rojo
+      '#8E44AD',    // Violeta
     ];
   }
 }
