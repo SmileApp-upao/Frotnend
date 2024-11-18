@@ -35,17 +35,23 @@ export class DentistLayoutComponent {
     const authData = this.authService.getUser();
     const userId = authData?.id;
     if (userId) {
+
       this.authService.getProfile(userId).subscribe({
         next: (profileResponse) => {
+          
           this.isStudent = profileResponse.condition === 'Estudiante';
           this.isAuthenticated = true;
           console.log('idDentista:', profileResponse.idDentista);
+
           this.clinicService.getClinicByDentisId(profileResponse.idDentista).subscribe({
             next: (clinic) => {
+
               console.log('Clinica:', clinic);
               this.hasClinic = clinic != null; // Verifica si la clínica no es nula
               console.log('Tiene clínica:', this.hasClinic);
+              this.hasClinic = true;
             },
+
             error: (error) => {
               console.error('Error al cargar la clínica', error);
               this.hasClinic = false;

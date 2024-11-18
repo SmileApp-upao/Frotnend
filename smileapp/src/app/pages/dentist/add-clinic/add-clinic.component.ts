@@ -218,36 +218,3 @@ export class AddClinicComponent implements OnInit {
   }
 
 }
-
-/*      this.clinicService.updateClinic(clinicData as ClinicRequestDTO).subscribe({
-        next: () => {
-          this.snackBar.open('Clínica actualizada exitosamente', 'Cerrar', {
-            duration: 3000,
-            verticalPosition: 'top',
-            horizontalPosition: 'center'
-          }); 
-
-          this.router.navigate(['/dentist/profile']);
-        },
-        error: (error) => { 
-          this.snackBar.open('Error al actualizar clínica', 'Cerrar', {
-            duration: 3000,
-            verticalPosition: 'top',
-            horizontalPosition: 'center'
-          }); 
-
-          const authData = this.storageService.getAuthData();
-          const token = authData ? authData.token : null; 
-
-          if (token) {
-            // Pasar el token a addClinic
-
-          } else { 
-            this.snackBar.open('Error: No se pudo obtener el token', 'Cerrar', {
-              duration: 3000,
-              verticalPosition: 'top',
-              horizontalPosition: 'center'
-            });
-          }
-        }
-      });*/
