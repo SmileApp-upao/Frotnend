@@ -13,10 +13,14 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
   styleUrl: './quote-view.component.scss'
 })
 export class QuoteViewComponent {
-  patientId: number | null = null;
-  quoteId: number | null = null;
-  patientDetails: any = null;
-  patientImage: SafeUrl | null = null;  // Cambié a patientImage para manejar una sola imagen
+  patientId: number | null = null; 
+  quoteId: number | null = null;  
+  patientDetails: any = null;  
+  patientImage: SafeUrl | null = null; 
+
+  appointmentDate: string | null = null; 
+  appointmentTime: string | null = null; 
+  reason: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,12 +31,24 @@ export class QuoteViewComponent {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
-      this.patientId = params['patientId']; // Recuperamos el patientId pasado desde CalendarComponent
+      this.patientId = params['patientId'];
       this.quoteId = params['quoteId'];
-      console.log("quote id:", this.quoteId);
+
+      // Capturamos los nuevos parámetros
+      this.appointmentDate = new Date(params['appointmentDate']).toLocaleDateString('es-PE');
+      this.appointmentTime = new Date(params['appointmentTime']).toLocaleTimeString('es-PE');
+      this.reason = params['reason'];
+
+      console.log('quoteId:', this.quoteId);
+      console.log('Datos adicionales:', {
+        appointmentDate: this.appointmentDate,
+        appointmentTime: this.appointmentTime,
+        reason: this.reason,
+      });
+
+      // Cargar los detalles e imagen del paciente si tenemos el ID
       if (this.patientId) {
-        this.loadPatientDetails(this.patientId);
-        this.loadPatientImage(this.patientId);  // Cambié a loadPatientImage para manejar la imagen
+        this.loadPatientDetails(this.patientId); 
       }
     });
   }
@@ -40,24 +56,14 @@ export class QuoteViewComponent {
   // Cargar los detalles del paciente usando el patientId
   loadPatientDetails(patientId: number): void {
     this.patientService.getUserbyID(patientId).subscribe((response) => {
-      this.patientDetails = response; // Guardamos la información del paciente
+      this.patientDetails = response;
       console.log("Datos del paciente: ", this.patientDetails);
       this.quoteId = this.patientDetails.id;
     });
   }
 
   // Cargar la imagen del paciente
-  loadPatientImage(patientId: number): void {
-    this.patientService.getPatientProfile(patientId).subscribe((response) => {
-      if (response && response.image) {
-        const imageUrl = response.image;
-        this.patientService.viewPhoto(imageUrl).subscribe((imageBlob) => {
-          const objectUrl = URL.createObjectURL(imageBlob);  // Creamos la URL de la imagen
-          this.patientImage = this.sanitizer.bypassSecurityTrustUrl(objectUrl);  // Sanitizamos la URL para usarla en el HTML
-        });
-      }
-    });
-  }
+   
 
   downloadPdf(): void {
     if (this.patientId && this.quoteId) {

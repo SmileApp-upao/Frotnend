@@ -22,8 +22,7 @@
                         <div class="card-header">
                             <h4>Detalles de la cita</h4>
                         </div>
-                        <div class="card-body">
-                            <p><strong>Título:</strong> {{ selectedEventDetails.title }}</p>
+                        <div class="card-body"> 
                             <p><strong>Fecha:</strong> {{ selectedEventDetails.start | date: 'fullDate' }}</p>
                             <p><strong>Hora:</strong> {{ selectedEventDetails.start | date: 'shortTime' }}</p>
                             <p><strong>Paciente:</strong> {{ selectedEventDetails.patientName }}</p>
