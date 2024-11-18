@@ -138,36 +138,37 @@ export class DentistProfileComponent implements OnInit {
 
 
   onFileSelected(event: any): void {
-    // const file: File = event.target.files[0];
-    // if (file) {
-    //   const reader = new FileReader();
-    //   reader.onload = (e: any) => {
-    //     this.imagePublicationPreview = this.sanitizer.bypassSecurityTrustUrl(e.target.result);
-    //     this.publicationForm.patchValue({
-    //       image: file
-    //     });
-    //   };
-    //   reader.readAsDataURL(file);
-    // }
+   const file: File = event.target.files[0];
+    if (file) {
+     const reader = new FileReader();
+    reader.onload = (e: any) => {
+    this.imagePublicationPreview = this.sanitizer.bypassSecurityTrustUrl(e.target.result);
+        this.publicationForm.patchValue({
+           image: file
+         });
+       };
+       reader.readAsDataURL(file);
+     }
   }
 
   onSubmitPublication(): void {
-    // if (this.publicationForm.invalid || !this.imagePublicationPreview) {
-    //   this.showSnackBar('Por favor, complete todos los campos y seleccione una imagen.');
-    //   return;
-    // }
+    if (this.publicationForm.invalid || !this.imagePublicationPreview) {
+     this.showSnackBar('Por favor, complete todos los campos y seleccione una imagen.');
+    return;
+    }
 
-    // const userData = this.publicationForm.value;
-    // this.dentistService.createPublication(userData).subscribe({
-    //   next: () => {
-    //     this.showSnackBar('Publicación creada con éxito');
-    //     this.loadPublications();
-    //   },
-    //   error: (error) => {
-    //     console.error('Error creating publication', error);
-    //     this.showSnackBar('Error al crear la publicación');
-    //   }
-    // });
+    
+  const userData = this.publicationForm.value;
+  this.dentistService.createPublication(userData).subscribe({
+      next: () => {
+         this.showSnackBar('Publicación creada con éxito');
+         this.loadPublications();
+       },
+       error: (error) => {
+      console.error('Error creating publication', error);
+       this.showSnackBar('Error al crear la publicación');
+       }
+     });
 
   }
 

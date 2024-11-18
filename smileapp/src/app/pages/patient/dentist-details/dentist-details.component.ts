@@ -24,6 +24,7 @@ export class DentistDetailsComponent {
   clinicId: string = "";
   clinica!: ClinicaResponse;
   dentista!:DentistResponse;
+  imagePublicationview: SafeUrl | null = null;
   post : PostResponse[]=[];
   dentistId: number | null = null; 
   userId!:number;
@@ -106,19 +107,31 @@ export class DentistDetailsComponent {
           this.dentistId = this.clinica.dentists[0].id;
 
           this.fetchDentistDetails(this.dentistId);
-         
-          this.postService.getPostByDentistId( parseInt(localStorage.getItem('selectedDentistId') || '', 10)).subscribe({
 
-            next :(posts) =>
-            { 
-              this.post=posts;
+          console.log(this.dentistId);
+
+          this.postService.getPostByDentistId(this.dentistId).subscribe({
+            next: (posts) => {
+              this.post = posts;
+    
+              // Procesar las imágenes de los posts
+              this.post.forEach((post: any) => {
+                if (post.image) {
+                  this.loadUserImage(post.image).then((url) => {
+                    post.processedImage = url; // Asigna la imagen procesada
+                  }).catch(() => {
+                    post.processedImage = 'https://via.placeholder.com/150'; // Imagen por defecto si falla
+                  });
+                } else {
+                  post.processedImage = 'https://via.placeholder.com/150'; // Imagen por defecto si no hay imagen
+                }
+              });
             },
-            error : (error)=>
-            {
-              this.showSnackBar(error?.error?.value)
-            }
-      
+            error: (error) => {
+              this.showSnackBar(error?.error?.value);
+            },
           });
+
         }
       },
       error: (error) => console.log('Error al cargar la clinica', error)
@@ -143,6 +156,7 @@ export class DentistDetailsComponent {
       });
     });
   }
+
 
 
   fetchDentistDetails(dentistId: number): void {
@@ -182,7 +196,9 @@ export class DentistDetailsComponent {
           });
         }
         
-        // Obtener posts
+        if(localStorage.getItem('selectedDentistId')!=null)
+        {
+                  // Obtener posts
         this.postService.getPostByDentistId(parseInt(localStorage.getItem('selectedDentistId') || '', 10)).subscribe({
           next: (posts) => {
             this.post = posts;
@@ -204,12 +220,41 @@ export class DentistDetailsComponent {
             this.showSnackBar(error?.error?.value);
           },
         });
+        }
       },
       error: (error) => console.log('Error al cargar el dentista', error),
     });
     
   }
-
+  loadPublicationImage(filename: string): void {
+    this.dentistService.viewImagePublication(filename).subscribe({
+      next: (imageBlob: Blob) => {
+        const objectURL = URL.createObjectURL(imageBlob);
+        this.imagePublicationview = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+        console.log('Image publication URL:', this.imagePublicationview);
+      },
+      error: (error) => {
+        console.error('Error al cargar la imagen del usuario', error);
+        this.showSnackBar('Error al cargar la imagen del usuario');
+      }
+    });
+  }
+  loadPublications(){
+    this.dentistService.myPublications().subscribe({
+      next: (publications) => {
+        this.post = publications;
+        for(let publication of this.post){
+          if(publication.image!= null){
+            this.loadPublicationImage(publication.image);
+          }
+        }
+        console.log("Publicaciones: ",publications);
+      },
+      error: (error) => {
+        console.error('Error al cargar las publicaciones', error);
+      }
+    })
+  }
 
   private showSnackBar(message:string) : void{
     this.snackbar.open(message,'Close',{
