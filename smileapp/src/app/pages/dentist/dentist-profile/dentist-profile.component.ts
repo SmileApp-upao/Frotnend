@@ -15,6 +15,7 @@ import { profileResponse } from '../../../shared/models/user/user-profile-model'
 import { PostService } from '../../../core/services/posts-j/posts-service';
 import { FormsModule, ReactiveFormsModule, FormGroup, Validators, FormBuilder} from '@angular/forms';
 import { PublicationResponse } from '../../../shared/models/publication/publication-response.model';
+import { PostResponse } from '../../../shared/models/post/post.response.model';
 
 @Component({
   selector: 'app-dentist-profile',
@@ -25,6 +26,7 @@ import { PublicationResponse } from '../../../shared/models/publication/publicat
 })
 export class DentistProfileComponent implements OnInit {
   profileResponse!:profileResponse;
+  post : PostResponse[]=[];
   imagePreview: SafeUrl | null = null;
   imagePublicationview: SafeUrl | null = null;
   imagePublicationPreview: SafeUrl | null = null;
@@ -33,6 +35,7 @@ export class DentistProfileComponent implements OnInit {
   publicationResponse!: PublicationResponse[];
 
   private clinicService= inject(ClinicService);
+  private postService = inject(PostService);
   private sanitizer = inject(DomSanitizer);
   private snackbar = inject(MatSnackBar);
   private router = inject(Router);
@@ -52,12 +55,11 @@ export class DentistProfileComponent implements OnInit {
     if (userData && userData.id) {
 
       this.loadDentistProfile(userData.id);
+      this.loadPublications();
     } else {
       console.error('No se pudo obtener el ID del usuario autenticado');
     }
     
-    this.loadPublications();
-
   }
 
   private loadDentistProfile(id: number) {
@@ -72,12 +74,35 @@ export class DentistProfileComponent implements OnInit {
         this.profileResponse = profile;
         console.log("Perfil",profile);
         if (profile.image != null) {
-          this.loadUserImage(profile.image);
+          console.log("si tienes imagen mafren")
+          this.loadUserImageDentist(profile.image);
+
         }
         this.clinicService.getClinicByDentisId( this.profileResponse.idDentista).subscribe({
           next: (clinic) => {
             this.clinica = clinic;
             console.log(clinic);
+            this.postService.getPostByDentistId(this.profileResponse.idDentista).subscribe({
+              next: (posts) => {
+                this.post = posts;
+      
+                // Procesar las imágenes de los posts
+                this.post.forEach((post: any) => {
+                  if (post.image) {
+                    this.loadUserImage(post.image).then((url) => {
+                      post.processedImage = url; // Asigna la imagen procesada
+                    }).catch(() => {
+                      post.processedImage = 'https://via.placeholder.com/150'; // Imagen por defecto si falla
+                    });
+                  } else {
+                    post.processedImage = 'https://via.placeholder.com/150'; // Imagen por defecto si no hay imagen
+                  }
+                });
+              },
+              error: (error) => {
+                this.showSnackBar(error?.error?.value);
+              },
+            });
           },
           error: (error) => console.log('Error al cargar la clinica', error)
         });
@@ -87,16 +112,37 @@ export class DentistProfileComponent implements OnInit {
       error: (error: any) => {
         console.error('Error fetching dentist profile', error);
       }
+      
+
     });
+    
     
   }
   
-  loadUserImage(filename: string): void {
+  loadUserImage(filename: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      this.dentistService.viewPhoto(filename).subscribe({
+        next: (imageBlob: Blob) => {
+          const objectURL = URL.createObjectURL(imageBlob);
+          const sanitizedUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL) as string;
+          resolve(sanitizedUrl); // Resolver con la URL generada
+        },
+        error: (error) => {
+          console.error('Error al cargar la imagen del usuario', error);
+          //this.showSnackBar('Error al cargar la imagen del usuario');
+          reject(error);
+        }
+      });
+    });
+  }
+  
+
+  loadUserImageDentist(filename: string): void {
     this.dentistService.viewPhoto(filename).subscribe({
       next: (imageBlob: Blob) => {
         const objectURL = URL.createObjectURL(imageBlob);
         this.imagePreview = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-        console.log('Image profile URL:', this.imagePreview);
+        console.log('Image URL:', this.imagePreview);
       },
       error: (error) => {
         console.error('Error al cargar la imagen del usuario', error);
@@ -106,20 +152,27 @@ export class DentistProfileComponent implements OnInit {
   }
 
   loadPublications(){
-    this.dentistService.myPublications().subscribe({
-      next: (publications) => {
-        this.publicationResponse = publications;
-        for(let publication of this.publicationResponse){
-          if(publication.image!= null){
-            this.loadPublicationImage(publication.image);
+    this.postService.getPostByDentistId(this.profileResponse.idDentista).subscribe({
+      next: (posts) => {
+        this.post = posts;
+
+        // Procesar las imágenes de los posts
+        this.post.forEach((post: any) => {
+          if (post.image) {
+            this.loadUserImage(post.image).then((url) => {
+              post.processedImage = url; // Asigna la imagen procesada
+            }).catch(() => {
+              post.processedImage = 'https://via.placeholder.com/150'; // Imagen por defecto si falla
+            });
+          } else {
+            post.processedImage = 'https://via.placeholder.com/150'; // Imagen por defecto si no hay imagen
           }
-        }
-        console.log("Publicaciones: ",publications);
+        });
       },
       error: (error) => {
-        console.error('Error al cargar las publicaciones', error);
-      }
-    })
+        this.showSnackBar(error?.error?.value);
+      },
+    });
   }
   
   loadPublicationImage(filename: string): void {

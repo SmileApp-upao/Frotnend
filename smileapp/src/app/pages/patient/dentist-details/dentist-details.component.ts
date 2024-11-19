@@ -36,7 +36,7 @@ export class DentistDetailsComponent {
 
   private sanitizer = inject(DomSanitizer);
   private snackbar = inject(MatSnackBar); 
-   private postService= inject(PostService);
+  private postService= inject(PostService);
   
   ngOnInit(): void 
   { 

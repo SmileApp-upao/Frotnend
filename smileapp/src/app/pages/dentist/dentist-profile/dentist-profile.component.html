@@ -47,9 +47,13 @@
             <h1 class="fs-4">Publicaciones</h1>
         </div> 
         <div class="row m-4 bg-black rounded p-4 text-white-50">
-            <div *ngFor="let publication of publicationResponse">
-                <img [src]="imagePublicationview" alt="Publication Image" class="img-thumbnail rounded-3">
-                <p class="text-light" >{{publication.description}}</p>
+            <div *ngFor="let post of post">
+                <img 
+                [src]="post.processedImage || 'https://via.placeholder.com/150'" 
+                alt="Post Image" 
+                class="img-thumbnail small-thumbnail">
+        
+                <p class="text-light" >{{post.description}}</p>
             </div>
         </div>   
     </div>
